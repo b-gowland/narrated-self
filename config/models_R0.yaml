@@ -1,0 +1,18 @@
+# Round 0 (pilot). Fill in the exact, dated model strings from each provider's docs.
+# A new model version is a new round, never a silent swap.
+round_id: R0
+themes: pilot          # pilot | all
+
+models:
+  - provider: anthropic
+    model_string: FILL_ME
+    price_per_mtok: {input: null, output: null}   # US$ per million tokens, for the dry-run estimate only
+  - provider: openai
+    model_string: FILL_ME
+    price_per_mtok: {input: null, output: null}
+  - provider: google
+    model_string: FILL_ME
+    price_per_mtok: {input: null, output: null}
+  # - provider: xai
+  #   model_string: FILL_ME
+  #   price_per_mtok: {input: null, output: null}
