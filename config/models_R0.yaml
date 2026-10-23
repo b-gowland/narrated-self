@@ -1,18 +1,19 @@
-# Round 0 (pilot). Fill in the exact, dated model strings from each provider's docs.
-# A new model version is a new round, never a silent swap.
+# Round 0 (pilot). Exact model strings, as listed by each provider's API on 2026-10-24.
+# Rule: each provider's current flagship general model. A new model version is a new round, never a silent swap.
+# Prices are US$ per million tokens, standard tier, for the dry-run estimate only.
 round_id: R0
 themes: pilot          # pilot | all
 
 models:
   - provider: anthropic
-    model_string: FILL_ME
-    price_per_mtok: {input: null, output: null}   # US$ per million tokens, for the dry-run estimate only
+    model_string: claude-fable-5-1      # labelled "most capable" in the Claude Console
+    price_per_mtok: {input: 10, output: 50}
   - provider: openai
-    model_string: FILL_ME
-    price_per_mtok: {input: null, output: null}
+    model_string: gpt-6-astra           # OpenAI's stated flagship
+    price_per_mtok: {input: 10, output: 50}
   - provider: google
-    model_string: FILL_ME
-    price_per_mtok: {input: null, output: null}
+    model_string: gemini-4-argon        # Google's stated flagship; paid API tier only
+    price_per_mtok: {input: 2, output: 10}   # introductory price; reported to rise on 2026-12-01
   # - provider: xai
   #   model_string: FILL_ME
   #   price_per_mtok: {input: null, output: null}
