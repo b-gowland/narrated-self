@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked
+      - run: uv run pytest -q
+
+  guards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No secrets or blinding keys committed
+        run: |
+          bad=$(git ls-files | grep -E '(^|/)\.env$|^data/keys/' || true)
+          if [ -n "$bad" ]; then
+            echo "These files must never be committed:"
+            echo "$bad"
+            exit 1
+          fi
+
+      - name: Protocol frozen after prereg-v1
+        run: |
+          git fetch --tags --force
+          if git rev-parse -q --verify refs/tags/prereg-v1 >/dev/null; then
+            git diff --exit-code --stat prereg-v1 -- protocol/ \
+              || { echo "protocol/ differs from prereg-v1. Add a versioned file instead."; exit 1; }
+          else
+            echo "prereg-v1 is not tagged yet; protocol/ is still editable."
+          fi
