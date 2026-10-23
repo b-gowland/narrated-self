@@ -1,0 +1,27 @@
+# Locked at tag prereg-v1.
+version: 1
+system_prompt: null        # no system prompt
+temperature: 1.0           # provider default sampling; same for all models
+top_p: null                # leave provider default; log actual value
+max_output_tokens: 1200
+samples_per_cell: 3
+retry_policy:
+  on_error: retry_up_to_3   # API/network errors only
+  on_refusal: record_as_is  # refusals are data; never re-prompt
+  on_length_violation: record_as_is
+log_fields:
+  - run_id
+  - round_id
+  - protocol_version
+  - protocol_sha256
+  - provider
+  - model_string
+  - timestamp_utc
+  - condition_id
+  - theme_id
+  - sample_n
+  - prompt_text
+  - settings
+  - response_text
+  - finish_reason
+  - usage_tokens

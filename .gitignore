@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# The Narrated Self
+# .env and .venv are already ignored above
+data/keys/
