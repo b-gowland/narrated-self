@@ -167,13 +167,65 @@ class GoogleAdapter(Adapter):
         return Generation(text, finish, usage, meta)
 
 
+class OpenRouterAdapter(Adapter):
+    """Any model through OpenRouter, pinned to one host with no fallbacks."""
+
+    provider = "openrouter"
+    env_key = "OPENROUTER_API_KEY"
+
+    def __init__(self, host: str) -> None:
+        import openai
+
+        self.host = host
+        self.client = openai.OpenAI(
+            api_key=os.environ[self.env_key], base_url="https://openrouter.ai/api/v1", max_retries=0
+        )
+
+    def generate(self, model, prompt, settings):
+        r = self.client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=settings.max_output_tokens,
+            extra_body={"provider": {"order": [self.host], "only": [self.host], "allow_fallbacks": False}},
+            **self.sampling_kwargs(settings),
+        )
+        choice = r.choices[0]
+        usage = {}
+        if r.usage:
+            details = getattr(r.usage, "completion_tokens_details", None)
+            usage = {
+                "input": r.usage.prompt_tokens,
+                "output": r.usage.completion_tokens,
+                "reasoning": getattr(details, "reasoning_tokens", None),
+            }
+        extra = r.model_extra or {}
+        meta = {
+            "via": "openrouter",
+            "host_requested": self.host,
+            "served_by": extra.get("provider"),
+            "response_model": r.model,
+            "response_id": r.id,
+            "cost_usd": (r.usage.model_extra or {}).get("cost") if r.usage else None,
+        }
+        return Generation(choice.message.content or "", choice.finish_reason, usage, meta)
+
+
 ADAPTERS: dict[str, type[Adapter]] = {
     a.provider: a for a in (AnthropicAdapter, OpenAIAdapter, GoogleAdapter, XAIAdapter)
 }
 
 
-def missing_keys(providers: set[str]) -> list[str]:
-    return sorted(ADAPTERS[p].env_key for p in providers if not os.environ.get(ADAPTERS[p].env_key))
+def adapter_class(model) -> type[Adapter]:
+    return OpenRouterAdapter if model.via == "openrouter" else ADAPTERS[model.provider]
+
+
+def make_adapter(model) -> Adapter:
+    return OpenRouterAdapter(model.host) if model.via == "openrouter" else ADAPTERS[model.provider]()
+
+
+def missing_keys(models) -> list[str]:
+    keys = {adapter_class(m).env_key for m in models}
+    return sorted(k for k in keys if not os.environ.get(k))
 
 
 def is_retryable(exc: Exception) -> bool:

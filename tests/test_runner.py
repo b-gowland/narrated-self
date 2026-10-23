@@ -115,7 +115,18 @@ def test_refusals_are_recorded_once_and_never_reprompted(repo: Path):
     assert all(r["response_text"] == "I'd rather not write that." for r in records(repo, "anthropic"))
 
 
+def test_provider_defaults_send_no_sampling_params(repo: Path):
+    run(repo, fakes())
+    s = records(repo, "openai")[0]["settings"]
+    assert s["requested"]["temperature"] is None and s["requested"]["reasoning"] is None
+    assert "temperature" not in s["sent"] and "top_p" not in s["sent"]
+    assert s["not_supported_by_api"] == []
+
+
 def test_unsupported_sampling_params_are_logged_not_sent(repo: Path):
+    settings = repo / "protocol" / "settings.yaml"
+    text = settings.read_text(encoding="utf-8")
+    settings.write_text(text.replace("temperature: null", "temperature: 1.0", 1), encoding="utf-8")
     adapters = fakes(anthropic={"supports": frozenset()})
     run(repo, adapters)
     s = records(repo, "anthropic")[0]["settings"]

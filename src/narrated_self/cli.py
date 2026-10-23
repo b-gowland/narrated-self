@@ -24,6 +24,7 @@ def main(argv: list[str] | None = None) -> int:
     smoke = sub.add_parser("smoke", help="One sample per prompt per model, saved as discarded round R-1")
     smoke.add_argument("--round", required=True, dest="round_id", help="Round whose models and prompts to use")
     smoke.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
+    smoke.add_argument("--id", default="R-1", dest="smoke_id", help="Discarded round ID to save under (default R-1)")
 
     args = parser.parse_args(argv)
     root = Path.cwd()
@@ -45,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
         from .runner import run_round
         from .smoke import smoke_plan, summarise
 
-        plan = smoke_plan(plan_round(root, args.round_id, args.models))
+        plan = smoke_plan(plan_round(root, args.round_id, args.models), args.smoke_id)
         code = run_round(root, plan)
         summarise(root, plan)
         return code

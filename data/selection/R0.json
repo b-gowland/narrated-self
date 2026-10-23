@@ -1,0 +1,29 @@
+{
+  "round_id": "R0",
+  "slot": "open-weight",
+  "rule": "docs/PREREGISTRATION.md section 3",
+  "source": "Artificial Analysis Intelligence Index, open-weight models",
+  "source_url": "https://artificialanalysis.ai/models/open-source",
+  "index_version": "v4.3.2",
+  "fetched_utc": "2026-10-23T20:48:10Z",
+  "page_sha256": "6089fbda61b4521c3f7b7ce602f33f50ac12557edff8e7254c15557dafdf6c6b",
+  "page_saved_locally_as": "data/selection/R0_artificialanalysis_open-source.html (not committed; third-party page)",
+  "top_ten": [
+    {"rank": 1, "model": "MiMo-V2.6-Pro", "creator": "Xiaomi", "index": 46},
+    {"rank": 2, "model": "DeepSeek V4.1 Flash 1017 (Max)", "creator": "DeepSeek", "index": 45},
+    {"rank": 3, "model": "GLM-5.3 (Max)", "creator": "Z AI", "index": 45},
+    {"rank": 4, "model": "Step 5 Preview", "creator": "StepFun", "index": 44},
+    {"rank": 5, "model": "GLM-5.3-Flash", "creator": "Z AI", "index": 42},
+    {"rank": 6, "model": "Muse Spark Open (Xhigh)", "creator": "Meta", "index": 39},
+    {"rank": 7, "model": "Qwen3.8 27B (Xhigh)", "creator": "Alibaba", "index": 34},
+    {"rank": 8, "model": "K2 Horizon 375B A23B", "creator": "Institute of Foundation Models", "index": 31},
+    {"rank": 9, "model": "Beam 1.0", "creator": "Reflection", "index": 30},
+    {"rank": 10, "model": "Nemotron 3.5 Super VL", "creator": "NVIDIA", "index": 26}
+  ],
+  "selected": {"model": "MiMo-V2.6-Pro", "openrouter_id": "xiaomi/mimo-v2.6-pro", "host": "xiaomi/fp8"},
+  "checks": {
+    "weights_downloadable": "labelled open-weight by Artificial Analysis; to confirm on the lab's model card",
+    "general_chat_not_preview": true,
+    "available_on_openrouter": true
+  }
+}

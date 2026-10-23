@@ -10,7 +10,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
-from .adapters import ADAPTERS, SAMPLING_PARAMS, Adapter, Generation, GenSettings, is_retryable, missing_keys
+from .adapters import (
+    SAMPLING_PARAMS,
+    Adapter,
+    Generation,
+    GenSettings,
+    adapter_class,
+    is_retryable,
+    make_adapter,
+    missing_keys,
+)
 from .config import RoundConfig, default_config_path, load_round_config
 from .estimate import estimate_model
 from .protocol import Cell, Protocol, build_cells, load_protocol
@@ -70,8 +79,11 @@ def dry_run(plan: RoundPlan, out: Callable[[str], None] = print) -> None:
         out(f"  Total: US${total_typical:.2f} typical, US${total_ceiling:.2f} ceiling")
     out("  Reasoning models may use extra hidden tokens; check each provider's billing after the first run.")
     for model in plan.config.models:
+        route = f"via OpenRouter, host pinned to {model.host}" if model.via == "openrouter" else "direct API"
+        out(f"  {model.provider}/{model.model_string}: {route}")
+    for model in plan.config.models:
         unsupported = [
-            p for p in SAMPLING_PARAMS if settings.get(p) is not None and p not in ADAPTERS[model.provider].supports
+            p for p in SAMPLING_PARAMS if settings.get(p) is not None and p not in adapter_class(model).supports
         ]
         if unsupported:
             out(f"  Warning: {model.provider} API does not accept {', '.join(unsupported)}; provider default will be used and logged")
@@ -141,6 +153,8 @@ def run_round(
     settings = plan.protocol.settings
     if settings.get("system_prompt") is not None:
         raise ValueError("The protocol asks for a system prompt, but this runner only sends user messages")
+    if settings.get("reasoning") is not None:
+        raise ValueError("The protocol sets a reasoning level, but adapters only support provider defaults")
     placeholders = [m.provider for m in plan.config.models if m.is_placeholder]
     if placeholders:
         out(f"Fill in the model strings in the config first: {', '.join(placeholders)}")
@@ -150,15 +164,19 @@ def run_round(
         from dotenv import load_dotenv
 
         load_dotenv(root / ".env")
-        providers = {m.provider for m in plan.config.models}
-        missing = missing_keys(providers)
+        missing = missing_keys(plan.config.models)
         if missing:
             out(f"Missing API keys in .env: {', '.join(missing)}")
             return 2
-        adapters = {p: ADAPTERS[p]() for p in providers}
+        adapters = {m.provider: make_adapter(m) for m in plan.config.models}
 
     gen = GenSettings(settings["temperature"], settings["top_p"], settings["max_output_tokens"])
-    requested = {"system_prompt": None, **{p: getattr(gen, p) for p in SAMPLING_PARAMS}, "max_output_tokens": gen.max_output_tokens}
+    requested = {
+        "system_prompt": None,
+        **{p: getattr(gen, p) for p in SAMPLING_PARAMS},
+        "reasoning": None,
+        "max_output_tokens": gen.max_output_tokens,
+    }
     retries = max_retries(settings)
     run_id = uuid.uuid4().hex
     failures = 0
@@ -166,6 +184,8 @@ def run_round(
     for model in plan.config.models:
         adapter = adapters[model.provider]
         sent = {"system_prompt": None, **adapter.sampling_kwargs(gen), "max_output_tokens": gen.max_output_tokens}
+        if model.via == "openrouter":
+            sent["route"] = {"via": "openrouter", "host": model.host, "allow_fallbacks": False}
         not_sent = [p for p in SAMPLING_PARAMS if requested[p] is not None and p not in sent]
         record_settings = {"requested": requested, "sent": sent, "not_supported_by_api": not_sent}
 

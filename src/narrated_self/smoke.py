@@ -16,11 +16,13 @@ from .runner import RoundPlan, raw_path
 SMOKE_ROUND = "R-1"
 
 
-def smoke_plan(plan: RoundPlan) -> RoundPlan:
-    """The same models and prompts, first sample only, under round R-1."""
+def smoke_plan(plan: RoundPlan, smoke_id: str = SMOKE_ROUND) -> RoundPlan:
+    """The same models and prompts, first sample only, under a discarded round (R-1, R-2…)."""
+    if not smoke_id.startswith("R-"):
+        raise ValueError("Smoke tests use negative round IDs (R-1, R-2…) so they are never analysed")
     return replace(
         plan,
-        config=replace(plan.config, round_id=SMOKE_ROUND),
+        config=replace(plan.config, round_id=smoke_id),
         cells=[c for c in plan.cells if c.sample_n == 1],
     )
 

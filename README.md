@@ -44,6 +44,7 @@ docs/          Protocol, changelog, round notes.
 src/           The `tns` command: runner, measures, site export.
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
 data/derived/  Measures and quiz data, generated from raw.
+data/selection/ Leaderboard snapshots showing how each round's open-weight model was picked.
 site/          Public site (static, GitHub Pages).
 ```
 

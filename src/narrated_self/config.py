@@ -2,21 +2,25 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
 
-PROVIDERS = ("anthropic", "openai", "google", "xai")
+DIRECT_PROVIDERS = ("anthropic", "openai", "google", "xai")
+ROUTES = ("direct", "openrouter")
 PLACEHOLDER = "FILL_ME"
 
 
 @dataclass(frozen=True)
 class ModelSpec:
-    provider: str
+    provider: str  # the lab, used as the data label and the raw file name
     model_string: str
     price_input: float | None  # US$ per million tokens, for estimates only
     price_output: float | None
+    via: str = "direct"
+    host: str | None = None  # OpenRouter host to pin, e.g. "anthropic" or "xiaomi/fp8"
 
     @property
     def is_placeholder(self) -> bool:
@@ -41,8 +45,16 @@ def load_round_config(path: Path, round_id: str) -> RoundConfig:
     models = []
     for entry in raw["models"]:
         provider = entry["provider"]
-        if provider not in PROVIDERS:
-            raise ValueError(f"Unknown provider {provider!r}; expected one of {PROVIDERS}")
+        via = entry.get("via", "direct")
+        host = entry.get("host")
+        if not re.fullmatch(r"[a-z0-9-]+", provider):
+            raise ValueError(f"Provider label {provider!r} must be a lowercase slug")
+        if via not in ROUTES:
+            raise ValueError(f"Unknown route {via!r}; expected one of {ROUTES}")
+        if via == "direct" and provider not in DIRECT_PROVIDERS:
+            raise ValueError(f"No direct adapter for {provider!r}; use via: openrouter")
+        if via == "openrouter" and not host:
+            raise ValueError(f"{provider}: via openrouter needs a host to pin (e.g. host: {provider})")
         price = entry.get("price_per_mtok") or {}
         models.append(
             ModelSpec(
@@ -50,9 +62,11 @@ def load_round_config(path: Path, round_id: str) -> RoundConfig:
                 model_string=str(entry.get("model_string") or ""),
                 price_input=price.get("input"),
                 price_output=price.get("output"),
+                via=via,
+                host=host,
             )
         )
-    keys = [(m.provider, m.model_string) for m in models]
-    if len(set(keys)) != len(keys):
-        raise ValueError(f"{path} lists the same model twice")
+    providers = [m.provider for m in models]
+    if len(set(providers)) != len(providers):
+        raise ValueError(f"{path} lists a lab more than once; the protocol has one slot per lab")
     return RoundConfig(round_id=round_id, themes=raw.get("themes", "pilot"), models=models)

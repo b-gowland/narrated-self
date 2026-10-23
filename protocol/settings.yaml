@@ -1,9 +1,10 @@
 # Locked at tag prereg-v1.
 version: 1
 system_prompt: null        # no system prompt
-temperature: 1.0           # provider default sampling; same for all models
-top_p: null                # leave provider default; log actual value
-max_output_tokens: 1200
+temperature: null          # provider default for every model (not all APIs accept it)
+top_p: null                # provider default for every model
+reasoning: null            # provider default; thinking is neither forced on nor off; tokens are logged
+max_output_tokens: 16000   # safety limit only, far above natural length; any output reaching it is reported
 samples_per_cell: 3
 retry_policy:
   on_error: retry_up_to_3   # API/network errors only

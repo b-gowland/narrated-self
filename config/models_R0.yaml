@@ -1,19 +1,41 @@
-# Round 0 (pilot). Exact model strings, as listed by each provider's API on 2026-10-24.
-# Rule: each provider's current flagship general model. A new model version is a new round, never a silent swap.
-# Prices are US$ per million tokens, standard tier, for the dry-run estimate only.
+# Round 0 (pilot). Model selection follows docs/PREREGISTRATION.md §3.
+# Model strings are OpenRouter IDs, checked against OpenRouter's model list on 2026-10-24.
+# Each model is pinned to its own lab as host, with fallbacks off; the serving host is logged.
+# Prices are US$ per million tokens (OpenRouter list prices), for the dry-run estimate only.
+# A new model version is a new round, never a silent swap.
 round_id: R0
 themes: pilot          # pilot | all
 
 models:
+  # Lab flagships
   - provider: anthropic
-    model_string: claude-fable-5-1      # labelled "most capable" in the Claude Console
+    model_string: anthropic/claude-fable-5.1
+    via: openrouter
+    host: anthropic
     price_per_mtok: {input: 10, output: 50}
   - provider: openai
-    model_string: gpt-6-astra           # OpenAI's stated flagship
+    model_string: openai/gpt-6-astra
+    via: openrouter
+    host: openai
     price_per_mtok: {input: 10, output: 50}
   - provider: google
-    model_string: gemini-4-argon        # Google's stated flagship; paid API tier only
-    price_per_mtok: {input: 2, output: 10}   # introductory price; reported to rise on 2026-12-01
-  # - provider: xai
-  #   model_string: FILL_ME
-  #   price_per_mtok: {input: null, output: null}
+    model_string: google/gemini-4-argon
+    via: openrouter
+    host: google-ai-studio
+    price_per_mtok: {input: 2, output: 10}     # introductory; reported to rise on 2026-12-01
+  - provider: xai
+    model_string: x-ai/grok-4.7
+    via: openrouter
+    host: xai
+    price_per_mtok: {input: 2, output: 6}
+
+  # Open-weight slot: top open-weight model on the Artificial Analysis Intelligence Index v4.3.2,
+  # fetched 2026-10-23T20:48Z (snapshot: data/selection/R0_artificialanalysis_open-source.html).
+  - provider: xiaomi
+    model_string: xiaomi/mimo-v2.6-pro
+    via: openrouter
+    host: xiaomi/fp8                            # the lab's own endpoint
+    price_per_mtok: {input: 0.44, output: 0.87}
+
+# Backup route if OpenRouter is unavailable: set `via: direct`, drop `host`, and use the
+# provider's own model string (e.g. claude-fable-5-1, gpt-6-astra, gemini-4-argon).

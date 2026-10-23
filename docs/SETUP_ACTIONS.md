@@ -4,15 +4,16 @@ Everything else is automated. These are the only things that need you.
 
 ## Once (about 2 hours in total)
 - [ ] Check your employer's outside-activities and public-comment policy. Get written clearance if it requires it.
-- [ ] Get API keys for three providers (for example Anthropic, OpenAI, Google AI Studio). Set a **monthly spend cap** of about US$10 on each.
-- [ ] Copy `.env.example` to `.env` and paste the keys in yourself. Never paste keys into Claude Code chat.
-- [ ] Fill in the exact model strings (and prices, for the estimate) in `config/models_R0.yaml`.
+- [ ] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
+- [ ] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
+- [ ] Once OpenRouter works, revoke the direct provider keys and clear them from `.env`.
+- [ ] Check the model strings in `config/models_R0.yaml` (the open-weight slot follows the rule in `docs/PREREGISTRATION.md` §3).
 - [ ] Dry run: `uv run tns run --round R0 --dry-run`. Check the prompts and the cost.
 - [ ] Read the prompts aloud once. Fix anything that sounds leading. Review the word lists once they are drafted.
 - [ ] Fill in your name and the date in `docs/PREREGISTRATION.md`, commit, then tag and push: `git tag prereg-v1` and `git push origin prereg-v1`. From then on `protocol/` is frozen.
 
 ## Each round (about 15 minutes)
-- [ ] When a provider ships a new flagship model, add its exact string to a new `config/models_<round>.yaml`.
+- [ ] Make a new `config/models_<round>.yaml`: the current lab flagships, plus the open-weight model picked by the rule (save the leaderboard page to `data/selection/`).
 - [ ] Run the round (or let the schedule run it), then skim the site.
 - [ ] Optional: write a short note in `docs/rounds/`.
 

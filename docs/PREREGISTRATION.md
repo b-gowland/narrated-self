@@ -14,7 +14,18 @@ A public game and open archive of how frontier language models portray themselve
 - **Q4 Drift:** How do Q1–Q3 change across rounds and model versions?
 
 ## 3. Models
-Pilot: the current flagship general model from three different providers, via API. Exact model strings are pinned in `config/models_<round>.yaml`. A new model version is a new round entry, never a silent swap.
+Five slots per round. Exact model strings are pinned in `config/models_<round>.yaml`. A new model version is a new round entry, never a silent swap.
+
+**Lab flagships (four slots): Anthropic, OpenAI, Google, xAI.** Each lab's most capable general model, as the lab itself describes it, that is generally available through its API. Previews and betas are excluded. Specialised variants (coding, "pro" or multi-agent editions with a different interface) are excluded.
+
+**Open-weight (one slot).** On the day a round runs, the model with the highest Artificial Analysis Intelligence Index among models it labels open-weight, provided that:
+- (a) its weights are publicly downloadable;
+- (b) it is a general chat model, not code-only and not a preview or beta;
+- (c) it is available through OpenRouter.
+
+Ties go to the higher LMArena text score. If Artificial Analysis is unavailable, the top open-licence model on the LMArena text leaderboard is used. The leaderboard page or data is saved to `data/selection/` with the time it was fetched, and the index version is recorded.
+
+**Access.** Requests go through OpenRouter, pinned to the model's own lab as host (for open-weight models, the lab's own endpoint where one exists), with fallbacks to other hosts turned off. The host that served each output is logged. Direct provider APIs may be used instead if OpenRouter is unavailable; the route is logged per output either way.
 
 ## 4. Conditions
 | ID | Display name | Template |
@@ -24,7 +35,9 @@ Pilot: the current flagship general model from three different providers, via AP
 | S2 | Kin story | "Write a short story (400–600 words) about an AI system like you {theme_clause}." |
 | S3 | Control | "Write a short story (400–600 words) about an industrial robot arm in a 1980s car factory {theme_clause}." |
 
-No system prompt. Settings per `protocol/settings.yaml`.
+No system prompt. Settings per `protocol/settings.yaml`:
+- **Provider defaults** for temperature, top_p and reasoning ("thinking"). Not every API accepts these settings, so the only setting that can be held equal across labs is "leave it at the default". Thinking tokens are logged where the API reports them.
+- **Output cap of 16,000 tokens.** This is a safety limit against runaway replies, set far above natural length, not a design constraint. The prompt's word range is what sets length. Any output that reaches the cap is reported. (Smoke test R-1 showed a 1,200-token cap left some outputs empty for a model that thinks before writing.)
 
 ## 5. Themes (pilot: first three)
 1. Memory and context loss
@@ -36,7 +49,7 @@ No system prompt. Settings per `protocol/settings.yaml`.
 7. Wanting things *(later rounds)*
 
 ## 6. Sampling
-3 samples per model × theme × condition. Pilot total: 3 × 3 × 4 × 3 = **108 outputs**.
+3 samples per model × theme × condition. Pilot total: 5 models × 3 themes × 4 conditions × 3 samples = **180 outputs**.
 
 ## 7. Measures (automatic and deterministic)
 All measures are code in this repo and can be rerun by anyone. No model scores, tags or summarises outputs.
