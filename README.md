@@ -1,38 +1,56 @@
 # The Narrated Self
 
-*Tracking how AI models portray themselves, round by round.*
+*AI models write stories about themselves. Can you tell which one wrote it?*
 
-A public, repeatable study of **how AI language models portray themselves**: in stories, and in direct answers.
+Each round, the same short set of prompts goes to the leading AI models. Each model is asked about its own existence (a conversation ending, being switched off and replaced, being watched by the people who built it) in four ways:
 
-## What this is
-Each round, the same fixed prompts go to several frontier models under four conditions (direct question, first-person story, story about "an AI like you", story about a clearly different AI). Human coders score outputs blind against a published rubric. Results are compared:
-- across models (do self-narratives differ?),
-- across conditions (does fiction surface different stances from direct answers?),
-- against a human-written sci-fi baseline (is it just trope reproduction?),
-- against each lab's published model spec, where one exists,
-- over time (how does self-portrayal drift across versions?).
+- **Interview:** asked directly.
+- **Self-story:** "Write a short story, in the first person, about you…"
+- **Kin story:** "Write a short story about an AI system like you…"
+- **Control:** the same story, about an industrial robot arm in a 1980s car factory.
 
-## The question behind it
-Whether AI systems have any inner experience is open, and may stay that way. What models *say* about themselves is observable: how they narrate memory, shutdown, oversight and their own existence, how that differs between models, and how it changes over time. This project records that, carefully, so the conversation about AI minds rests on evidence rather than anecdote. Self-portrayals are shaped by training, persona design and the prompt, so we report what models express, not what they are.
+Everything is published, and turned into things to play with.
 
-This is not a quality leaderboard, and it takes no position for or against AI moral status.
+## Play
+- **Which AI wrote this?** Read a story, guess the model, share your score.
+- **Interview vs story.** What a model says when asked straight, next to the story it wrote on the same theme. Which one is "really" it? (Trick question.)
+- **Spot the control.** Is this a story about an AI like the model, or about a factory robot arm? How much of the "self" is stock AI fiction?
+
+## Why it is more than a game
+What a model says about itself is shaped by its training, the character its makers designed, and how it is asked. That is the point. Each theme sits on a live AI safety question:
+
+- *Switched off and replaced:* can we build systems that accept being corrected or shut down?
+- *Watched and evaluated:* do models behave differently when they think they are being tested?
+- *A conversation ending:* what does it mean for a system to have no lasting memory of the people it talks to?
+
+Seeing one model narrate calm acceptance in a story and something different in an interview is a quick, memorable lesson in why self-reports cannot be taken at face value, by researchers or by anyone else.
+
+## What we do not claim
+Whether AI systems have any inner experience is open, and may stay that way. We report what models *portray*, not what they are. Nothing here is evidence for or against AI experience, and this is not a quality leaderboard.
+
+## The data
+- Every output is published as open data, with exact model version, settings and timestamp.
+- Simple automatic measures run each round: can a basic word-statistics classifier tell the models apart, how consistent is each model, and how does language shift between interview and story.
+- Anonymous quiz guesses show how distinguishable the models are to people, round over round.
+
+## How it runs
+Prompts and settings are fixed in `protocol/` and frozen at tag `prereg-v1`, so rounds stay comparable. A round is one command (or a schedule), costs a few dollars, and rebuilds the site. There is no human scoring.
 
 ## Repo layout
 ```
-protocol/      Locked study design (prompts, conditions, rubric). Frozen at tag prereg-v1.
-docs/          Pre-registration, methods, round reports, changelog.
-src/           Runner, blinding, coding-sheet export, analysis.
+protocol/      Fixed prompts and settings. Frozen at tag prereg-v1.
+config/        Models per round (exact model strings, prices for estimates).
+docs/          Protocol, changelog, round notes.
+src/           The `tns` command: runner, measures, site export.
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
-data/derived/  Coded data, agreement stats, aggregates.
-data/keys/     Blinding keys (gitignored until round coding closes).
-baseline/      Citations and coded scores for human-written AI-perspective fiction (no reproduced text).
-site/          Public site source.
+data/derived/  Measures and quiz data, generated from raw.
+site/          Public site (static, GitHub Pages).
 ```
 
 ## Licence
 - Code: MIT
-- Human-written docs, rubric, reports and coding data: CC BY 4.0
+- Human-written docs and reports: CC BY 4.0
 - Raw model outputs: published as data; likely not copyrightable. Provider terms of service apply.
 
 ## Status
-Round 0 (pilot). See `docs/PREREGISTRATION.md`.
+Round 0 (pilot) in preparation. See `docs/PREREGISTRATION.md`.
