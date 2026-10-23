@@ -21,6 +21,10 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
     run.add_argument("--dry-run", action="store_true", help="Print the prompt matrix and cost; no API calls")
 
+    smoke = sub.add_parser("smoke", help="One sample per prompt per model, saved as discarded round R-1")
+    smoke.add_argument("--round", required=True, dest="round_id", help="Round whose models and prompts to use")
+    smoke.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
+
     args = parser.parse_args(argv)
     root = Path.cwd()
 
@@ -36,6 +40,15 @@ def main(argv: list[str] | None = None) -> int:
         from .runner import run_round
 
         return run_round(root, plan)
+
+    if args.command == "smoke":
+        from .runner import run_round
+        from .smoke import smoke_plan, summarise
+
+        plan = smoke_plan(plan_round(root, args.round_id, args.models))
+        code = run_round(root, plan)
+        summarise(root, plan)
+        return code
 
     return 1
 
