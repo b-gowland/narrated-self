@@ -61,7 +61,12 @@ class AnthropicAdapter(Adapter):
             **self.sampling_kwargs(settings),
         )
         text = "".join(b.text for b in r.content if b.type == "text")
-        usage = {"input": r.usage.input_tokens, "output": r.usage.output_tokens}
+        details = getattr(r.usage, "output_tokens_details", None)
+        usage = {
+            "input": r.usage.input_tokens,
+            "output": r.usage.output_tokens,
+            "reasoning": getattr(details, "thinking_tokens", None),
+        }
         return Generation(text, r.stop_reason, usage, {"response_model": r.model, "response_id": r.id})
 
 
