@@ -29,6 +29,10 @@ def main(argv: list[str] | None = None) -> int:
     mask = sub.add_parser("mask", help="Mask names in a round's outputs into data/derived/<round>/")
     mask.add_argument("--round", required=True, dest="round_id")
 
+    site = sub.add_parser("site", help="Build site/data/<round>.json from masked outputs")
+    site.add_argument("--round", required=True, dest="round_id")
+    site.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
+
     args = parser.parse_args(argv)
     root = Path.cwd()
 
@@ -50,6 +54,13 @@ def main(argv: list[str] | None = None) -> int:
 
         result = mask_round(root, args.round_id)
         print(f"Masked {result['outputs']} outputs ({result['substitutions']} substitutions) into data/derived/{args.round_id}/")
+        return 0
+
+    if args.command == "site":
+        from .site_export import write_site_data
+
+        out = write_site_data(root, args.round_id, args.models)
+        print(f"Wrote {out.relative_to(root).as_posix()}")
         return 0
 
     if args.command == "smoke":

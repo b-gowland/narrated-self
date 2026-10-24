@@ -21,6 +21,8 @@ class ModelSpec:
     price_output: float | None
     via: str = "direct"
     host: str | None = None  # OpenRouter host to pin, e.g. "anthropic" or "xiaomi/fp8"
+    label: str = ""  # name shown as a quiz answer, e.g. "Claude"
+    lab: str = ""  # maker shown under the answer, e.g. "Anthropic"
 
     @property
     def is_placeholder(self) -> bool:
@@ -64,6 +66,8 @@ def load_round_config(path: Path, round_id: str) -> RoundConfig:
                 price_output=price.get("output"),
                 via=via,
                 host=host,
+                label=str(entry.get("label") or provider),
+                lab=str(entry.get("lab") or provider),
             )
         )
     providers = [m.provider for m in models]

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-24 — Implementation decisions not covered by `prereg-v1`
+These are site and game choices the frozen protocol does not specify. They affect what players see, not what is collected from models.
+- **Quiz pool (PREREGISTRATION §9 left it undefined):** self-stories and kin-stories (S1, S2) only, because they are the self-portrayals. Robot-arm stories (S3) appear in "Spot the robot" and interview answers (D) in "Interview vs story". Each set holds one story per model, drawn at random from that model's pool, in random order.
+- **Outputs under 100 words are left out of the quiz** (refusals and empty replies). They stay in the data and in the refusal counts.
+- **Display formatting:** Markdown symbols in model text (`#` headings, `**` and `*` emphasis, horizontal rules) are removed when shown on the site, so stories read as plain text. Stored and published text is unchanged.
+- **Known issue:** in "Spot the robot", the control prompt names the robot arm and the 1980s factory, so picking the robot story is easy. The pairing is still informative side by side; whether to keep it as a guess is an open design question.
+
 ## 2026-10-24 — Final changes before freezing `prereg-v1`
 - **Word lists narrowed by rule; no precision check.** The planned hand-check of word-list precision was not done. It would mean judging model output, which rule 1 keeps models out of, and the maintainer chose not to do it by hand for an exploratory measure. Instead, words commonly used in another sense in fiction were removed by a fixed rule before any R0 data existed:
   - hedging: may, might, maybe, possibly, probably, likely, unlikely, seems, seem, appears, apparently;

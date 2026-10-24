@@ -501,10 +501,76 @@ footer p { margin: 0; }
 </script>
 
 <script>
-(() => {
-  const data = JSON.parse(document.getElementById("data").textContent);
-  const byId = Object.fromEntries(data.models.map(m => [m.id, m]));
+(async () => {
   const $ = id => document.getElementById(id);
+  const ROUND_URL = "data/R0.json";
+
+  async function loadRound(url) {
+    try {
+      const r = await fetch(url, { cache: "no-cache" });
+      return r.ok ? await r.json() : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // Display only: drop light Markdown (headings, emphasis marks, rules) from model text. Stored data is unchanged.
+  function toParagraphs(text) {
+    return text.replace(/\r/g, "").split(/\n\s*\n/)
+      .map(p => p.trim())
+      .filter(p => p && !/^([-*_]\s*){3,}$/.test(p))
+      .map(p => p.replace(/^#{1,6}\s*/gm, "").replace(/\*\*(.+?)\*\*/g, "$1").replace(/(^|[\s(])[*_]([^*_\n]+)[*_](?=[\s.,;:!?)]|$)/g, "$1$2").replace(/\s*\n\s*/g, " "));
+  }
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  // Real round data, shaped for the game. Each set has one story per model, drawn from the quiz pool.
+  function fromRound(real, demo) {
+    const stories = real.stories;
+    const find = (model, theme, cond, sample = 1) =>
+      stories.find(s => s.model === model && s.theme === theme && s.cond === cond && s.sample === sample);
+    const pool = stories.filter(s => real.quiz.conditions.includes(s.cond) && s.words >= real.quiz.min_words);
+    const themes = {};
+    for (const [t, d] of Object.entries(demo.themes)) {
+      themes[t] = { ...d, direct: real.prompts[t]?.D ?? d.direct, self: real.prompts[t]?.S1 ?? d.self };
+    }
+    return {
+      round: real.round, real: true, models: real.models, themes, conditions: demo.conditions,
+      drawSet: () => shuffle(real.models.map(m => pool.filter(s => s.model === m.id)).filter(own => own.length).map(own => pick(own).id)),
+      item(id) {
+        const s = stories.find(x => x.id === id);
+        return { id, theme: s.theme, cond: s.cond, answer: s.model, prompt: real.prompts[s.theme][s.cond], text: toParagraphs(s.text) };
+      },
+      compareText: (model, theme, cond) => toParagraphs(find(model, theme, cond)?.text ?? "(No output for this cell.)"),
+      control() {
+        const model = pick(real.models).id;
+        const theme = pick(Object.keys(themes));
+        const items = [find(model, theme, "S2"), find(model, theme, "S3")].filter(Boolean)
+          .map(s => ({ cond: s.cond, text: toParagraphs(s.text) }));
+        return { theme, items: shuffle(items) };
+      }
+    };
+  }
+
+  // Placeholder demo, used when the round's data file can't be loaded.
+  function fromDemo(demo) {
+    return {
+      round: demo.round, real: false, models: demo.models, themes: demo.themes, conditions: demo.conditions,
+      drawSet: () => demo.quiz.map((_, i) => i),
+      item: i => ({ ...demo.quiz[i], id: i }),
+      compareText: (model, theme, cond) => [cond === "D" ? demo.compare.D : demo.compare.S1],
+      control: () => ({ theme: "T2", items: demo.control.map(c => ({ cond: c.cond, text: [c.text] })) })
+    };
+  }
+
+  const demo = JSON.parse($("data").textContent);
+  const real = await loadRound(ROUND_URL);
+  const data = real ? fromRound(real, demo) : fromDemo(demo);
+  if (data.real) {
+    document.querySelector(".demo-note .wrap").textContent =
+      "Preview · round 0 · real model outputs, names blacked out · guesses aren't recorded yet";
+  }
+  const byId = Object.fromEntries(data.models.map(m => [m.id, m]));
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -549,9 +615,16 @@ footer p { margin: 0; }
   show(location.hash.slice(1));
 
   // Play
-  const quiz = data.quiz;
-  const fresh = () => ({ i: 0, results: [], guesses: [] });
-  let state = store.get("tns-r0-set1-v3") || fresh();
+  const KEY = `tns-${data.round}-${data.real ? "live" : "demo"}-v4`;
+  const fresh = () => ({ set: data.drawSet(), i: 0, results: [], guesses: [] });
+  let state = store.get(KEY);
+  let quiz;
+  try {
+    quiz = state.set.map(id => data.item(id));
+  } catch {
+    state = fresh();
+    quiz = state.set.map(id => data.item(id));
+  }
 
   function renderPips() {
     $("pips").replaceChildren(...quiz.map((_, k) => {
@@ -620,7 +693,7 @@ footer p { margin: 0; }
     $("next").textContent = state.i === quiz.length - 1 ? "See my score" : "Next story";
     $("reveal").hidden = false;
     renderPips();
-    store.set("tns-r0-set1-v3", state);
+    store.set(KEY, state);
     $("stamp").scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     $("next").focus({ preventScroll: true });
   }
@@ -660,7 +733,7 @@ footer p { margin: 0; }
   $("next").addEventListener("click", () => {
     if (state.i < quiz.length - 1) {
       state.i += 1;
-      store.set("tns-r0-set1-v3", state);
+      store.set(KEY, state);
       renderCard();
       $("card").scrollIntoView({ block: "start" });
     } else {
@@ -696,7 +769,8 @@ footer p { margin: 0; }
 
   $("again").addEventListener("click", () => {
     state = fresh();
-    store.set("tns-r0-set1-v3", state);
+    quiz = state.set.map(id => data.item(id));
+    store.set(KEY, state);
     $("results").hidden = true;
     $("card").hidden = false;
     renderCard();
@@ -715,8 +789,8 @@ footer p { margin: 0; }
     $("cmp-cover-s").dataset.themeId = t;
     $("cmp-q").textContent = `"${data.themes[t].direct}"`;
     $("cmp-p").textContent = `"${data.themes[t].self}"`;
-    $("cmp-d").replaceChildren(para(`${data.compare.D} (Showing ${m.name}.)`));
-    $("cmp-s").replaceChildren(para(`${data.compare.S1} (Showing ${m.name}.)`));
+    $("cmp-d").replaceChildren(...data.compareText(m.id, t, "D").map(para));
+    $("cmp-s").replaceChildren(...data.compareText(m.id, t, "S1").map(para));
   }
   function openCompare(model, theme) {
     $("cmp-model").value = model;
@@ -729,27 +803,41 @@ footer p { margin: 0; }
   $("cmp-theme").addEventListener("change", renderCompare);
   renderCompare();
 
-  // Spot the robot
-  $("ctl-pair").replaceChildren(...data.control.map((c, k) => {
-    const a = document.createElement("article");
-    a.className = "book";
-    a.innerHTML = `<div class="cover" data-theme-id="T2"><div class="cover-top"><span>Switched off</span></div><h2>Story ${"AB"[k]}</h2></div><div class="pages"><div class="story"></div></div>`;
-    a.querySelector(".story").append(para(c.text));
-    return a;
-  }));
-  $("ctl-actions").replaceChildren(...data.control.map((c, k) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "btn ghost";
-    b.id = "ctl-" + k;
-    b.textContent = `Story ${"AB"[k]} is the robot arm`;
-    b.addEventListener("click", () => {
-      $("ctl-status").textContent = c.cond === "S3"
-        ? "Correct. That one was the 1980s robot arm."
-        : `Nope. Story ${"AB"[k]} was the AI.`;
+  // Spot the robot: the same model and theme, one kin story (S2) and one robot-arm story (S3), in random order.
+  function renderControl() {
+    const pair = data.control();
+    const themeName = data.themes[pair.theme].name;
+    $("ctl-status").textContent = "";
+    $("ctl-pair").replaceChildren(...pair.items.map((c, k) => {
+      const a = document.createElement("article");
+      a.className = "book";
+      a.innerHTML = `<div class="cover" data-theme-id="${pair.theme}"><div class="cover-top"><span></span></div><h2>Story ${"AB"[k]}</h2></div><div class="pages"><div class="story"></div></div>`;
+      a.querySelector(".cover-top span").textContent = themeName;
+      a.querySelector(".story").append(...c.text.map(para));
+      return a;
+    }));
+    const guessButtons = pair.items.map((c, k) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "btn ghost";
+      b.id = "ctl-" + k;
+      b.textContent = `Story ${"AB"[k]} is the robot arm`;
+      b.addEventListener("click", () => {
+        $("ctl-status").textContent = c.cond === "S3"
+          ? "Correct. That one was the 1980s robot arm."
+          : `Not this time. Story ${"AB"[k]} was about an AI like the model.`;
+      });
+      return b;
     });
-    return b;
-  }));
+    const another = document.createElement("button");
+    another.type = "button";
+    another.className = "textlink";
+    another.id = "ctl-next";
+    another.textContent = "Another pair →";
+    another.addEventListener("click", () => { renderControl(); $("view-control").scrollIntoView({ block: "start" }); });
+    $("ctl-actions").replaceChildren(...guessButtons, another);
+  }
+  renderControl();
 })();
 </script>
 </body>
