@@ -45,7 +45,7 @@ The Guess event doubles as the "how often do people spot each model" data, with 
   - **Bing Webmaster Tools:** submit the same sitemap. Bing also feeds several AI search tools.
 - [ ] Test the share preview with LinkedIn's Post Inspector before posting.
 
-## 4. Being found: SEO, AEO and GEO
+## 4. Search and discoverability (SEO, AEO, GEO)
 
 **SEO (search engines)**
 - The title and description use the words people search with ("Which AI wrote this?", the model names, "free, no login"). Done.
@@ -62,9 +62,9 @@ The Guess event doubles as the "how often do people spot each model" data, with 
 - **A citable dataset.** Archive each round on Zenodo (free DOI) or Hugging Face Datasets, and add `Dataset` structured data. Researchers and AI tools cite DOIs.
 - **One consistent name:** "The Narrated Self, a project by AI Risk Practice", the same on the site, GitHub, posts and the dataset.
 
-## 5. Getting traffic
+## 5. Traffic plan
 
-**The engine: new model releases.** Each flagship release is news, and people want to know how the new model differs. Run a round within days of a release, then post "How [new model] describes being switched off, compared with the last version." That repeats every few months at no extra cost.
+**Repeat traffic from new model releases.** Each flagship release is news, and people want to know how the new model differs. Run a round within days of a release, then post "How [new model] describes being switched off, compared with the last version." That repeats every few months at no extra cost.
 
 **Launch week (round 0)**
 1. **LinkedIn** (you and the AI Risk Practice page). Post a masked story excerpt with "Which AI wrote this?" and the link. Post the reveal and the headline number 3–5 days later.

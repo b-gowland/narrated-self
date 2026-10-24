@@ -2,7 +2,7 @@
 
 Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details marked *(from listings)* come from third-party descriptions and have not been checked on the site itself.
 
-## 1. "Can you tell?" guessing games
+## 1. AI-or-human guessing games
 
 | Site | What it does | What to take from it |
 |---|---|---|
@@ -29,14 +29,14 @@ Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details m
 | **Opper "AI Roundtable"** | Several models answer the same questions about their own personalities, then compare answers. | Shows public appetite for "models talking about themselves", but as an unstructured log. Our fixed protocol is the difference. |
 | **Rival, AnyModel and similar** | Side-by-side tools for comparing model responses to one prompt. | Side-by-side layout is familiar to people who use AI, so the "Interview vs story" mode needs no explanation. |
 
-## 4. Explainers that teach through play
+## 4. Interactive explainers
 
 | Site | What it does | What to take from it |
 |---|---|---|
 | **The Pudding** | Visual essays where the reader does something (sorts, guesses, compares) before the explanation. | Let readers commit to a guess *before* telling them anything. Explanation lands harder after a wrong guess. |
 | **Explorable explanations** (Nicky Case and others) | Short, playable essays on hard ideas. | Keep each idea to one screen and one interaction. |
 
-## What this means for The Narrated Self
+## Takeaways for this project
 
 1. **The quiz is the front door.** Open on a story and five model buttons. No intro wall.
 2. **Reveal, then teach.** After each guess: who wrote it, and a short card on the AI safety question behind the theme.
@@ -53,7 +53,7 @@ Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details m
 - **One number per round.** The machine classifier's accuracy against the players' accuracy.
 - **Formats:** LinkedIn (your network), Bluesky or X (AI researchers), and a LessWrong post after a couple of rounds.
 
-## 5. What good, human-made design looks like in 2026
+## 5. Design trends in 2026
 
 - **Award winners** (Awwwards Site of the Year 2025 included Lando Norris by OFF+BRAND and Messenger by abeto; Webby 2026 Best Visual Design, Function went to FOLLOW.ART) are mostly heavy 3D brand showcases. Impressive, but the wrong model for a reading game that must load fast on a phone.
 - **The broader 2026 trend is a reaction against the polished AI look.** Design commentary (Creative Bloq on "tactile rebellion", Canva's reported "Imperfect by Design" theme, DesignRush's 2026 trends) points to texture, print grain, hand-drawn marks and visible imperfection as signals that a person made something.

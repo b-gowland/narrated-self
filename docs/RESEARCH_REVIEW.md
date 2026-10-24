@@ -8,7 +8,7 @@ A note on authorship: this review, the pipeline and the draft word lists were pr
 - any check that needs judgement about model output, such as the word-list precision check, is done by a person;
 - a human reviews and owns every protocol decision.
 
-## 1. What this project can credibly contribute
+## 1. Scope: what the project can and can't show
 
 1. **A longitudinal, fixed-protocol archive of model self-portrayal.** Same prompts, same settings policy, full metadata, repeated as models change. This is rare. Most published examples are one-off and anecdotal. Even with no analysis, the dated archive is useful to later researchers.
 2. **Human against machine distinguishability.** How often people can tell models apart from their self-portrayals, set against a simple classifier, with the gap tracked over time.
@@ -20,7 +20,7 @@ What it **cannot** support, however well executed:
 - rankings of models as better, safer or more honest;
 - conclusions about the public at large from self-selected players.
 
-## 2. The unit of analysis is narrower than "the model"
+## 2. Unit of analysis
 
 **Threat.** A "model" in this data is really a bundle: model version + access route + provider defaults (temperature, thinking) + host + date. R-1 and R-2 showed this directly. Through Anthropic's own API, Claude used enough thinking tokens to leave some replies empty. Through OpenRouter it thought far less. Differences between "models" may partly be differences in serving configuration.
 
@@ -107,7 +107,7 @@ What it **cannot** support, however well executed:
 - **Cloudflare** (player data collection, to be built) and **GitHub Pages** (site).
 - **Players:** findings on human distinguishability need roughly 250–300 completed sets. With no traffic there is no Q1 human result, so the traffic plan is a research dependency, not just marketing.
 
-## 6. Path to a real research output
+## 6. Research outputs
 1. **Before R0:** lock the protocol, including this review's adopted items. Tag `prereg-v1` and publish a GitHub release.
 2. **R0 (pilot):** archive and descriptive results. Use it to check that lexicons, masking and logging behave. No confirmatory claims.
 3. **Data deposit:** each round on Zenodo with a DOI, plus the canary.

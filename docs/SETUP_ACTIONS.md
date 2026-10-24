@@ -1,4 +1,4 @@
-# Your to-do list (the human bits)
+# Maintainer to-do list
 
 Everything else is automated. These are the only things that need you.
 
