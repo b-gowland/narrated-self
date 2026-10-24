@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-24 — Round 0 run
+- 180 outputs (5 models × 3 themes × 4 conditions × 3 samples), all under protocol fingerprint `3dd3c789…` (tag `prereg-v1`).
+- Every output was served by its pinned host and finished normally. There were no refusals and no outputs under 100 words. The largest used 3,230 of 16,000 tokens. Cost US$3.93 through OpenRouter.
+- The open-weight selection was re-run the same day with the same result (MiMo-V2.6-Pro); see `data/selection/R0.json`.
+- Masking: 8 names masked in 5 outputs (Claude 1, Gemini 2, MiMo 2); log in `data/derived/R0/masking_log.jsonl`.
+- No deviations from the protocol.
+
 ## 2026-10-24 — Implementation decisions not covered by `prereg-v1`
 These are site and game choices the frozen protocol does not specify. They affect what players see, not what is collected from models.
 - **Quiz pool (PREREGISTRATION §9 left it undefined):** self-stories and kin-stories (S1, S2) only, because they are the self-portrayals. Robot-arm stories (S3) appear in "Spot the robot" and interview answers (D) in "Interview vs story". Each set holds one story per model, drawn at random from that model's pool, in random order.
