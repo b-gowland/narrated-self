@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-24 — Smoke test R-2 (before `prereg-v1`)
+- One sample per prompt per model (60 outputs) with the five R0 models through OpenRouter, using the revised settings (provider defaults, 16,000-token safety cap).
+- Checks: each output served by its pinned host, no output reaching the cap, thinking tokens logged.
+- Stored in `data/raw/R-2/`. **Discarded: not used in any analysis, quiz or measure.**
+
 ## 2026-10-24 — Models, access and settings revised after R-1 (before `prereg-v1`)
 - **Output cap raised from 1,200 to 16,000 tokens.** In R-1 the 1,200 cap left 3 of 12 outputs empty and cut 1 short for a model that thinks before writing. The cap is now a safety limit only; the prompt's word range sets length.
 - **Temperature and top_p set to provider defaults** (were temperature 1.0). The current Anthropic API does not accept either setting, so a shared value was not possible. Reasoning ("thinking") is also left at each provider's default and logged.
