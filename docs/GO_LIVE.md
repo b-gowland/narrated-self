@@ -4,7 +4,9 @@ The site will live at **narratedself.airiskpractice.org**, next to the other AI 
 
 While the stories are placeholder text, the page carries `noindex`, so search engines skip it. That tag comes off when round 0's real stories go in.
 
-## 1. Turn on hosting (about 10 minutes)
+## 1. Turn on hosting (done 2026-10-24)
+
+Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps are kept here for reference. One lesson: add the DNS record **before** entering the custom domain in GitHub. Otherwise GitHub caches a "not found" answer for up to 30 minutes and the HTTPS certificate is delayed.
 
 **GitHub** (repo `b-gowland/narrated-self`)
 1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.

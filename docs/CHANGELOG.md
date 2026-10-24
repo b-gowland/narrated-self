@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-24 — Research review adopted (before `prereg-v1`)
+- Red-team review written (`docs/RESEARCH_REVIEW.md`); adopted items folded into `docs/PREREGISTRATION.md`. These are: unit of analysis defined as model + route + defaults + date; primary, descriptive and exploratory questions separated; a written analysis plan per question, including difference-in-differences for Q3 to separate genre from stance; the player-data protocol with randomised balanced sets, first-play flag, exclusions and power threshold; refusals reported as a result; a canary string.
+- Drafted `protocol/masking.yaml` (names masked in quiz and classifier text) and `protocol/lexicons.yaml` (word lists; VADER for sentiment). Both await maintainer review and a precision hand-check on R-1/R-2 before tagging.
+
 ## 2026-10-24 — S1 prompt wording fixed (before `prereg-v1`)
 - S1 reused the third-person theme clauses, producing prompts such as "…about you learning that **it** will soon be switched off…". Each theme now has a `self_clause` in the second person for S1 ("…that **you** will soon be switched off…"). Only pronouns changed; S2, S3 and D are unchanged.
 - Smoke tests R-1 and R-2 used the old wording. Both are discarded, so no analysed data is affected.

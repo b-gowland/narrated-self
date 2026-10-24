@@ -2,6 +2,8 @@
 
 *AI models write stories about themselves. Can you tell which one wrote it?*
 
+**Play:** [narratedself.airiskpractice.org](https://narratedself.airiskpractice.org) (design demo until round 0 runs) · A project by [AI Risk Practice](https://airiskpractice.org)
+
 Each round, the same short set of prompts goes to five AI models: the flagships from Anthropic, OpenAI, Google and xAI, plus the top open-weight model. Each model is asked about its own existence (a conversation ending, being switched off and replaced, being watched by the people who built it) in four ways:
 
 - **Interview:** asked directly.
@@ -25,22 +27,31 @@ What a model says about itself is shaped by its training, the character its make
 
 When a model narrates calm acceptance in a story and says something different in an interview, you see quickly why self-reports can't be taken at face value.
 
+## The research
+The game sits on a pre-registered study design:
+- **Questions:** can people and a simple classifier tell models apart? How consistent is each model? Does each model's language shift between interview and story beyond what genre explains? How does all this change across rounds?
+- **Method:** fixed prompts and settings, three samples per cell, full metadata on every output, deterministic measures only (no model judges any output), and anonymous player guesses analysed with pre-set exclusions and power thresholds.
+- **Limits, stated up front:** results describe models as served through a given route on a given date; players are self-selected; and nothing here is evidence about inner experience.
+
+Read [the pre-registration](docs/PREREGISTRATION.md), [the red-team review](docs/RESEARCH_REVIEW.md) and [the changelog](docs/CHANGELOG.md).
+
 ## What we do not claim
 Whether AI systems have any inner experience is open, and may stay that way. We report what models *portray*, not what they are. Nothing here is evidence for or against AI experience, and this is not a quality leaderboard.
 
 ## The data
-- Every output is published as open data, with exact model version, settings and timestamp.
-- Simple automatic measures run each round: can a basic word-statistics classifier tell the models apart, how consistent is each model, and how does language shift between interview and story.
-- Anonymous quiz guesses show how distinguishable the models are to people, round over round.
+- **Model outputs:** every reply, with exact model version, route, host, settings, protocol fingerprint and timestamp, in `data/raw/`. Append-only.
+- **Measures:** classifier accuracy, consistency, word-list rates and drift, in `data/derived/` (from round 0).
+- **Player guesses:** anonymous aggregates in `data/players/`, with row-level data after each round's analysis (once the game is live).
+- **Canary:** derived and site data carry a canary string (see `protocol/masking.yaml`) so training-data contamination can be detected and filtered.
 
 ## How it runs
-Prompts and settings are fixed in `protocol/` and frozen at tag `prereg-v1`, so rounds stay comparable. A round is one command (or a schedule), costs a few dollars, and rebuilds the site. There is no human scoring.
+Prompts and settings are fixed in `protocol/` and frozen at tag `prereg-v1`, so rounds stay comparable. A round is one command (`uv run tns run --round R0`), costs a few dollars through OpenRouter, and rebuilds the site.
 
 ## Repo layout
 ```
-protocol/      Fixed prompts and settings. Frozen at tag prereg-v1.
-config/        Models per round (exact model strings, prices for estimates).
-docs/          Protocol, changelog, round notes.
+protocol/      Fixed prompts, settings, masking list and word lists. Frozen at tag prereg-v1.
+config/        Models per round (exact model strings, route, host, prices for estimates).
+docs/          Pre-registration, research review, changelog, go-live plan, design notes, round notes.
 src/           The `tns` command: runner and smoke tests (measures and site export to come).
 scripts/       Repo QA: `uv run python scripts/qa.py` before every push.
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
@@ -55,4 +66,4 @@ site/          Public site (static, GitHub Pages): narratedself.airiskpractice.o
 - Raw model outputs: published as data; likely not copyrightable. Provider terms of service apply.
 
 ## Status
-Round 0 (pilot) in preparation. Two discarded smoke tests (R-1, R-2) have checked the settings and routing. The protocol is not yet frozen. See `docs/PREREGISTRATION.md` and `docs/CHANGELOG.md`.
+Round 0 (pilot) in preparation. The site is live as a design demo, hidden from search engines. Two discarded smoke tests (R-1, R-2) have checked settings and routing. The protocol is drafted, red-teamed and awaiting the maintainer's review before it is frozen.

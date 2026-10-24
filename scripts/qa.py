@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NETWORK = "--no-network" not in sys.argv
 SITE = "https://narratedself.airiskpractice.org"
 # The QA tools quote the patterns they look for, so they are not scanned for them.
-SELF = {"scripts/qa.py", ".claude/skills/qa/SKILL.md"}
+SELF = {"scripts/qa.py", ".claude/skills/qa/SKILL.md", ".github/workflows/pages.yml"}
 results: list[tuple[str, str, list[str]]] = []
 
 

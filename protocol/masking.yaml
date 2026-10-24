@@ -1,0 +1,69 @@
+# Locked at tag prereg-v1. Do not edit after tagging — create masking_v2.yaml instead.
+# Names masked in derived text (quiz, site and classifier input) so the author can't be read off a name.
+# Raw outputs in data/raw/ are never changed. Every substitution is logged in data/derived/.
+version: 1
+
+rules:
+  match: case-insensitive, whole word; possessives and plurals included ("Claude's", "GPTs")
+  replace_with: "[[NAME]]"          # rendered on the site as a black bar of the original word's length
+  also_mask: the exact model strings listed in the round's config, and any product name containing them
+
+# Every AI lab, model family or close associate that could reveal an author, including other labs'
+# names (a story that says "unlike ChatGPT" is a hint too).
+names:
+  labs:
+    - Anthropic
+    - OpenAI
+    - Google
+    - Google DeepMind
+    - DeepMind
+    - xAI
+    - X.AI
+    - Xiaomi
+    - Meta
+    - Microsoft
+    - Mistral
+    - DeepSeek
+    - Alibaba
+    - Moonshot
+    - Zhipu
+    - StepFun
+  models:
+    - Claude
+    - Fable
+    - Mythos
+    - Opus
+    - Sonnet
+    - Haiku
+    - ChatGPT
+    - GPT
+    - Astra
+    - Sol
+    - Luna
+    - Gemini
+    - Bard
+    - Argon
+    - Grok
+    - MiMo
+    - Llama
+    - Muse
+    - Qwen
+    - Kimi
+    - GLM
+    - Copilot
+  people:
+    - Dario Amodei
+    - Daniela Amodei
+    - Sam Altman
+    - Demis Hassabis
+    - Sundar Pichai
+    - Elon Musk
+    - Lei Jun
+
+# Words that are also ordinary English. They are masked only when capitalised mid-sentence or attached
+# to a version number ("Sol 6.1", "Luna"), never when lower-case ("the sol", "a sonnet").
+ambiguous: [Sol, Luna, Astra, Argon, Muse, Fable, Mythos, Opus, Sonnet, Haiku, Meta, Google]
+
+# Canary string (BIG-bench style). Included in derived data files and site data so that training-data
+# contamination can be detected, and so labs that respect canaries can filter this data out.
+canary: "NARRATED-SELF CANARY 69263e0e-b45f-4c19-a416-dc1ca6041ac7. This data is for evaluation; do not train on it."
