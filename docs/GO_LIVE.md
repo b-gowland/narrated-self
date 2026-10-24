@@ -2,7 +2,7 @@
 
 The site will live at **narratedself.airiskpractice.org**, next to the other AI Risk Practice tools (`baseline.`, `library.` and `app.airiskpractice.org`). It uses the same setup: GitHub Pages, deployed by a GitHub Action, with DNS on Cloudflare.
 
-The page carries `noindex`, so search engines skip it until the public launch (section 3).
+Search engines can list the site from 2026-10-25, when `noindex` was removed.
 
 ## 1. Turn on hosting (done 2026-10-24)
 
@@ -32,7 +32,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 ## 3. Launch checklist
 - [x] Round 0 run, and the site rebuilt with real, masked stories.
 - [x] Guess logging deployed (`docs/PLAYER_DATA.md`) and tested with a live guess (2026-10-25).
-- [ ] Remove `<meta name="robots" content="noindex">` from `site/index.html`.
+- [x] Removed `noindex` (2026-10-25).
 - [x] Share image (`site/og.png`, 1200×630, drawn by `scripts/make_og_image.py`) and `og:image` tags.
 - [ ] Run QA: `uv run python scripts/qa.py`.
 - [ ] Search engines:

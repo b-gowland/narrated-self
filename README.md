@@ -69,4 +69,4 @@ docs/           Pre-registration, research review, changelog, operations, go-liv
 Code is MIT. Human-written documents and reports are CC BY 4.0. Raw model outputs are published as data; they are probably not copyrightable, and each provider's terms of service apply.
 
 ## Status
-Round 0 (pilot) ran on 24 October 2026: 180 outputs, all under the frozen protocol. The site plays the real stories and records guesses anonymously. It is still hidden from search engines until the public launch (see [docs/GO_LIVE.md](docs/GO_LIVE.md)).
+Round 0 (pilot) ran on 24 October 2026: 180 outputs, all under the frozen protocol. The site plays the real stories and records guesses anonymously. It is open to search engines; the launch plan is in [docs/GO_LIVE.md](docs/GO_LIVE.md).

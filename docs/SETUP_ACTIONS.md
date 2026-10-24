@@ -22,7 +22,7 @@ Everything else is automated. These are the only things that need you.
 - [ ] Before pushing anything public: `uv run python scripts/qa.py` (or ask Claude Code to run the `qa` skill).
 
 ## Going live and sharing
-- [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org, hidden from search engines until launch).
+- [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org; open to search engines from 2026-10-25).
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
 - [x] Guess logging deployed (2026-10-25): Worker, database, export token, nightly export.
 - [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule, verified domain, Wrangler logout, OpenRouter key limit).
