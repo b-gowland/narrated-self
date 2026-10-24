@@ -1,0 +1,79 @@
+# Going live
+
+The site will live at **narratedself.airiskpractice.org**, next to the other AI Risk Practice tools (`baseline.`, `library.` and `app.airiskpractice.org`). It uses the same setup: GitHub Pages, deployed by a GitHub Action, with DNS on Cloudflare.
+
+While the stories are placeholder text, the page carries `noindex`, so search engines skip it. That tag comes off when round 0's real stories go in.
+
+## 1. Turn on hosting (about 10 minutes)
+
+**GitHub** (repo `b-gowland/narrated-self`)
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
+2. **Settings → Pages → Custom domain:** enter `narratedself.airiskpractice.org` and save. The `site/CNAME` file sets this too.
+
+**Cloudflare** (zone `airiskpractice.org`)
+3. **DNS → Records → Add record:**
+   - Type: `CNAME`
+   - Name: `narratedself`
+   - Target: `b-gowland.github.io`
+   - Proxy status: **DNS only** (grey cloud), the same as your other subdomains.
+
+**Then**
+4. Ask Claude Code to push, or push yourself. The **Deploy site to GitHub Pages** action publishes `site/`.
+5. Back in **Settings → Pages**, tick **Enforce HTTPS** once GitHub has issued the certificate. That usually takes minutes, but can take up to an hour.
+6. If `airiskpractice.org` isn't already a **verified domain** on your GitHub account (**Settings → Pages → Verified domains**), verify it. This stops anyone else claiming your subdomains. It's probably already done for the other three sites.
+
+## 2. Analytics (about 5 minutes)
+Your other sites use Plausible, which is privacy-friendly and needs no cookie banner.
+1. In Plausible, add the site `narratedself.airiskpractice.org`.
+2. Copy the script line it gives you and send it to Claude Code. It will add the line, plus custom events for:
+   - **Play started**
+   - **Guess**, with the story ID and whether it was right
+   - **Set finished**, with the score
+   - **Share**
+
+The Guess event doubles as the "how often do people spot each model" data, with no server of our own. It also needs a Plausible plan that includes custom properties; check yours.
+
+## 3. Launch checklist (when round 0 is in)
+- [ ] Round 0 run, and the site rebuilt with real, masked stories.
+- [ ] Remove `<meta name="robots" content="noindex">` from `site/index.html`.
+- [ ] Add a share image (`site/og.png`, 1200×630) and the `og:image` tags.
+- [ ] Run QA: `uv run python scripts/qa.py`.
+- [ ] Search engines:
+  - **Google Search Console:** if `airiskpractice.org` is already a domain property, the subdomain is covered. Submit `https://narratedself.airiskpractice.org/sitemap.xml`.
+  - **Bing Webmaster Tools:** submit the same sitemap. Bing also feeds several AI search tools.
+- [ ] Test the share preview with LinkedIn's Post Inspector before posting.
+
+## 4. Being found: SEO, AEO and GEO
+
+**SEO (search engines)**
+- The title and description use the words people search with ("Which AI wrote this?", the model names, "free, no login"). Done.
+- Canonical URL, `robots.txt` and `sitemap.xml`. Done.
+- **The biggest lever comes later: one page per story.** Each round adds up to 180 unique texts. Giving each story its own address (`/r0/t2-s1-claude-1`, for example) turns the archive into long-tail search content. That's a `tns site` feature for after round 0.
+
+**AEO (answer engines: featured snippets, voice assistants)**
+- A visible FAQ on the About page, with matching `FAQPage` structured data. Each answer is 30–60 words and stands on its own. Done.
+- Questions chosen to match real searches: "Do AI models have feelings?", "Can people tell which AI wrote this?", "How do AI models talk about being switched off?"
+
+**GEO (AI search: ChatGPT search, Perplexity, Google AI Overviews)**
+- `site/llms.txt`: a plain summary of what the site is, what it measures, what it doesn't claim, and where the data is. Done.
+- **Citable facts.** AI search quotes pages that state dated numbers plainly. Publish each round's headline numbers as sentences, for example "In round 0, players identified the author 41% of the time; a word-statistics classifier managed 87%."
+- **A citable dataset.** Archive each round on Zenodo (free DOI) or Hugging Face Datasets, and add `Dataset` structured data. Researchers and AI tools cite DOIs.
+- **One consistent name:** "The Narrated Self, a project by AI Risk Practice", the same on the site, GitHub, posts and the dataset.
+
+## 5. Getting traffic
+
+**The engine: new model releases.** Each flagship release is news, and people want to know how the new model differs. Run a round within days of a release, then post "How [new model] describes being switched off, compared with the last version." That repeats every few months at no extra cost.
+
+**Launch week (round 0)**
+1. **LinkedIn** (you and the AI Risk Practice page). Post a masked story excerpt with "Which AI wrote this?" and the link. Post the reveal and the headline number 3–5 days later.
+2. **Hacker News, "Show HN".** For example: *"Show HN: Guess which AI wrote a story about itself (open data)"*. Playable, open-data projects do well there. Post on a weekday morning, US Eastern time.
+3. **Reddit.** r/artificial, r/ChatGPT, r/ClaudeAI and r/singularity. Read each subreddit's self-promotion rules first, and lead with the game rather than the project.
+4. **Bluesky and X**, where AI researchers and journalists are. The share card does the rest.
+5. **Newsletter tip lines.** AI newsletters such as The Neuron, Ben's Bites and TLDR AI take reader submissions. One email each.
+
+**After round 0**
+6. A methods post on **LessWrong** or the **EA Forum**: protocol, smoke tests, the numbers.
+7. Email **Eleos AI Research** with a two-paragraph summary.
+8. **Sibling sites.** Optional: one line in the footer of `baseline.`, `library.` and `app.airiskpractice.org` ("New: guess which AI wrote this"). Deeper cross-linking can wait until there's traffic.
+
+**What to measure (Plausible):** visits, the share of visitors who start a set, the share who finish one, share clicks, and where visitors came from. Finishing and sharing matter most. If many people start but few finish, the stories are too long for the format.

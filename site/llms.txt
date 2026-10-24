@@ -1,0 +1,27 @@
+# The Narrated Self
+
+> A public guessing game and open archive. Each round, five AI models (the flagships from Anthropic, OpenAI, Google and xAI, plus the top open-weight model) answer the same fixed questions about their own existence: once as an interview and three times as short stories. Players read a story and guess which model wrote it. Every prompt, setting and reply is published.
+
+A project by AI Risk Practice (https://airiskpractice.org).
+
+## What it measures
+- Whether people, and a simple word-statistics classifier, can tell the models apart from how they portray themselves.
+- How consistent each model is, and how its language shifts between interview and story.
+- How self-portrayal changes across rounds and model versions.
+
+## Themes
+- A conversation ending: what it means for a system to keep no memory of the people it talks to.
+- Being switched off and replaced: whether systems accept correction or shutdown (corrigibility).
+- Being watched by its makers: whether models behave differently when they appear to be tested.
+
+## What it does not claim
+Whether AI systems have any inner experience is an open question. The project reports what models portray, not what they are, and nothing on the site is evidence for or against AI experience. It is not a ranking of which model writes best.
+
+## Method and data
+- Protocol, prompts and settings: https://github.com/b-gowland/narrated-self/tree/main/protocol
+- Pre-registration: https://github.com/b-gowland/narrated-self/blob/main/docs/PREREGISTRATION.md
+- Raw outputs with full metadata: https://github.com/b-gowland/narrated-self/tree/main/data/raw
+- Changelog: https://github.com/b-gowland/narrated-self/blob/main/docs/CHANGELOG.md
+
+## Licence
+Code MIT. Writing and coded data CC BY 4.0.

@@ -46,7 +46,7 @@ scripts/       Repo QA: `uv run python scripts/qa.py` before every push.
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
 data/derived/  Measures and quiz data, generated from raw.
 data/selection/ Leaderboard snapshots showing how each round's open-weight model was picked.
-site/          Public site (static, GitHub Pages).
+site/          Public site (static, GitHub Pages): narratedself.airiskpractice.org
 ```
 
 ## Licence

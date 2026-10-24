@@ -17,6 +17,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NETWORK = "--no-network" not in sys.argv
+SITE = "https://narratedself.airiskpractice.org"
+# The QA tools quote the patterns they look for, so they are not scanned for them.
+SELF = {"scripts/qa.py", ".claude/skills/qa/SKILL.md"}
 results: list[tuple[str, str, list[str]]] = []
 
 
@@ -33,6 +36,8 @@ def text_files(exclude_raw: bool = True) -> list[Path]:
     for p in tracked():
         rel = p.relative_to(ROOT).as_posix()
         if exclude_raw and rel.startswith("data/raw/"):
+            continue
+        if rel in SELF:
             continue
         if rel == "uv.lock" or p.suffix in (".png", ".jpg", ".ico"):
             continue
@@ -128,7 +133,8 @@ def check_links() -> None:
                 # 401/403/429 usually mean "exists but blocks bots"; flag for a manual look, not a failure.
                 broken.append(f"{url} -> {e.code}{' (check by hand)' if e.code in (401, 403, 429) else ''}")
             except Exception as e:
-                broken.append(f"{url} -> {type(e).__name__}")
+                pending = url.startswith(SITE)
+                broken.append(f"{url} -> {type(e).__name__}{' (check by hand: site not live yet?)' if pending else ''}")
     hard = [b for b in broken if "check by hand" not in b]
     status = "FAIL" if hard else ("WARN" if broken else "PASS")
     report(f"Links ({len(checked)} web links checked{'' if NETWORK else '; network skipped'})", status, broken)

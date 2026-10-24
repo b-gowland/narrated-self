@@ -3,7 +3,6 @@
 Everything else is automated. These are the only things that need you.
 
 ## Once (about 2 hours in total)
-- [ ] Check your employer's outside-activities and public-comment policy. Get written clearance if it requires it.
 - [x] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
 - [x] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
 - [ ] Revoke the direct provider keys (Anthropic, OpenAI, Google) in each console, then clear them from `.env`. OpenRouter passed smoke test R-2, so they are no longer needed.
@@ -18,10 +17,8 @@ Everything else is automated. These are the only things that need you.
 - [ ] Optional: write a short note in `docs/rounds/`.
 - [ ] Before pushing anything public: `uv run python scripts/qa.py` (or ask Claude Code to run the `qa` skill).
 
-## Sharing (whenever you like)
-- [ ] Post the quiz link on LinkedIn.
-- [ ] After a round or two, a methods post on LessWrong.
-- [ ] Email Eleos AI Research a two-paragraph summary and the repo link.
+## Going live and sharing
+- [ ] Follow `docs/GO_LIVE.md`: GitHub Pages, the Cloudflare DNS record, Plausible, then the launch checklist and traffic plan.
 
 ## Working with Claude Code — guardrails
 - Keep the CLAUDE.md hard rules. Refuse anything that has a model scoring or summarising outputs.

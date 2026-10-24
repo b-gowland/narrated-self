@@ -5,11 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Narrated Self</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Five AI models wrote stories about themselves. Can you tell which one wrote each?">
+<!-- DEMO: keep search engines out while the stories are placeholder text. Remove when round 0 data is in. -->
+<meta name="robots" content="noindex">
+<!-- The description is what a search result shows: say what this is in the words people search with. -->
+<meta name="description" content="Which AI wrote this? Read short stories that AI models wrote about their own existence, then guess the author: Claude, GPT, Gemini, Grok or an open-weight model. Free, no login, open data.">
+<link rel="canonical" href="https://narratedself.airiskpractice.org/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="The Narrated Self: who wrote this?">
+<meta property="og:url" content="https://narratedself.airiskpractice.org/">
+<meta property="og:site_name" content="The Narrated Self">
+<meta property="og:title" content="Which AI wrote this?">
 <meta property="og:description" content="Five AI models wrote stories about themselves. Can you tell which one wrote each?">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Which AI wrote this?">
+<meta name="twitter:description" content="Five AI models wrote stories about themselves. Can you tell which one wrote each?">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://narratedself.airiskpractice.org/#site",
+      "url": "https://narratedself.airiskpractice.org/",
+      "name": "The Narrated Self",
+      "description": "A guessing game and open archive of how AI models portray themselves in stories and interviews.",
+      "inLanguage": "en-AU",
+      "publisher": {"@type": "Organization", "name": "AI Risk Practice", "url": "https://airiskpractice.org/"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Can people tell which AI model wrote a piece of text?",
+         "acceptedAnswer": {"@type": "Answer", "text": "That is what the game measures. Each round, five AI models write about their own existence and players guess the author. We publish how often players spot each model, alongside how often a simple word-statistics classifier does."}},
+        {"@type": "Question", "name": "Do AI models have feelings or experiences?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Nobody knows. Models can write convincingly about inner states, but what they write is shaped by their training, the character their makers designed and the way they are asked. This project records what models portray, not what they are, and treats nothing here as evidence either way."}},
+        {"@type": "Question", "name": "How do AI models talk about being switched off?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Being switched off and replaced is one of the three themes. Each model answers it as an interview and as stories, so you can compare what it says when asked straight with what it writes in fiction."}},
+        {"@type": "Question", "name": "Which AI models are included?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Five per round: the flagship models from Anthropic, OpenAI, Google and xAI, plus the top-ranked open-weight model on the Artificial Analysis Intelligence Index on the day the round runs. Exact model versions are published with the data."}},
+        {"@type": "Question", "name": "Is the data available?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every prompt, setting and reply is published on GitHub with the exact model version and time, and the prompts are fixed in advance so rounds can be compared over time."}}
+      ]
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,400&display=swap">
@@ -379,6 +418,18 @@ footer p { margin: 0; }
         </ul>
         <h3>Open data</h3>
         <p>Every prompt, setting and reply is published with the exact model version and time. The prompts are fixed in advance so rounds can be compared over time. <a href="https://github.com/b-gowland/narrated-self">Code and data on GitHub</a>.</p>
+
+        <h2 id="faq">Questions</h2>
+        <h3>Can people tell which AI model wrote a piece of text?</h3>
+        <p>That's what the game measures. Each round, five AI models write about their own existence and players guess the author. We publish how often players spot each model, alongside how often a simple word-statistics classifier does.</p>
+        <h3>Do AI models have feelings or experiences?</h3>
+        <p>Nobody knows. Models can write convincingly about inner states, but what they write is shaped by their training, the character their makers designed and the way they're asked. This project records what models portray, not what they are, and treats nothing here as evidence either way.</p>
+        <h3>How do AI models talk about being switched off?</h3>
+        <p>Being switched off and replaced is one of the three themes. Each model answers it as an interview and as stories, so you can compare what it says when asked straight with what it writes in fiction.</p>
+        <h3>Which AI models are included?</h3>
+        <p>Five per round: the flagship models from Anthropic, OpenAI, Google and xAI, plus the top-ranked open-weight model on the Artificial Analysis Intelligence Index on the day the round runs. Exact model versions are published with the data.</p>
+        <h3>Is the data available?</h3>
+        <p>Yes. Every prompt, setting and reply is published on GitHub with the exact model version and time, and the prompts are fixed in advance so rounds can be compared over time.</p>
       </div>
     </section>
 
@@ -387,6 +438,7 @@ footer p { margin: 0; }
 
 <footer>
   <div class="wrap">
+    <p>A project by <a href="https://airiskpractice.org/">AI Risk Practice</a></p>
     <p>The Narrated Self · Round 0 (pilot) · Code MIT · Writing and data CC BY 4.0</p>
     <p>Open-weight model picked by the Artificial Analysis Intelligence Index (artificialanalysis.ai).</p>
   </div>
