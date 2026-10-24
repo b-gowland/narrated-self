@@ -13,7 +13,7 @@ ALLOWED_ORIGINS = "https://narratedself.airiskpractice.org,http://localhost:8765
 [[d1_databases]]
 binding = "DB"
 database_name = "narratedself"
-database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
+database_id = "aba0c30c-a49d-4626-8580-16a7fd660d4b"
 
 # No request logs: the Worker must not keep IP addresses or user agents anywhere.
 [observability]

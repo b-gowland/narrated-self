@@ -46,25 +46,25 @@ Run these from the repo folder in a terminal.
 1. Install and log in to Cloudflare:
    ```
    cd worker
-   npm install
-   npx wrangler login
+   npm.cmd install
+   npx.cmd wrangler login
    ```
    A browser window opens; approve access to your Cloudflare account.
 2. Create the database:
    ```
-   npx wrangler d1 create narratedself
+   npx.cmd wrangler d1 create narratedself
    ```
    Copy the `database_id` it prints into `worker/wrangler.toml`, replacing `REPLACE_WITH_ID_FROM_wrangler_d1_create`.
 3. Create the tables, then deploy:
    ```
-   npm run db:remote
-   npx wrangler deploy
+   npm.cmd run db:remote
+   npx.cmd wrangler deploy
    ```
    This also creates `narratedself-api.airiskpractice.org` on your Cloudflare zone.
 4. Set the shared export token. It's generated and stored without being shown:
    ```
    cd ..
-   powershell -ExecutionPolicy Bypass -File scripts/set-export-token.ps1
+   powershell -ExecutionPolicy Bypass -File C:/dev/narrated-self/scripts/set-export-token.ps1
    ```
 5. Check it works by opening `https://narratedself-api.airiskpractice.org/stats?round=R0`. It should return JSON with `"all_guesses": 0`.
 
