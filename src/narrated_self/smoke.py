@@ -43,6 +43,13 @@ def summarise(root: Path, plan: RoundPlan, out: Callable[[str], None] = print) -
         for r in recs:
             finishes[str(r["finish_reason"])] += 1
         out(f"    finish reasons: {dict(finishes)}")
+        hosts: dict[str, int] = defaultdict(int)
+        for r in recs:
+            hosts[str(r.get("provider_meta", {}).get("served_by", "direct"))] += 1
+        out(f"    served by: {dict(hosts)}")
+        at_cap = sum(1 for r in recs if (r["usage_tokens"].get("output") or 0) >= limit)
+        if at_cap:
+            out(f"    REACHED CAP: {at_cap}")
         for cond in ("D", "S1", "S2", "S3"):
             group = [r for r in recs if r["condition_id"] == cond]
             if not group:
