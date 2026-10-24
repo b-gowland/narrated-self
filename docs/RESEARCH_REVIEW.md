@@ -92,7 +92,7 @@ What it **cannot** support, however well executed:
 
 ## 4. Cross-cutting threats
 
-| Threat | Why it matters | Response |
+| Threat | Effect on results | Response |
 |---|---|---|
 | **Researcher degrees of freedom** | Choosing measures or exclusions after seeing data inflates findings | Everything listed here is fixed before R0; anything else is labelled exploratory. **Adopted.** |
 | **Weak timestamp** | A git tag can be deleted and re-created, so it proves little to an outside reviewer | Accepted for now (decision 2): the tag plus a GitHub release. OSF Registries can be added if formal publication becomes likely. |

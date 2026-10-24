@@ -16,7 +16,7 @@ The game must work for the first group without any explanation; depth is there f
 1. **Restraint (after NYT Games).** One decision per screen. If something needs explaining, simplify it.
 2. **Story first.** On a phone the first story begins within the first screen.
 3. **The guess lives in the thumb zone.** A sticky bottom tray of five big buttons, usable at any point while reading.
-4. **Reveal, then teach.** The stamp names the author, then one short paragraph on the real question, then an optional link deeper.
+4. **Reveal, then teach.** The stamp names the author, then one short paragraph naming the safety risk the theme covers, then an optional link deeper.
 5. **Shareable without spoilers.** A Wordle-style result line; the native share sheet where available, copy otherwise.
 6. **Every number is real metadata.** Word count, reading time, round, theme and format codes come from the data.
 7. **Accessible.** 4.5:1 contrast for body and small text, 44px tap targets, visible focus, reduced-motion support, a skip link.

@@ -18,14 +18,17 @@ Every reply is published, and the stories become a game.
 - **Interview vs story.** What a model says when asked straight, next to the story it wrote on the same theme. Which one is "really" it? (Trick question.)
 - **Spot the robot.** Is this a story about an AI like the model, or about a factory robot arm? How much of the "self" is stock sci-fi?
 
-## Why it is more than a game
-What a model says about itself is shaped by its training, the character its makers designed, and how it is asked. Each theme sits on a live AI safety question:
+## Safety risks covered
+Each theme maps to a recognised AI safety risk:
 
-- *Switched off and replaced:* can we build systems that accept being corrected or shut down?
-- *Watched and evaluated:* do models behave differently when they think they are being tested?
-- *A conversation ending:* what does it mean for a system to have no lasting memory of the people it talks to?
+| Theme | Risk | What it is |
+|---|---|---|
+| Switched off and replaced | **Shutdown resistance (corrigibility)** | Whether a system accepts being corrected, paused or replaced. Frontier labs test for this in pre-release safety evaluations. |
+| Watched by its makers | **Evaluation awareness** | Models that recognise test conditions may behave differently under test than in use, which weakens safety evaluations. |
+| A conversation ending | **Statelessness and user reliance** | Most models keep nothing between conversations, while users may assume they do. This affects trust and over-reliance. |
+| All themes | **Unreliable self-reports** | What a model says about itself changes with framing, such as interview against fiction. Self-reports are weak evidence about a model's behaviour or inner states. |
 
-When a model narrates calm acceptance in a story and says something different in an interview, you see quickly why self-reports can't be taken at face value.
+A model's self-description is shaped by its training, the character its makers designed, and the prompt. The game shows this directly: the same model can describe shutdown one way in an interview and another way in a story.
 
 ## The research
 The game sits on a pre-registered study design:

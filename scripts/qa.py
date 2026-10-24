@@ -149,6 +149,10 @@ AI_TELLS = [
     r"\bvibrant\b", r"\bnavigat(e|ing) the\b", r"\bplays? a (vital|key|crucial) role\b", r"\bin conclusion\b",
     r"\bhonest caveat\b", r"\bgame-?changer\b", r"\bunlock(s|ing)? the\b", r"\bembark\b", r"\brealm\b",
     r"\bnot only\b.*\bbut also\b", r"\bharness(ing)? the power\b", r"\bfoster(ing)?\b", r"\belevate\b",
+    # Vague headings and gestures instead of naming the specific risk, category or finding.
+    r"\bmore than (just )?a (game|tool|quiz)\b", r"\bthe real question\b", r"\bwhy bother\b",
+    r"\ba (live|real|big|key) (ai )?(safety )?question\b", r"\bat face value\b", r"\bthat is the point\b",
+    r"\bhere'?s (why|the thing)\b", r"\bthe bigger picture\b", r"\bwhy (it|this) matters\b",
 ]
 US_SPELLING = [r"\bcolor", r"\bbehavior", r"\banalyz", r"\borganiz", r"\bcenter\b", r"\bfavorite",
                r"\brealiz", r"\bprioritiz", r"\bsummariz", r"\bcategoriz", r"\boptimiz"]

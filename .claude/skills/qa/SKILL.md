@@ -39,6 +39,7 @@ The script only finds listed phrases. Read every user-facing text yourself: `REA
   - stated takeaways ("This shows that…") and tidy closing summaries;
   - em-dash asides and colon reveals;
   - vague attributions ("experts say") and hedging stacks.
+- **Name the thing, don't gesture at it.** Headings and labels should say exactly what follows. Name the specific risk, category or finding ("Shutdown resistance (corrigibility)", "Evaluation awareness"), not a vague promise ("Why it is more than a game", "The real question", "Why bother?", "a live AI safety question"). Turn rhetorical questions into plain statements, unless the heading really is a question readers ask, as in a FAQ.
 - **Plain, specific sentences.** Short and active. Name things the way readers know them. Cut any sentence that adds nothing.
 - **Australian spelling:** colour, behaviour, analyse, organise, licence (noun), centre.
 - **Rule 9.** Models "portray", "narrate", "express" or "claim". They never "feel", "experience" or "are conscious".

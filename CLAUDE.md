@@ -3,7 +3,7 @@
 Project: **The Narrated Self**. CLI command: `tns`.
 
 ## What this project is
-A fun, shareable public game and open archive of how large language models portray themselves in fiction and in direct answers. People read the stories models write about themselves, guess which model wrote them, and compare stories with interview answers. Each theme connects to a real AI safety question. Simple automated measures and anonymous quiz data are a research bonus.
+A fun, shareable public game and open archive of how large language models portray themselves in fiction and in direct answers. People read the stories models write about themselves, guess which model wrote them, and compare stories with interview answers. Each theme maps to a named AI safety risk: shutdown resistance (corrigibility), evaluation awareness, statelessness and user reliance, and unreliable self-reports. Simple automated measures and anonymous quiz data are a research bonus.
 
 We study **expressed self-models**: what models produce when asked to narrate their own existence. Whether models have inner experience is open; we neither claim nor deny it, and never present outputs as evidence either way.
 
