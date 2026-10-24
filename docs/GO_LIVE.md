@@ -33,7 +33,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 - [x] Round 0 run, and the site rebuilt with real, masked stories.
 - [x] Guess logging deployed (`docs/PLAYER_DATA.md`) and tested with a live guess (2026-10-25).
 - [ ] Remove `<meta name="robots" content="noindex">` from `site/index.html`.
-- [ ] Add a share image (`site/og.png`, 1200×630) and the `og:image` tags.
+- [x] Share image (`site/og.png`, 1200×630, drawn by `scripts/make_og_image.py`) and `og:image` tags.
 - [ ] Run QA: `uv run python scripts/qa.py`.
 - [ ] Search engines:
   - **Google Search Console:** if `airiskpractice.org` is already a domain property, the subdomain is covered. Submit `https://narratedself.airiskpractice.org/sitemap.xml`.
