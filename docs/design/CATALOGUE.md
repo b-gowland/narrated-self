@@ -53,13 +53,24 @@ Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details m
 - **One number per round.** The machine classifier's accuracy against the players' accuracy.
 - **Formats:** LinkedIn (your network), Bluesky or X (AI researchers), and a LessWrong post after a couple of rounds.
 
-## Visual direction
+## 5. What good, human-made design looks like in 2026
 
-**Concept: the redacted transcript.** The stories are the content. The one signature device is the **redaction bar**: model and lab names are masked as solid bars in the text, and the "Written by ███████" line clears on reveal, like a document being declassified. It is honest about what the game is (we hid the name), and it is specific to this project.
+- **Award winners** (Awwwards Site of the Year 2025 included Lando Norris by OFF+BRAND and Messenger by abeto; Webby 2026 Best Visual Design, Function went to FOLLOW.ART) are mostly heavy 3D brand showcases. Impressive, but the wrong model for a reading game that must load fast on a phone.
+- **The broader 2026 trend is a reaction against the polished AI look.** Design commentary (Creative Bloq on "tactile rebellion", Canva's reported "Imperfect by Design" theme, DesignRush's 2026 trends) points to texture, print grain, hand-drawn marks and visible imperfection as signals that a person made something.
+- **Patterns that fit us:** neobrutalism (thick outlines, hard offset shadows), human scribbles and handwritten notes, gamification (progress, streaks), dark mode through CSS variables, and accessibility (4.5:1 contrast, skip links, labelled controls).
+- **Patterns to avoid:** glassmorphism, neon on dark ("dopamine" palettes), bento grids, and muted paper-and-serif layouts. Those are now what AI-made pages default to.
 
-- **Palette:** cool paper and dark ink, with one marker-yellow highlight for the reveal moment. A dark theme inverts paper and ink.
-- **Type:** a reading serif for stories (they are long, so reading comfort comes first), a characterful grotesque for headings, and a mono face for the protocol codes (R0, T2, S1, sample 3), which appear as real metadata on every story.
-- **Avoid:** chat-bubble layouts, robot imagery, glowing gradients and "AI" clichés. The stories should look like writing, not like a product demo.
+## Visual direction (v2: pulp paperback)
+
+The first demo used muted paper, a reading serif and mono labels. Feedback: it looked "very Claude and AI". v2 goes the other way.
+
+**Concept: 1970s pulp sci-fi paperbacks.** Stories about machines, written by machines, in a genre humans invented. Each story is a "cover": a flat print-colour band with halftone dots, a condensed headline and a heavy black frame.
+
+- **Palette:** one flat print colour per theme (cobalt for a conversation ending, signal red for being switched off, sodium yellow for being watched), black ink, white pages. Checked for 4.5:1 contrast on small text.
+- **Type:** a condensed poster face for headlines and answer buttons, a highly legible sans (Atkinson Hyperlegible) for the stories, and a handwritten face for the odd scrawled note.
+- **Human marks:** paper grain over the whole page, slightly mis-registered headline printing, a rubber stamp for the reveal, and a hand-drawn loop around the right answer.
+- **Kept from v1:** black bars over model names inside stories, which are functional, not decoration.
+- **Avoid:** chat bubbles, robot imagery, glowing gradients, glass effects and "AI" clichés.
 
 ## Sources
 - [Human or Not? results (AI21 Labs)](https://www.ai21.com/blog/human-or-not-results)
@@ -72,3 +83,9 @@ Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details m
 - [Museum of Models listing](https://completeaitraining.com/ai-tools/museum-of-models/)
 - [Opper AI Roundtable](https://opper.ai/ai-roundtable/questions/how-do-you-think-others-might-describe-your-personality-and-e68d443a)
 - [Rival](https://discuss.huggingface.co/t/rival-open-source-tool-for-visually-comparing-ai-model-responses/143842)
+- [Awwwards listing pages showing Site of the Year 2025 badges](https://www.awwwards.com/websites/%23e2de00/?page=5)
+- [Webby Awards, Best Visual Design – Function](https://winners.webbyawards.com/winners/websites-and-mobile-sites/features-design/best-visual-design-function)
+- [Creative Bloq: texture, warmth and tactile rebellion (2026 trends)](https://www.creativebloq.com/design/graphic-design/texture-warmth-and-tactile-rebellion-the-big-graphic-design-trends-for-2026)
+- [DesignRush: 17 web design trends for 2026](https://www.designrush.com/agency/website-design-development/trends/web-design-trends)
+- [Fontfabric: design and typography trends for 2026](https://www.fontfabric.com/blog/10-design-trends-shaping-the-visual-typographic-landscape-in-2026/)
+- [The anti-AI-slop trend (Crossglobe Marketing)](https://crossglobemarketing.com/blogs/anti-ai-slop-human-centered-design-trends-2026/)
