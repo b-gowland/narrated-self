@@ -26,6 +26,6 @@
 
 ## 2026-10-23 — Premise revised (before `prereg-v1`)
 - Project reframed as a public game and open archive, with automated measures as a bonus. Two-coder human scoring was dropped as unsustainable for a side project.
-- Removed `protocol/rubric.md` (seven-dimension human coding rubric). It remains in git history at commit 603e293.
+- Removed `protocol/rubric.md` (seven-dimension human coding rubric). It remains in git history at commit b2595cb.
 - Research questions and coding sections of `docs/PREREGISTRATION.md` replaced with automated measures and quiz data.
 - Prompts (`protocol/prompts.yaml`) and settings (`protocol/settings.yaml`) unchanged.
