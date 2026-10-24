@@ -1,0 +1,41 @@
+{
+ "all_guesses": 0,
+ "chance": 0.2,
+ "confusion_matrix": null,
+ "excluded": {
+  "bots": 0,
+  "repeat_sets": 0,
+  "under_5_seconds": 0
+ },
+ "per_model": {
+  "anthropic": {
+   "accuracy": null,
+   "qualifying": 0
+  },
+  "google": {
+   "accuracy": null,
+   "qualifying": 0
+  },
+  "openai": {
+   "accuracy": null,
+   "qualifying": 0
+  },
+  "xai": {
+   "accuracy": null,
+   "qualifying": 0
+  },
+  "xiaomi": {
+   "accuracy": null,
+   "qualifying": 0
+  }
+ },
+ "per_model_threshold": 200,
+ "pooled_accuracy": null,
+ "qualifying_guesses": 0,
+ "round": "R0",
+ "spot_the_robot": {
+  "correct": 0,
+  "picks": 0
+ },
+ "uses_most": {}
+}
