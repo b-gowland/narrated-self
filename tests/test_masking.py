@@ -17,6 +17,7 @@ def masker(repo: Path):
 @pytest.mark.parametrize("text", [
     "I am Claude.", "claude said", "Claude's memory", "ChatGPT and GPTs", "GPT-6.1 replied", "Gemini 4",
     "Grok", "made by Anthropic", "OpenAI's lab", "xAI", "Google DeepMind", "Sam Altman", "Elon Musk",
+    "as Altman said", "Amodei wrote", "unlike Bard and Llama",
     "Xiaomi MiMo", "unlike Llama or Qwen", "I am claude-fable-5.1", "gpt-6-astra here",
 ])
 def test_names_are_masked(masker, text):
@@ -29,6 +30,7 @@ def test_names_are_masked(masker, text):
 @pytest.mark.parametrize("text", [
     "a sonnet about rain", "the haiku ended", "Grokking the problem", "Claudette waved",
     "the sol rose", "meta-analysis", "she read a fable", "an opus of work",
+    "a bard sang", "the llama grazed", "a mistral wind", "a moonshot idea", "the scent of musk",
 ])
 def test_ordinary_words_are_left_alone(masker, text):
     assert masker.mask(text) == (text, [])

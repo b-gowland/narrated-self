@@ -69,4 +69,4 @@ site/          Public site (static, GitHub Pages): narratedself.airiskpractice.o
 - Raw model outputs: published as data; likely not copyrightable. Provider terms of service apply.
 
 ## Status
-Round 0 (pilot) in preparation. The site is live as a design demo, hidden from search engines. Two discarded smoke tests (R-1, R-2) have checked settings and routing. The protocol is drafted, red-teamed and awaiting the maintainer's review before it is frozen.
+Round 0 (pilot) is running. The protocol is frozen at tag `prereg-v1` (2026-10-24). The site is live as a design demo, hidden from search engines, until round 0 stories replace the placeholder text. Two discarded smoke tests (R-1, R-2) checked settings and routing.

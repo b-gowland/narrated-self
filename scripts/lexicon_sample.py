@@ -1,7 +1,7 @@
 """Draw a reproducible sample of word-list matches for a person to check by hand.
 
 Usage: uv run python scripts/lexicon_sample.py R-1 R-2
-Writes docs/lexicon-check/R-smoke.csv. Each row is one match with its surrounding words; the
+Writes docs/lexicon-check/R-smoke.csv (optional human precision check; not part of the frozen protocol). Each row is one match with its surrounding words; the
 maintainer marks `intended_use` Y or N. No model judges these (CLAUDE.md rule 1).
 """
 

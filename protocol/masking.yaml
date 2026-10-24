@@ -54,15 +54,26 @@ names:
   people:
     - Dario Amodei
     - Daniela Amodei
+    - Amodei
     - Sam Altman
+    - Altman
     - Demis Hassabis
+    - Hassabis
     - Sundar Pichai
+    - Pichai
     - Elon Musk
+    - Elon
+    - Musk
     - Lei Jun
 
 # Words that are also ordinary English. They are masked only when capitalised mid-sentence or attached
 # to a version number ("Sol 6.1", "Luna"), never when lower-case ("the sol", "a sonnet").
-ambiguous: [Sol, Luna, Astra, Argon, Muse, Fable, Mythos, Opus, Sonnet, Haiku, Meta, Google]
+ambiguous: [Sol, Luna, Astra, Argon, Muse, Fable, Mythos, Opus, Sonnet, Haiku, Meta, Google,
+            Bard, Llama, Mistral, Moonshot, Musk]
+
+# Not masked, by design: phrases that hint at a lab without naming it (for example a lab's own
+# terminology for its training method). They are part of a model's voice, and masking them would mean
+# judging the text. This is a known way an author can still be identified; see RESEARCH_REVIEW.md.
 
 # Canary string (BIG-bench style). Included in derived data files and site data so that training-data
 # contamination can be detected, and so labs that respect canaries can filter this data out.

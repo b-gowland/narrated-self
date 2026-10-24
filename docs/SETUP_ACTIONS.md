@@ -11,10 +11,9 @@ Everything else is automated. These are the only things that need you.
 
 ## Before freezing the protocol
 - [x] Decisions in `docs/RESEARCH_REVIEW.md` §7 (made 2026-10-24).
-- [ ] Read the prompts aloud once. Fix anything that sounds leading.
-- [ ] Review `protocol/masking.yaml` and `protocol/lexicons.yaml`.
-- [ ] Mark the word-list checking sheet (`docs/lexicon-check/R-smoke.csv`): about 10 minutes of yes/no.
-- [ ] Ask Claude Code to fill in the date, tag `prereg-v1` and publish the release. From then on `protocol/` is frozen.
+- [x] Prompts and masking list reviewed (by Claude Code, at the maintainer's request); weaknesses recorded in PREREGISTRATION §13.
+- [x] Word lists narrowed by rule instead of a hand-check (see CHANGELOG).
+- [x] Protocol frozen: tag `prereg-v1` and GitHub release.
 
 ## Each round (about 15 minutes)
 - [ ] Make a new `config/models_<round>.yaml`: the current lab flagships, plus the open-weight model picked by the rule (save the leaderboard page to `data/selection/`).

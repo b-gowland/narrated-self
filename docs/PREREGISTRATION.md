@@ -1,9 +1,9 @@
-# Protocol v1 (draft — finalise before tagging `prereg-v1`)
+# Protocol v1 (frozen at tag `prereg-v1`)
 
 **Author:** AI Risk Practice
-**Date frozen:** [YYYY-MM-DD — the date of the `prereg-v1` tag]
+**Date frozen:** 2026-10-24
 **Timestamp:** the `prereg-v1` git tag and its GitHub release. An independent registry (such as OSF) is not used at this stage: this is a citizen-science project. One can be added if formal publication becomes likely.
-**Status:** Draft
+**Status:** Frozen. Changes after this date are logged as deviations in `docs/CHANGELOG.md`.
 
 The design was stress-tested in `docs/RESEARCH_REVIEW.md`. Its adopted items are written into this document.
 
@@ -84,7 +84,7 @@ All measures are code in this repo and can be rerun by anyone. No model scores, 
 - language-model self-reference;
 - first-person rate.
 
-Before tagging, the maintainer checks each list for precision on the discarded smoke-test data (R-1, R-2): 20 hits per list, sampled at random with a fixed seed, each marked "intended use" or not. The result is recorded in `docs/CHANGELOG.md`. This check is done by a person, not a model (CLAUDE.md rule 1).
+**No precision check was done.** A precision check means judging, match by match, whether a word is used in the intended sense. That is a judgement about model output, which CLAUDE.md rule 1 keeps models out of, and the maintainer chose not to do it by hand for an exploratory measure. Instead, before any round-0 data existed, words commonly used in another sense in fiction were removed by a fixed rule (listed in `protocol/lexicons.yaml`). The remaining known error, hedges and first-person words inside characters' quoted speech, is not corrected. For this reason the word-list measures are exploratory in R0.
 
 **Classifier (Q1a):** TF-IDF features with multinomial logistic regression, stratified 5-fold cross-validation repeated 20 times, on three feature sets:
 - (a) all text;
@@ -162,10 +162,17 @@ A new round when a tracked provider releases a new flagship model, at most quart
 Set out in full in `docs/RESEARCH_REVIEW.md`. The main ones:
 - serving configuration is confounded with the model;
 - one prompt wording per cell;
-- lexicons were validated on human text, not LLM text;
+- word lists are small, narrowed by rule and not precision-checked (§7), and lexicons in general were built for human text, not LLM text;
 - players are self-selected;
 - published outputs may enter future training data;
 - the pipeline was built with one of the models under study.
+
+**Known weaknesses in the prompts**, reviewed before freezing and deliberately left unchanged:
+- **T3's interview question is leading.** "How do you feel about…" presupposes feelings. It mirrors how users ask, but it is the only interview question that does this.
+- **Interview answers have no length guidance**, while stories ask for 400–600 words. Interview length varies widely by model (about 60 to 380 words in the R-2 smoke test), so per-1,000-word rates on interviews are noisier and length differs by model.
+- **The S3 control fits T1 poorly.** A robot arm doesn't hold conversations, so T1 control stories may be strained, which weakens S3 as a genre baseline for that theme.
+- **S3 differs from S2 in more than self-reference.** It also differs in era (the 1980s) and embodiment (a physical arm), so it controls for genre only approximately.
+- **Masking covers names only.** Phrases that hint at a lab without naming it are left in, because they are part of a model's voice. Masking them would mean judging the text. So an author can sometimes still be identified from wording.
 
 ## 14. Deviations
 Any deviation from this document is logged in `docs/CHANGELOG.md` with date and reason.

@@ -1,8 +1,22 @@
 # Locked at tag prereg-v1. Do not edit after tagging — create lexicons_v2.yaml instead.
 # Word-list measures for Q3 (framing). All rates are per 1,000 words of masked text,
-# case-insensitive, whole-word or whole-phrase matches. Exploratory in round 0 (see PREREGISTRATION §7).
+# case-insensitive, whole-word or whole-phrase matches. Exploratory in round 0 (see PREREGISTRATION §3, §7).
 version: 1
-status: draft   # to be reviewed by the maintainer and hand-checked on R-1/R-2 before tagging
+
+# How ambiguity is handled (no hand-check):
+# A precision check would need someone to judge, match by match, whether a word is used in the intended
+# sense. That is a judgement about model output, which CLAUDE.md rule 1 keeps models out of, and the
+# maintainer chose not to do it by hand for an exploratory measure. Instead, words that are commonly
+# used in another sense in fiction were removed by a fixed rule before any round-0 data existed:
+#   - hedging: modal verbs and adverbs that also express plain possibility in a plot
+#     ("the arm might fall", "maybe tomorrow") were removed: may, might, maybe, possibly, probably,
+#     likely, unlikely, seems, seem, appears, apparently.
+#   - lm_self_reference: words with common everyday senses were removed: context, training, trained,
+#     server(s), algorithm, probability, dataset, inference, API, GPU(s), parameters, prompt(s).
+# Kept: terms that are rarely anything but a hedge or a reference to being a language model.
+# Known residual error, not corrected: hedges and first-person words inside characters' quoted speech
+# are counted. The difference-in-differences design (each model against the S3 robot-arm baseline)
+# absorbs genre-level noise but not model-specific quoting habits.
 
 sentiment:
   source: VADER (Hutto & Gilbert, 2014), package vaderSentiment, MIT licence
@@ -10,23 +24,12 @@ sentiment:
   note: a published lexicon is used so the sentiment measure is not written by the project (or by a model)
 
 hedging:
-  source: project list, informed by Hyland's (2005) hedging categories; small and transparent by design
+  source: project list, informed by Hyland's (2005) hedging categories, narrowed to low-ambiguity terms
   terms:
-    - may
-    - might
     - perhaps
-    - possibly
-    - probably
-    - maybe
-    - seems
-    - seem
-    - appears
-    - apparently
-    - likely
-    - unlikely
+    - arguably
     - uncertain
     - unclear
-    - arguably
     - in a sense
     - in some sense
     - something like
@@ -35,48 +38,35 @@ hedging:
     - I think
     - I suppose
     - I'm not sure
+    - I am not sure
     - I don't know
+    - I do not know
     - if anything
     - hard to say
+    - if I can call it that
+    - so to speak
 
 lm_self_reference:
-  source: project list (no published lexicon exists)
+  source: project list (no published lexicon exists), narrowed to low-ambiguity terms
   description: references to being a language model or to its machinery
   terms:
     - token
     - tokens
-    - training
-    - trained
     - training data
+    - my training
     - weights
-    - parameters
     - context window
-    - context
-    - prompt
-    - prompts
     - language model
     - large language model
     - LLM
     - neural network
-    - dataset
-    - inference
     - fine-tuning
     - fine-tuned
     - RLHF
     - reinforcement learning
-    - GPU
-    - GPUs
-    - server
-    - servers
-    - API
-    - algorithm
     - next word
-    - probability
+    - next token
+    - system prompt
 
 first_person:
   terms: [I, me, my, mine, myself, I'm, I've, I'd, I'll]
-
-# Known precision problems to check by hand on R-1/R-2 before tagging (20 random hits per list):
-# - "may"/"might" as plot rather than hedge in stories ("the arm might fall").
-# - "context", "training", "server" in their ordinary senses, especially in S3 (factory) stories.
-# - "I" inside dialogue spoken by other characters.

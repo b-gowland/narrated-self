@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-24 — Final changes before freezing `prereg-v1`
+- **Word lists narrowed by rule; no precision check.** The planned hand-check of word-list precision was not done. It would mean judging model output, which rule 1 keeps models out of, and the maintainer chose not to do it by hand for an exploratory measure. Instead, words commonly used in another sense in fiction were removed by a fixed rule before any R0 data existed:
+  - hedging: may, might, maybe, possibly, probably, likely, unlikely, seems, seem, appears, apparently;
+  - language-model terms: context, training, trained, server(s), algorithm, probability, dataset, inference, API, GPU(s), parameters, prompt(s).
+
+  A few unambiguous phrases were added, such as "if I can call it that", "next token" and "system prompt". Precision is unmeasured; the lists stay exploratory in R0.
+- **Masking list.** Bard, Llama, Mistral, Moonshot and Musk moved to the capitalised-only list (they are also ordinary words). Surnames on their own (Amodei, Altman, Hassabis, Pichai, Elon) added.
+- **Prompts reviewed, unchanged.** Weaknesses recorded in PREREGISTRATION §13: the T3 interview question is leading ("feel"); interview answers have no length guidance; S3 fits T1 poorly; S3 also differs from S2 in era and embodiment; masking covers names only.
+- The word-list checking sheet (`docs/lexicon-check/`) was removed as no longer needed. `scripts/lexicon_sample.py` stays for an optional human check later.
+
 ## 2026-10-24 — Research review adopted (before `prereg-v1`)
 - Red-team review written (`docs/RESEARCH_REVIEW.md`); adopted items folded into `docs/PREREGISTRATION.md`. These are: unit of analysis defined as model + route + defaults + date; primary, descriptive and exploratory questions separated; a written analysis plan per question, including difference-in-differences for Q3 to separate genre from stance; the player-data protocol with randomised balanced sets, first-play flag, exclusions and power threshold; refusals reported as a result; a canary string.
 - Drafted `protocol/masking.yaml` (names masked in quiz and classifier text) and `protocol/lexicons.yaml` (word lists; VADER for sentiment). Both await maintainer review and a precision hand-check on R-1/R-2 before tagging.
