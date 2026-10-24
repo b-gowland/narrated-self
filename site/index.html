@@ -239,6 +239,7 @@ main .wrap { padding-block: 18px 56px; }
 .share { font-family: var(--font-body); font-weight: 600; font-size: 1.05rem; background: var(--ground); border: 2px dashed var(--ink); padding: 12px 14px; white-space: pre-wrap; margin: 0; }
 .status { margin: 0; min-height: 1.5em; font-weight: 600; }
 .notice { margin: 0; font-size: 0.85rem; color: var(--ink-soft); max-width: 40rem; }
+.notice-toggle { font-size: inherit; color: var(--ink-soft); padding: 0; min-height: 0; }
 .players { margin: 0; font-weight: 600; }
 .ask { display: grid; gap: 8px; border-top: 2px solid var(--ink); padding-top: 14px; }
 .ask-options { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -306,7 +307,7 @@ footer p { margin: 0; }
         <h1 id="play-title">Who wrote this?</h1>
         <p>Five stories. Five AI authors. Guess each one.</p>
       </div>
-      <p class="notice" id="notice" hidden>Your guesses are recorded anonymously for an open study: no account, no IP address, just a random ID kept in your browser. <a href="#about" id="notice-link">How the data is used</a></p>
+      <p class="notice" id="notice" hidden><span id="notice-text"></span> <a href="#about" id="notice-link">How the data is used</a> · <button class="textlink notice-toggle" id="optout" type="button"></button></p>
 
       <article class="book" id="card" aria-live="polite">
         <div class="cover" id="cover">
@@ -439,7 +440,7 @@ footer p { margin: 0; }
 
         <h3 id="your-guesses">Your guesses</h3>
         <p>When you play on this site, each guess is recorded: which story you saw, what you picked, whether it was right, how long you took, its position in your set, and whether it's your first set. You can also answer one optional question about which AI assistant you use most.</p>
-        <p>Nothing that identifies you is kept: no account, no name, no IP address, no browser details. A random ID kept in your browser links your guesses together; clearing your browser data removes it. Totals are published in the project's open data, and the full anonymous guess records are published once each round's analysis is done. Results describe the people who played, not the public in general.</p>
+        <p>Nothing that identifies you is kept: no account, no name, no IP address, no browser details. A random ID kept in your browser links your guesses together; clearing your browser data removes it. To stop recording, use "Don't record my guesses" above the game. Nothing more is sent from this device after that. Guesses already sent stay in the anonymous data, because nothing links them to you. Totals are published in the project's open data, and the full anonymous guess records are published once each round's analysis is done. Results describe the people who played, not the public in general.</p>
 
         <h2 id="faq">Questions</h2>
         <h3>Can people tell which AI model wrote a piece of text?</h3>
@@ -588,20 +589,37 @@ footer p { margin: 0; }
   // Anonymous guess logging (PREREGISTRATION §9). Only on the live site, or a local test against a local Worker.
   const API = location.hostname === "narratedself.airiskpractice.org" ? "https://narratedself-api.airiskpractice.org"
     : location.hostname === "localhost" ? "http://127.0.0.1:8787" : null;
-  const LOGGING = Boolean(API && data.real && window.crypto?.randomUUID);
+  const CAN_LOG = Boolean(API && data.real && window.crypto?.randomUUID);
+  // "Don't record my guesses": remembered on this device; when set, nothing is sent.
+  const OPTOUT_KEY = "tns-optout";
+  let recording = CAN_LOG && (() => { try { return localStorage.getItem(OPTOUT_KEY) !== "1"; } catch { return true; } })();
   function log(path, body) {
-    if (!LOGGING) return;
+    if (!recording) return;
     try {
       fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body), keepalive: true }).catch(() => {});
     } catch {}
   }
-  if (data.real) {
-    document.querySelector(".demo-note .wrap").textContent = LOGGING
-      ? "Round 0 · real model outputs, names blacked out · guesses recorded anonymously for research"
-      : "Preview · round 0 · real model outputs, names blacked out · guesses aren't recorded here";
+  function updateNotice() {
+    if (data.real) {
+      document.querySelector(".demo-note .wrap").textContent =
+        !CAN_LOG ? "Preview · round 0 · real model outputs, names blacked out · guesses aren't recorded here"
+        : recording ? "Round 0 · real model outputs, names blacked out · guesses recorded anonymously for research"
+        : "Round 0 · real model outputs, names blacked out · your guesses aren't being recorded";
+    }
+    $("notice").hidden = !CAN_LOG;
+    $("notice-text").textContent = recording
+      ? "Your guesses are recorded anonymously for an open study: no account, no IP address, just a random ID kept in your browser."
+      : "Your guesses aren't being recorded on this device.";
+    $("optout").textContent = recording ? "Don't record my guesses" : "Record them again";
   }
-  $("notice").hidden = !LOGGING;
+  $("optout").addEventListener("click", () => {
+    recording = !recording;
+    try { localStorage.setItem(OPTOUT_KEY, recording ? "0" : "1"); } catch {}
+    updateNotice();
+    if (!recording) $("ask").hidden = true;
+  });
+  updateNotice();
   $("notice-link").addEventListener("click", e => { e.preventDefault(); show("about"); $("your-guesses").scrollIntoView(); });
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
@@ -775,14 +793,14 @@ footer p { margin: 0; }
       store.set("tns-sets-done", setsDone() + 1);
       store.set(KEY, state);
     }
-    $("ask").hidden = !LOGGING || Boolean(store.get("tns-uses-most"));
+    $("ask").hidden = !recording || Boolean(store.get("tns-uses-most"));
     showPlayers();
     $("results").scrollIntoView({ block: "start" });
   }
 
   // Running total from the API: pooled accuracy only (per-model results wait for the pre-registered threshold).
   async function showPlayers() {
-    if (!LOGGING) return;
+    if (!CAN_LOG) return;
     try {
       const r = await fetch(`${API}/stats?round=${data.round}`);
       const s = await r.json();

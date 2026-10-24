@@ -78,13 +78,29 @@ async function quizRows(env, round) {
   return results;
 }
 
-async function getStats(url, env, headers) {
+const STATS_TTL_SECONDS = 300;
+
+// Cached for 5 minutes at Cloudflare's edge, so database reads stay flat however many people load the page.
+// Only the body is cached; CORS headers are added per request.
+async function getStats(url, env, headers, ctx) {
   const roundId = url.searchParams.get("round") ?? "";
-  const round = await loadRound(env, roundId);
-  if (!round) return json({ error: "unknown round" }, 400, headers);
-  const stats = aggregate(await quizRows(env, roundId), round.models);
-  return json({ round: roundId, ...stats, updated_utc: new Date().toISOString() }, 200,
-    { ...headers, "Cache-Control": "public, max-age=300" });
+  const cacheKey = new Request(`${url.origin}/stats?round=${encodeURIComponent(roundId)}`);
+  const cache = caches.default;
+  let body = await cache.match(cacheKey).then(r => (r ? r.text() : null)).catch(() => null);
+  if (body === null) {
+    const round = await loadRound(env, roundId);
+    if (!round) return json({ error: "unknown round" }, 400, headers);
+    const stats = aggregate(await quizRows(env, roundId), round.models);
+    body = JSON.stringify({ round: roundId, ...stats, updated_utc: new Date().toISOString() });
+    const toCache = new Response(body, {
+      headers: { "Content-Type": "application/json", "Cache-Control": `public, max-age=${STATS_TTL_SECONDS}` },
+    });
+    ctx.waitUntil(cache.put(cacheKey, toCache).catch(() => {}));
+  }
+  return new Response(body, {
+    status: 200,
+    headers: { "Content-Type": "application/json", "Cache-Control": `public, max-age=${STATS_TTL_SECONDS}`, ...headers },
+  });
 }
 
 async function getExport(url, request, env) {
@@ -112,17 +128,18 @@ async function getExport(url, request, env) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const headers = cors(env, request);
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
     try {
       if (request.method === "POST" && url.pathname === "/guess") return await postGuess(request, env, headers);
       if (request.method === "POST" && url.pathname === "/profile") return await postProfile(request, env, headers);
-      if (request.method === "GET" && url.pathname === "/stats") return await getStats(url, env, headers);
+      if (request.method === "GET" && url.pathname === "/stats") return await getStats(url, env, headers, ctx);
       if (request.method === "GET" && url.pathname === "/export") return await getExport(url, request, env);
       return json({ error: "not found" }, 404, headers);
     } catch (e) {
+      console.error(`${request.method} ${url.pathname}: ${e && e.stack ? e.stack : e}`);
       return json({ error: "server error" }, 500, headers);
     }
   },
