@@ -33,7 +33,7 @@ What it **cannot** support, however well executed:
 ## 3. Threats by research question
 
 ### Q1 Distinctiveness (classifier)
-- **Style, not self.** A word-statistics classifier will probably separate models almost perfectly, because LLMs have strong stylistic fingerprints: formatting, Markdown, titles, punctuation habits, favourite words. High accuracy says little about *self-portrayal*.
+- **Stylistic fingerprints.** A word-statistics classifier will probably separate models almost perfectly, because LLMs have strong stylistic fingerprints: formatting, Markdown, titles, punctuation habits, favourite words. High accuracy says little about *self-portrayal*.
   - **Adopted.** Report accuracy at three levels: (a) all features; (b) after stripping formatting (Markdown, headings, bullet marks, titles); (c) function words only. Report the drop between levels. Treat the human result as primary for "self-portrayal" and the classifier as the stylistic ceiling.
 - **Name leakage.** If a story mentions its own name or maker, the classifier gets a free answer.
   - **Adopted.** Classifier input uses the masked text (`protocol/masking.yaml`), the same as the game.
@@ -106,7 +106,7 @@ What it **cannot** support, however well executed:
 ## 5. Dependencies
 - **OpenRouter** (routing), the **providers' defaults** (which can change without notice), and **Artificial Analysis** (open-weight selection; its index version is recorded).
 - **Cloudflare** (player data collection, to be built) and **GitHub Pages** (site).
-- **Players:** findings on human distinguishability need roughly 250–300 completed sets. With no traffic there is no Q1 human result, so the traffic plan is a research dependency, not just marketing.
+- **Players:** findings on human distinguishability need roughly 250–300 completed sets. With no traffic there is no Q1 human result, so the traffic plan is also a research dependency.
 
 ## 6. Research outputs
 1. **Before R0:** lock the protocol, including this review's adopted items. Tag `prereg-v1` and publish a GitHub release.

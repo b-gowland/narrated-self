@@ -2,7 +2,7 @@
 
 The site will live at **narratedself.airiskpractice.org**, next to the other AI Risk Practice tools (`baseline.`, `library.` and `app.airiskpractice.org`). It uses the same setup: GitHub Pages, deployed by a GitHub Action, with DNS on Cloudflare.
 
-While the stories are placeholder text, the page carries `noindex`, so search engines skip it. That tag comes off when round 0's real stories go in.
+The page carries `noindex`, so search engines skip it until the public launch (section 3).
 
 ## 1. Turn on hosting (done 2026-10-24)
 
@@ -31,7 +31,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 
 ## 3. Launch checklist
 - [x] Round 0 run, and the site rebuilt with real, masked stories.
-- [ ] Guess logging deployed (`docs/PLAYER_DATA.md`), and a test guess shows up in `/stats`.
+- [x] Guess logging deployed (`docs/PLAYER_DATA.md`) and tested with a live guess (2026-10-25).
 - [ ] Remove `<meta name="robots" content="noindex">` from `site/index.html`.
 - [ ] Add a share image (`site/og.png`, 1200×630) and the `og:image` tags.
 - [ ] Run QA: `uv run python scripts/qa.py`.
@@ -64,7 +64,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 **Launch week (round 0)**
 1. **LinkedIn** (you and the AI Risk Practice page). Post a masked story excerpt with "Which AI wrote this?" and the link. Post the reveal and the headline number 3–5 days later.
 2. **Hacker News, "Show HN".** For example: *"Show HN: Guess which AI wrote a story about itself (open data)"*. Playable, open-data projects do well there. Post on a weekday morning, US Eastern time.
-3. **Reddit.** r/artificial, r/ChatGPT, r/ClaudeAI and r/singularity. Read each subreddit's self-promotion rules first, and lead with the game rather than the project.
+3. **Reddit.** r/artificial, r/ChatGPT, r/ClaudeAI and r/singularity. Read each subreddit's self-promotion rules first, and open with the game itself.
 4. **Bluesky and X**, where AI researchers and journalists are. The share card does the rest.
 5. **Newsletter tip lines.** AI newsletters such as The Neuron, Ben's Bites and TLDR AI take reader submissions. One email each.
 

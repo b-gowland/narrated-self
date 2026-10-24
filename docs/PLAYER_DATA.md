@@ -23,7 +23,7 @@ This implements the player-data protocol in `docs/PREREGISTRATION.md` §9.
   - qualifying guesses, which means first sets only, not bots, and 5 seconds or more;
   - exclusion counts;
   - pooled accuracy;
-  - "Spot the robot" totals;
+  - "AI vs robot arm" totals from earlier picks, if any (the view no longer has a guess);
   - answers to the optional question.
 - **Per-model accuracy** for a model is published once it has 200 qualifying guesses. **The confusion matrix** is published once every model has.
 - **Row-level data** is published once a round's analysis is complete.
@@ -32,8 +32,7 @@ This implements the player-data protocol in `docs/PREREGISTRATION.md` §9.
 ## Implementation choices not spelled out in §9
 - **Flood limit:** at most 1,000 guesses per device per day are accepted. This guards against abuse, so it is separate from the analysis exclusions.
 - **Known bots:** user agents matching common crawler and script patterns are flagged as bots. An empty user agent counts as a bot.
-- **"Spot the robot":** only the first pick per pair is recorded.
-- **First set:** for "Spot the robot", "first set" means the device hadn't yet finished a quiz set.
+- **"AI vs robot arm"** (formerly "Spot the robot") no longer has a guess, so nothing is recorded from it. The Worker still accepts the "control" mode in case a guess returns.
 - **The optional question** has fixed options: Claude, ChatGPT, Gemini, Grok, Copilot, Meta AI, DeepSeek, another one, or none. "Skip" records nothing.
 
 ## Known limitations

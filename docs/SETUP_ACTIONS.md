@@ -6,7 +6,7 @@ Everything else is automated. These are the only things that need you.
 - [x] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
 - [x] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
 - [x] Revoked the direct provider keys (Anthropic, OpenAI, Google), confirmed rejected, and blanked them in `.env` (2026-10-25).
-- [ ] Review the model line-up in `config/models_R0.yaml` (the open-weight slot follows the rule in `docs/PREREGISTRATION.md` §4).
+- [x] Model line-up for R0 set and re-checked on the run day (`config/models_R0.yaml`, `data/selection/R0.json`).
 - [x] Dry run: `uv run tns run --round R0 --dry-run`.
 
 ## Before freezing the protocol
@@ -22,7 +22,7 @@ Everything else is automated. These are the only things that need you.
 - [ ] Before pushing anything public: `uv run python scripts/qa.py` (or ask Claude Code to run the `qa` skill).
 
 ## Going live and sharing
-- [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org as a demo).
+- [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org, hidden from search engines until launch).
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
 - [x] Guess logging deployed (2026-10-25): Worker, database, export token, nightly export.
 - [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule, verified domain, Wrangler logout, OpenRouter key limit).

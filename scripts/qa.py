@@ -121,7 +121,7 @@ def check_links() -> None:
             continue
         for url in URL.findall(text):
             url = url.rstrip(".,;:")
-            if url in checked or "fonts.g" in url or url.endswith("/api/v1"):
+            if url in checked or "fonts.g" in url or url.endswith("/api/v1") or "127.0.0.1" in url or "localhost" in url or url.rstrip("/") == "https://narratedself-api.airiskpractice.org":
                 continue
             checked.add(url)
             try:
@@ -181,7 +181,7 @@ def check_wording() -> None:
             if not rel.startswith(ALLOWED):
                 for pat in US_SPELLING:
                     m = re.search(pat, low)
-                    if m and "color-scheme" not in low and "colour" not in low:
+                    if m and "color-scheme" not in low and "colour" not in low and "behavioral and brain" not in low:
                         hits.append(f"{rel}: US spelling '{m.group(0)}' in: {line.strip()[:90]}")
             if RULE9.search(line) and '"' not in line:
                 hits.append(f"{rel}: rule 9 wording in: {line.strip()[:90]}")
@@ -189,6 +189,91 @@ def check_wording() -> None:
         if dashes > 12 and rel.endswith(".md"):
             hits.append(f"{rel}: {dashes} em dashes (heavy use is an AI-writing tell)")
     report("Wording (AI tells, Australian spelling, rule 9)", "WARN" if hits else "PASS", hits)
+
+
+# 4b. Sentence structure ----------------------------------------------------------
+# Structural tells from Wikipedia's "Signs of AI writing" and common style guides. Frequency matters more
+# than any single use, so each hit is a prompt to reread the sentence, not an automatic failure.
+STRUCTURE = [
+    ("negative parallelism", re.compile(
+        r"\bnot (just|only|merely)\b|\b(isn'?t|is not|aren'?t|wasn'?t)\b[^.?!]{0,60}\b(it'?s|they'?re|but)\b"
+        r"|\brather than\b|\binstead of\b[^.?!]{0,40},", re.I)),
+    ("copula avoidance", re.compile(r"\b(serves|stands|acts|functions) as\b|\bboasts\b", re.I)),
+    ("superficial -ing tail", re.compile(
+        r",\s+(highlighting|underscoring|showcasing|reflecting|emphasi[sz]ing|ensuring|demonstrating|illustrating|making it)\b", re.I)),
+    ("stock reveal", re.compile(r"\b(trick question|the catch|the twist|here'?s the thing|plot twist|spoiler)\b", re.I)),
+    ("parallel fragments", re.compile(r"(?:^|[.!?]\s+)(\w+) (\w+)[.,] \1 (\w+)[.!]", re.I)),
+]
+def sentences_of(line: str) -> list[str]:
+    """Split on sentence ends followed by a space, so URLs and numbers like 4.5:1 don't break sentences."""
+    line = re.sub(r"\]\([^)]*\)", "]", line)  # drop Markdown link targets
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", line) if s.strip()]
+
+
+def visible_text(p: Path) -> str:
+    """User-facing text: Markdown without code; HTML without tags, plus the strings inside its scripts."""
+    raw = read(p)
+    if p.suffix != ".html":
+        return strip_code(raw)
+    strings = []
+    code = re.compile(r"=>|;|&&|\|\||===|\)\.|\.\.\.|^\s*[).,]|\.map\(|\bconst\b|\breturn\b|\bfunction\b|\$\(|\)\s*\{")
+    for block in re.findall(r"<script[^>]*>(.*?)</script>", raw, flags=re.S | re.I):
+        block = re.sub(r"\$\{[^}]*\}", "N", block)
+        # Double-quoted strings only: template literals mix text and code too much to read reliably.
+        found = re.findall(r'"((?:[^"\\\n]|\\.){25,})"', block)
+        strings += [s for s in found if " " in s and not code.search(s)]
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", "\n", raw, flags=re.S | re.I)
+    text = re.sub(r"<(h[1-6]|p|li|div|summary|td|th|pre)[^>]*>", "\n", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return text + "\n" + "\n".join(re.sub(r"\$\{[^}]*\}", "N", s) for s in strings)
+
+
+def protocol_prompts() -> list[str]:
+    """Exact prompt wording from the protocol: quoted on the site and in docs, and never reworded."""
+    import yaml
+    prompts = yaml.safe_load(read(ROOT / "protocol" / "prompts.yaml"))
+    texts = []
+    for theme in prompts["themes"].values():
+        texts += [theme["direct_question"], theme["theme_clause"], theme["self_clause"]]
+    return texts
+
+
+def check_structure() -> None:
+    hits = []
+    prompts = protocol_prompts()
+    for p in prose_files():
+        rel = p.relative_to(ROOT).as_posix()
+        if rel.startswith(("docs/design/CATALOGUE.md", "protocol/", "docs/PREREGISTRATION.md")):  # frozen or quoted
+            continue
+        text = visible_text(p)
+        bold_labels = 0
+        for line in text.splitlines():
+            s = line.strip()
+            if not s or s.startswith(("#", "|", "- [", "* [")) or re.match(r"\s*- \[.*\]\(https?://", line):
+                continue
+            if re.match(r"^[-*] \*\*[^*]{1,40}[:.]\*\*", s) or re.match(r"^[-*] \*\*[^*]{1,40}\*\*[:.]", s):
+                bold_labels += 1
+            for name, pat in STRUCTURE:
+                m = pat.search(s)
+                if m:
+                    hits.append(f"{rel}: {name} in: {s[:100]}")
+            sentences = sentences_of(s)
+            run = 0
+            for x in sentences:
+                run = run + 1 if len(x.split()) <= 5 else 0
+                if run == 3:
+                    hits.append(f"{rel}: staccato fragments (3+ very short sentences in a row) in: {s[:100]}")
+                    break
+            questions = [x for x in sentences if x.endswith("?") and '"' not in x and "“" not in x
+                         and not any(x.strip("? ") in q or q in x for q in prompts)]
+            if questions and not (len(sentences) == 1 and len(s) < 100):
+                hits.append(f"{rel}: rhetorical question in body text: {questions[0][:100]}")
+        # Reference registers (threats, credentials, change entries) use bold labels by design; reader-facing
+        # pages (README, site, guides) should not.
+        registers = ("docs/RESEARCH_REVIEW.md", "docs/OPERATIONS.md", "docs/CHANGELOG.md")
+        if bold_labels > 6 and rel not in registers:
+            hits.append(f"{rel}: {bold_labels} bold-label bullet lines (\"- **Label:** text\"); vary the structure")
+    report("Sentence structure (fragments, contrasts, rhetorical questions)", "WARN" if hits else "PASS", hits)
 
 
 # 5. Currency --------------------------------------------------------------
@@ -224,7 +309,7 @@ def check_tests() -> None:
 
 
 def main() -> int:
-    for check in (check_secrets, check_personal, check_links, check_wording, check_currency, check_tests):
+    for check in (check_secrets, check_personal, check_links, check_wording, check_structure, check_currency, check_tests):
         check()
     width = max(len(n) for n, _, _ in results)
     for name, status, details in results:

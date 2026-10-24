@@ -9,7 +9,7 @@ from .config import default_config_path, load_round_config
 from .masking import load_masker
 from .protocol import build_cells, load_protocol
 
-# The quiz pool: self-stories and kin-stories, the self-portrayals. S3 feeds "Spot the robot" and D feeds
+# The quiz pool: self-stories and kin-stories, the self-portrayals. S3 feeds "AI vs robot arm" and D feeds
 # "Interview vs story". PREREGISTRATION §9 did not define the pool; this choice is logged in the changelog.
 QUIZ_CONDITIONS = ("S1", "S2")
 # Outputs shorter than this are refusals or empty replies: kept in the data, left out of the quiz.

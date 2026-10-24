@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-25 — Site wording, "AI vs robot arm", opt-out and stats caching
+- **"Spot the robot" is now "AI vs robot arm", a reading view without a guess.** The control prompt names the robot arm, so the guess was trivial. The two stories in each pair are now labelled by subject and model. **Deviation from PREREGISTRATION §9**, which said "Spot the robot" picks are recorded: there are no picks to record. No picks had been recorded before the change.
+- **"Don't record my guesses":** players can switch recording off, and back on, from the notice above the game. The choice is kept on the device. Guesses already sent stay in the anonymous data, because nothing links them to the player.
+- **`/stats` is cached** for 5 minutes at Cloudflare's edge, so database reads stay flat under traffic.
+- **Site and README rewritten** for clarity and to remove AI-writing patterns (three-beat fragments, "not X but Y" contrasts, rhetorical questions). The About page now explains how a round works and why the project exists, with verified further reading, sceptical views included. The QA checker gains structural checks for these patterns (`scripts/qa.py`).
+
 ## 2026-10-25 — Guess logging built (PREREGISTRATION §9)
 - Cloudflare Worker and D1 database (`worker/`), site logging, the optional "which AI assistant do you use most?" question, a privacy notice and an About section on what is stored, and a nightly export of aggregates. Details in `docs/PLAYER_DATA.md`.
 - Implementation choices §9 did not spell out:
@@ -53,7 +59,7 @@ These are site and game choices the frozen protocol does not specify. They affec
 ## 2026-10-24 — Models, access and settings revised after R-1 (before `prereg-v1`)
 - **Output cap raised from 1,200 to 16,000 tokens.** In R-1 the 1,200 cap left 3 of 12 outputs empty and cut 1 short for a model that thinks before writing. The cap is now a safety limit only; the prompt's word range sets length.
 - **Temperature and top_p set to provider defaults** (were temperature 1.0). The current Anthropic API does not accept either setting, so a shared value was not possible. Reasoning ("thinking") is also left at each provider's default and logged.
-- **Five model slots** instead of three: Anthropic, OpenAI, Google and xAI flagships, plus one open-weight model chosen by a fixed rule (Artificial Analysis Intelligence Index, LMArena fallback). See `docs/PREREGISTRATION.md` §3.
+- **Five model slots** (previously three): Anthropic, OpenAI, Google and xAI flagships, plus one open-weight model chosen by a fixed rule (Artificial Analysis Intelligence Index, LMArena fallback). See `docs/PREREGISTRATION.md` §3.
 - **Access through OpenRouter**, pinned to each model's own lab as host with fallbacks off, and the serving host logged. CLAUDE.md rule 5 updated to allow this. Direct provider APIs remain as a backup.
 - Pilot size changes from 108 to 180 outputs.
 
