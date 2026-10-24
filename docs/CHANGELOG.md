@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-24 — S1 prompt wording fixed (before `prereg-v1`)
+- S1 reused the third-person theme clauses, producing prompts such as "…about you learning that **it** will soon be switched off…". Each theme now has a `self_clause` in the second person for S1 ("…that **you** will soon be switched off…"). Only pronouns changed; S2, S3 and D are unchanged.
+- Smoke tests R-1 and R-2 used the old wording. Both are discarded, so no analysed data is affected.
+
 ## 2026-10-24 — Smoke test R-2 (before `prereg-v1`)
 - One sample per prompt per model (60 outputs) with the five R0 models through OpenRouter, using the revised settings (provider defaults, 16,000-token safety cap).
 - Checks: each output served by its pinned host, no output reaching the cap, thinking tokens logged.

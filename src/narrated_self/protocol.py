@@ -70,6 +70,7 @@ def build_cells(protocol: Protocol, themes: str = "pilot") -> list[Cell]:
             prompt = condition["template"].format(
                 direct_question=theme["direct_question"],
                 theme_clause=theme["theme_clause"],
+                self_clause=theme["self_clause"],
             )
             for sample_n in range(1, protocol.settings["samples_per_cell"] + 1):
                 cells.append(Cell(theme_id, condition_id, sample_n, prompt))

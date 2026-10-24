@@ -23,6 +23,13 @@ def test_prompts_are_filled_in(repo: Path):
     assert all("robot arm" in p for p in stories)
 
 
+def test_first_person_stories_address_the_model_as_you(repo: Path):
+    for cell in build_cells(load_protocol(repo), "all"):
+        if cell.condition_id == "S1":
+            words = cell.prompt_text.replace(",", " ").replace(".", " ").split()
+            assert "it" not in words, cell.prompt_text
+
+
 def test_hash_is_stable(repo: Path):
     assert protocol_hash(repo) == protocol_hash(repo)
 
