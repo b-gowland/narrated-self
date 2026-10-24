@@ -2,7 +2,11 @@
 
 Written 2026-10-24, before `prereg-v1`, to stress-test the design the way a sceptical reviewer would. It sets out what the project can credibly contribute, what could undermine each result, and what the protocol does about it. Items marked **Adopted** are written into `docs/PREREGISTRATION.md`. Items marked **Decision** need the maintainer.
 
-A note on authorship: this review, the pipeline and the draft word lists were produced with Claude, which is also one of the models studied. The mitigations are that every measure is deterministic and public, published lexicons are preferred over custom ones, and a human reviews and owns every protocol decision.
+A note on authorship: this review, the pipeline and the draft word lists were produced with Claude, which is also one of the models studied. The mitigations are:
+- every measure is deterministic and public;
+- published lexicons are preferred over custom ones;
+- any check that needs judgement about model output, such as the word-list precision check, is done by a person;
+- a human reviews and owns every protocol decision.
 
 ## 1. What this project can credibly contribute
 
@@ -91,7 +95,7 @@ What it **cannot** support, however well executed:
 | Threat | Why it matters | Response |
 |---|---|---|
 | **Researcher degrees of freedom** | Choosing measures or exclusions after seeing data inflates findings | Everything listed here is fixed before R0; anything else is labelled exploratory. **Adopted.** |
-| **Weak timestamp** | A git tag can be deleted and re-created, so it proves nothing to an outside reviewer | Deposit the pre-registration on **OSF Registries** (free, immutable, timestamped) before R0, and link it from the README. **Decision:** needs your OSF account. |
+| **Weak timestamp** | A git tag can be deleted and re-created, so it proves little to an outside reviewer | Accepted for now (decision 2): the tag plus a GitHub release. OSF Registries can be added if formal publication becomes likely. |
 | **Refusals and safety filters** | Some cells may be refused or cut short by provider filters (R-1 had one "refusal" stop). Dropping them biases results; keeping them distorts lexicon rates. | Refusals stay in the data. Report the refusal rate per model and cell as its own result. Lexicon and classifier analyses run with and without refusals. **Adopted.** |
 | **Masking as an intervention** | Masking changes the text people read | The masking list is fixed in advance. Every substitution is logged, and the substitution rate per model is reported. **Adopted.** |
 | **Ethics** | Anonymous game data is low risk, but journals may ask about ethics review | Collect no personal data. Show a plain notice before the first guess ("guesses are recorded anonymously for research"). **Decision** for formal publication: seek a low-risk ethics exemption, via an institution or an independent review body. |
@@ -104,16 +108,18 @@ What it **cannot** support, however well executed:
 - **Players:** findings on human distinguishability need roughly 250–300 completed sets. With no traffic there is no Q1 human result, so the traffic plan is a research dependency, not just marketing.
 
 ## 6. Path to a real research output
-1. **Before R0:** lock the protocol, including this review's adopted items. Tag `prereg-v1` and deposit on OSF.
+1. **Before R0:** lock the protocol, including this review's adopted items. Tag `prereg-v1` and publish a GitHub release.
 2. **R0 (pilot):** archive and descriptive results. Use it to check that lexicons, masking and logging behave. No confirmatory claims.
 3. **Data deposit:** each round on Zenodo with a DOI, plus the canary.
 4. **R1 onward:** confirmatory analyses on lexicons and drift. Player results once the power thresholds are met.
 5. **Write-up:** a preprint (arXiv or PsyArXiv) and a workshop paper. Venues on evaluation, model behaviour or AI welfare, such as workshops at NeurIPS, ICLR or FAccT, fit a careful descriptive study of this kind.
 
-## 7. Decisions for the maintainer
-1. Make lexicon measures exploratory for R0 (recommended: yes).
-2. Deposit the pre-registration on OSF before R0 (recommended: yes).
-3. Add the optional "Which AI assistant do you use most?" question (recommended: yes).
-4. Add a second paraphrase per theme from R1 (recommended: yes, as `prompts_v2.yaml`).
-5. Ethics exemption, if aiming at formal publication.
-6. Check provider terms on publishing outputs.
+## 7. Decisions (made 2026-10-24)
+1. Lexicon measures are **exploratory in R0** and confirmatory from R1. **Yes.**
+2. OSF deposit: **not now.** This is a citizen-science project; the git tag and GitHub release are the timestamp. Revisit if formal publication becomes likely.
+3. Optional "Which AI assistant do you use most?" question: **yes.**
+4. Second paraphrase per theme from R1 (`prompts_v2.yaml`): **yes.**
+5. Ethics exemption: **not needed now.** There is no personal data and no formal publication planned. Revisit with decision 2.
+6. Provider terms on publishing outputs: the maintainer is checking.
+
+The project is published under **AI Risk Practice**, not a personal name.

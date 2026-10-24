@@ -4,8 +4,8 @@
 version: 1
 
 rules:
-  match: case-insensitive, whole word; possessives and plurals included ("Claude's", "GPTs")
-  replace_with: "[[NAME]]"          # rendered on the site as a black bar of the original word's length
+  match: case-insensitive, whole word; possessives, plurals and version numbers included ("Claude's", "GPTs", "GPT-6.1")
+  replace_with: "[[xxxxxx]]"        # fixed width for every name, so the bar's length is never a clue; shown as a black bar
   also_mask: the exact model strings listed in the round's config, and any product name containing them
 
 # Every AI lab, model family or close associate that could reveal an author, including other labs'

@@ -10,12 +10,11 @@ Everything else is automated. These are the only things that need you.
 - [x] Dry run: `uv run tns run --round R0 --dry-run`.
 
 ## Before freezing the protocol
-- [ ] Read `docs/RESEARCH_REVIEW.md` and answer its "Decisions for the maintainer" (§7).
+- [x] Decisions in `docs/RESEARCH_REVIEW.md` §7 (made 2026-10-24).
 - [ ] Read the prompts aloud once. Fix anything that sounds leading.
-- [ ] Review `protocol/masking.yaml` and `protocol/lexicons.yaml`. Claude Code then hand-checks the word lists on R-1/R-2 for precision.
-- [ ] Fill in your name and the date in `docs/PREREGISTRATION.md`.
-- [ ] Deposit the pre-registration on OSF Registries (free) for an independent timestamp, and add the link to the document.
-- [ ] Tag and push: `git tag prereg-v1` and `git push origin prereg-v1`. From then on `protocol/` is frozen.
+- [ ] Review `protocol/masking.yaml` and `protocol/lexicons.yaml`.
+- [ ] Mark the word-list checking sheet (`docs/lexicon-check/R-smoke.csv`): about 10 minutes of yes/no.
+- [ ] Ask Claude Code to fill in the date, tag `prereg-v1` and publish the release. From then on `protocol/` is frozen.
 
 ## Each round (about 15 minutes)
 - [ ] Make a new `config/models_<round>.yaml`: the current lab flagships, plus the open-weight model picked by the rule (save the leaderboard page to `data/selection/`).

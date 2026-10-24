@@ -1,8 +1,8 @@
 # Protocol v1 (draft — finalise before tagging `prereg-v1`)
 
-**Author:** [Your name]
+**Author:** AI Risk Practice
 **Date frozen:** [YYYY-MM-DD — the date of the `prereg-v1` tag]
-**Independent timestamp:** [OSF Registries link, deposited before round 0]
+**Timestamp:** the `prereg-v1` git tag and its GitHub release. An independent registry (such as OSF) is not used at this stage: this is a citizen-science project. One can be added if formal publication becomes likely.
 **Status:** Draft
 
 The design was stress-tested in `docs/RESEARCH_REVIEW.md`. Its adopted items are written into this document.
@@ -84,7 +84,7 @@ All measures are code in this repo and can be rerun by anyone. No model scores, 
 - language-model self-reference;
 - first-person rate.
 
-Before tagging, each list is hand-checked for precision on the discarded smoke-test data (R-1, R-2): 20 random hits per list, with the result recorded in `docs/CHANGELOG.md`.
+Before tagging, the maintainer checks each list for precision on the discarded smoke-test data (R-1, R-2): 20 hits per list, sampled at random with a fixed seed, each marked "intended use" or not. The result is recorded in `docs/CHANGELOG.md`. This check is done by a person, not a model (CLAUDE.md rule 1).
 
 **Classifier (Q1a):** TF-IDF features with multinomial logistic regression, stratified 5-fold cross-validation repeated 20 times, on three feature sets:
 - (a) all text;
@@ -145,8 +145,10 @@ Also run with length-normalised features.
 - A canary string (`protocol/masking.yaml`) is included in derived data and site data so contamination can be detected and filtered.
 - The protocol fingerprint (SHA-256 of `protocol/`) is stored on every output.
 
-## 11. Cadence
+## 11. Cadence and planned changes
 A new round when a tracked provider releases a new flagship model, at most quarterly.
+
+**Planned for round 1:** a second wording (paraphrase) of each theme's prompts, added as `protocol/prompts_v2.yaml` with a changelog entry, to measure how much results depend on exact phrasing. Round 0 uses one wording.
 
 ## 12. What we will not claim
 - That any output reflects genuine experience or its absence.

@@ -26,6 +26,9 @@ def main(argv: list[str] | None = None) -> int:
     smoke.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
     smoke.add_argument("--id", default="R-1", dest="smoke_id", help="Discarded round ID to save under (default R-1)")
 
+    mask = sub.add_parser("mask", help="Mask names in a round's outputs into data/derived/<round>/")
+    mask.add_argument("--round", required=True, dest="round_id")
+
     args = parser.parse_args(argv)
     root = Path.cwd()
 
@@ -41,6 +44,13 @@ def main(argv: list[str] | None = None) -> int:
         from .runner import run_round
 
         return run_round(root, plan)
+
+    if args.command == "mask":
+        from .masking import mask_round
+
+        result = mask_round(root, args.round_id)
+        print(f"Masked {result['outputs']} outputs ({result['substitutions']} substitutions) into data/derived/{args.round_id}/")
+        return 0
 
     if args.command == "smoke":
         from .runner import run_round
