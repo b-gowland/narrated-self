@@ -54,7 +54,7 @@ Prompts and settings are fixed in `protocol/` and frozen at tag `prereg-v1`, so 
 ```
 protocol/      Fixed prompts, settings, masking list and word lists. Frozen at tag prereg-v1.
 config/        Models per round (exact model strings, route, host, prices for estimates).
-docs/          Pre-registration, research review, changelog, go-live plan, design notes, round notes.
+docs/          Pre-registration, research review, changelog, go-live plan, operations (security and costs), design notes, round notes.
 src/           The `tns` command: runner and smoke tests (measures and site export to come).
 scripts/       Repo QA: `uv run python scripts/qa.py` before every push.
 worker/        Cloudflare Worker that records anonymous guesses (see docs/PLAYER_DATA.md).

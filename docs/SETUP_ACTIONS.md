@@ -5,7 +5,7 @@ Everything else is automated. These are the only things that need you.
 ## Once (about 2 hours in total)
 - [x] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
 - [x] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
-- [ ] Revoke the direct provider keys (Anthropic, OpenAI, Google) in each console, then clear them from `.env`. OpenRouter passed smoke test R-2, so they are no longer needed.
+- [x] Revoked the direct provider keys (Anthropic, OpenAI, Google), confirmed rejected, and blanked them in `.env` (2026-10-25).
 - [ ] Review the model line-up in `config/models_R0.yaml` (the open-weight slot follows the rule in `docs/PREREGISTRATION.md` §4).
 - [x] Dry run: `uv run tns run --round R0 --dry-run`.
 
@@ -24,7 +24,8 @@ Everything else is automated. These are the only things that need you.
 ## Going live and sharing
 - [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org as a demo).
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
-- [ ] Guess logging: the one-time Cloudflare setup in `docs/PLAYER_DATA.md` (about 10 minutes).
+- [x] Guess logging deployed (2026-10-25): Worker, database, export token, nightly export.
+- [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule, verified domain, Wrangler logout, OpenRouter key limit).
 - [ ] Plausible, then the launch checklist and traffic plan in `docs/GO_LIVE.md`.
 
 ## Working with Claude Code — guardrails
