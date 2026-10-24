@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-25 — Guess logging built (PREREGISTRATION §9)
+- Cloudflare Worker and D1 database (`worker/`), site logging, the optional "which AI assistant do you use most?" question, a privacy notice and an About section on what is stored, and a nightly export of aggregates. Details in `docs/PLAYER_DATA.md`.
+- Implementation choices §9 did not spell out:
+  - a flood limit of 1,000 guesses per device per day;
+  - a basic bot user-agent pattern;
+  - only the first "Spot the robot" pick per pair is recorded;
+  - a fixed option list for the optional question;
+  - nightly aggregates withhold per-model accuracy until 200 qualifying guesses, and the confusion matrix until every model reaches 200.
+- Known limitations:
+  - clearing browser data resets the device ID;
+  - the answer key is readable in the site's data file;
+  - bot detection is basic.
+
 ## 2026-10-24 — Round 0 run
 - 180 outputs (5 models × 3 themes × 4 conditions × 3 samples), all under protocol fingerprint `3dd3c789…` (tag `prereg-v1`).
 - Every output was served by its pinned host and finished normally. There were no refusals and no outputs under 100 words. The largest used 3,230 of 16,000 tokens. Cost US$3.93 through OpenRouter.

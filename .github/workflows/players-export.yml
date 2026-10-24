@@ -1,0 +1,57 @@
+name: Export player data
+
+# Nightly copy of anonymous player aggregates into the repo (docs/PREREGISTRATION.md §9).
+# Aggregates only: row-level data is published once a round's analysis is complete.
+on:
+  schedule:
+    - cron: "17 15 * * *"   # 15:17 UTC, about 2am in Melbourne
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: players-export
+  cancel-in-progress: false
+
+env:
+  API: https://narratedself-api.airiskpractice.org
+  ROUNDS: R0
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Fetch aggregates
+        env:
+          EXPORT_TOKEN: ${{ secrets.EXPORT_TOKEN }}
+        run: |
+          if [ -z "$EXPORT_TOKEN" ]; then
+            echo "EXPORT_TOKEN is not set yet; nothing to export."; exit 0
+          fi
+          for round in $ROUNDS; do
+            mkdir -p "data/players/$round"
+            curl -fsS -H "Authorization: Bearer $EXPORT_TOKEN" "$API/export?round=$round" -o "/tmp/$round.json"
+            # Keep the file stable when nothing changed: drop the export timestamp before comparing.
+            python3 - "$round" <<'EOF'
+          import json, sys
+          r = sys.argv[1]
+          d = json.load(open(f"/tmp/{r}.json"))
+          d.pop("exported_utc", None)
+          d.pop("rows", None)
+          json.dump(d, open(f"data/players/{r}/aggregates.json", "w"), indent=1, sort_keys=True)
+          open(f"data/players/{r}/aggregates.json", "a").write("\n")
+          EOF
+          done
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/players; then echo "No change."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/players
+          git commit -m "data: nightly player aggregates"
+          git push

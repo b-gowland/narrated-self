@@ -44,7 +44,7 @@ Whether AI systems have any inner experience is open, and may stay that way. We 
 ## The data
 - **Model outputs:** every reply, with exact model version, route, host, settings, protocol fingerprint and timestamp, in `data/raw/`. Append-only.
 - **Measures:** classifier accuracy, consistency, word-list rates and drift, in `data/derived/` (from round 0).
-- **Player guesses:** anonymous aggregates in `data/players/`, with row-level data after each round's analysis (once the game is live).
+- **Player guesses:** anonymous aggregates in `data/players/`, updated nightly, with row-level data after each round's analysis. What is and isn't stored: [docs/PLAYER_DATA.md](docs/PLAYER_DATA.md).
 - **Canary:** derived and site data carry a canary string (see `protocol/masking.yaml`) so training-data contamination can be detected and filtered.
 
 ## How it runs
@@ -57,6 +57,7 @@ config/        Models per round (exact model strings, route, host, prices for es
 docs/          Pre-registration, research review, changelog, go-live plan, design notes, round notes.
 src/           The `tns` command: runner and smoke tests (measures and site export to come).
 scripts/       Repo QA: `uv run python scripts/qa.py` before every push.
+worker/        Cloudflare Worker that records anonymous guesses (see docs/PLAYER_DATA.md).
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
 data/derived/  Measures and quiz data, generated from raw.
 data/selection/ Leaderboard snapshots showing how each round's open-weight model was picked.

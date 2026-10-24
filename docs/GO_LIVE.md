@@ -25,18 +25,13 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 6. If `airiskpractice.org` isn't already a **verified domain** on your GitHub account (**Settings → Pages → Verified domains**), verify it. This stops anyone else claiming your subdomains. It's probably already done for the other three sites.
 
 ## 2. Analytics (about 5 minutes)
-Your other sites use Plausible, which is privacy-friendly and needs no cookie banner.
+**Research data** (guesses) goes through the project's own Cloudflare Worker; see `docs/PLAYER_DATA.md`. **Traffic** (visits, where people come from, shares) can use Plausible, as your other sites do. It is privacy-friendly and needs no cookie banner.
 1. In Plausible, add the site `narratedself.airiskpractice.org`.
-2. Copy the script line it gives you and send it to Claude Code. It will add the line, plus custom events for:
-   - **Play started**
-   - **Guess**, with the story ID and whether it was right
-   - **Set finished**, with the score
-   - **Share**
+2. Copy the script line it gives you and send it to Claude Code. It will add the line, plus events for **Set started**, **Set finished** and **Share**.
 
-The Guess event doubles as the "how often do people spot each model" data, with no server of our own. It also needs a Plausible plan that includes custom properties; check yours.
-
-## 3. Launch checklist (when round 0 is in)
-- [ ] Round 0 run, and the site rebuilt with real, masked stories.
+## 3. Launch checklist
+- [x] Round 0 run, and the site rebuilt with real, masked stories.
+- [ ] Guess logging deployed (`docs/PLAYER_DATA.md`), and a test guess shows up in `/stats`.
 - [ ] Remove `<meta name="robots" content="noindex">` from `site/index.html`.
 - [ ] Add a share image (`site/og.png`, 1200×630) and the `og:image` tags.
 - [ ] Run QA: `uv run python scripts/qa.py`.

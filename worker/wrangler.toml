@@ -1,0 +1,22 @@
+name = "narratedself-api"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Served at its own subdomain on the airiskpractice.org zone (one level deep, so Cloudflare's free
+# certificate covers it).
+routes = [{ pattern = "narratedself-api.airiskpractice.org", custom_domain = true }]
+
+[vars]
+SITE_URL = "https://narratedself.airiskpractice.org"
+ALLOWED_ORIGINS = "https://narratedself.airiskpractice.org,http://localhost:8765"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "narratedself"
+database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
+
+# No request logs: the Worker must not keep IP addresses or user agents anywhere.
+[observability]
+enabled = false
+
+# EXPORT_TOKEN is a secret, set with `wrangler secret put EXPORT_TOKEN` (see docs/PLAYER_DATA.md).

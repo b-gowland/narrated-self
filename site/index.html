@@ -238,6 +238,12 @@ main .wrap { padding-block: 18px 56px; }
 .tally .who { font-family: var(--font-display); text-transform: uppercase; font-size: 1.1rem; }
 .share { font-family: var(--font-body); font-weight: 600; font-size: 1.05rem; background: var(--ground); border: 2px dashed var(--ink); padding: 12px 14px; white-space: pre-wrap; margin: 0; }
 .status { margin: 0; min-height: 1.5em; font-weight: 600; }
+.notice { margin: 0; font-size: 0.85rem; color: var(--ink-soft); max-width: 40rem; }
+.players { margin: 0; font-weight: 600; }
+.ask { display: grid; gap: 8px; border-top: 2px solid var(--ink); padding-top: 14px; }
+.ask-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.ask-options button { cursor: pointer; font: 600 0.95rem var(--font-body); color: var(--ink); background: var(--page); border: 2px solid var(--ink); padding: 8px 12px; min-height: 44px; }
+.ask-options button:hover { background: var(--ink); color: var(--page); }
 
 /* Interview vs story, control */
 .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)); gap: 20px; }
@@ -300,6 +306,7 @@ footer p { margin: 0; }
         <h1 id="play-title">Who wrote this?</h1>
         <p>Five stories. Five AI authors. Guess each one.</p>
       </div>
+      <p class="notice" id="notice" hidden>Your guesses are recorded anonymously for an open study: no account, no IP address, just a random ID kept in your browser. <a href="#about" id="notice-link">How the data is used</a></p>
 
       <article class="book" id="card" aria-live="polite">
         <div class="cover" id="cover">
@@ -352,6 +359,12 @@ footer p { margin: 0; }
             <button class="btn ghost" id="again" type="button">Play again</button>
           </div>
           <p class="status" id="share-status" role="status"></p>
+          <p class="players" id="players" hidden></p>
+          <div class="ask" id="ask" hidden>
+            <p class="tray-label">Optional: which AI assistant do you use most?</p>
+            <div class="ask-options" id="ask-options"></div>
+            <button class="textlink" id="ask-skip" type="button">Skip</button>
+          </div>
           <p style="margin:0"><span class="scrawl">send it to someone who thinks they can tell ↗</span></p>
         </div>
       </article>
@@ -423,6 +436,10 @@ footer p { margin: 0; }
         </ul>
         <h3>Open data</h3>
         <p>Every prompt, setting and reply is published with the exact model version and time. The prompts are fixed in advance so rounds can be compared over time. <a href="https://github.com/b-gowland/narrated-self">Code and data on GitHub</a>.</p>
+
+        <h3 id="your-guesses">Your guesses</h3>
+        <p>When you play on this site, each guess is recorded: which story you saw, what you picked, whether it was right, how long you took, its position in your set, and whether it's your first set. You can also answer one optional question about which AI assistant you use most.</p>
+        <p>Nothing that identifies you is kept: no account, no name, no IP address, no browser details. A random ID kept in your browser links your guesses together; clearing your browser data removes it. Totals are published in the project's open data, and the full anonymous guess records are published once each round's analysis is done. Results describe the people who played, not the public in general.</p>
 
         <h2 id="faq">Questions</h2>
         <h3>Can people tell which AI model wrote a piece of text?</h3>
@@ -546,7 +563,7 @@ footer p { margin: 0; }
         const model = pick(real.models).id;
         const theme = pick(Object.keys(themes));
         const items = [find(model, theme, "S2"), find(model, theme, "S3")].filter(Boolean)
-          .map(s => ({ cond: s.cond, text: toParagraphs(s.text) }));
+          .map(s => ({ id: s.id, cond: s.cond, text: toParagraphs(s.text) }));
         return { theme, items: shuffle(items) };
       }
     };
@@ -566,11 +583,26 @@ footer p { margin: 0; }
   const demo = JSON.parse($("data").textContent);
   const real = await loadRound(ROUND_URL);
   const data = real ? fromRound(real, demo) : fromDemo(demo);
-  if (data.real) {
-    document.querySelector(".demo-note .wrap").textContent =
-      "Preview · round 0 · real model outputs, names blacked out · guesses aren't recorded yet";
-  }
   const byId = Object.fromEntries(data.models.map(m => [m.id, m]));
+
+  // Anonymous guess logging (PREREGISTRATION §9). Only on the live site, or a local test against a local Worker.
+  const API = location.hostname === "narratedself.airiskpractice.org" ? "https://narratedself-api.airiskpractice.org"
+    : location.hostname === "localhost" ? "http://127.0.0.1:8787" : null;
+  const LOGGING = Boolean(API && data.real && window.crypto?.randomUUID);
+  function log(path, body) {
+    if (!LOGGING) return;
+    try {
+      fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body), keepalive: true }).catch(() => {});
+    } catch {}
+  }
+  if (data.real) {
+    document.querySelector(".demo-note .wrap").textContent = LOGGING
+      ? "Round 0 · real model outputs, names blacked out · guesses recorded anonymously for research"
+      : "Preview · round 0 · real model outputs, names blacked out · guesses aren't recorded here";
+  }
+  $("notice").hidden = !LOGGING;
+  $("notice-link").addEventListener("click", e => { e.preventDefault(); show("about"); $("your-guesses").scrollIntoView(); });
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -615,16 +647,22 @@ footer p { margin: 0; }
   show(location.hash.slice(1));
 
   // Play
-  const KEY = `tns-${data.round}-${data.real ? "live" : "demo"}-v4`;
-  const fresh = () => ({ set: data.drawSet(), i: 0, results: [], guesses: [] });
+  const KEY = `tns-${data.round}-${data.real ? "live" : "demo"}-v5`;
+  const newId = () => (window.crypto?.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2));
+  const DEVICE = store.get("tns-device") || newId();
+  store.set("tns-device", DEVICE);
+  const setsDone = () => store.get("tns-sets-done") || 0;
+  const fresh = () => ({ set: data.drawSet(), set_id: newId(), first: setsDone() === 0, counted: false, i: 0, results: [], guesses: [] });
   let state = store.get(KEY);
   let quiz;
   try {
+    if (!state.set_id) throw new Error("old saved state");
     quiz = state.set.map(id => data.item(id));
   } catch {
     state = fresh();
     quiz = state.set.map(id => data.item(id));
   }
+  let shownAt = performance.now();
 
   function renderPips() {
     $("pips").replaceChildren(...quiz.map((_, k) => {
@@ -661,6 +699,7 @@ footer p { margin: 0; }
     $("tray-label").textContent = "Who wrote it?";
     $("reveal").hidden = true;
     renderPips();
+    shownAt = performance.now();
   }
 
   function guess(id) {
@@ -668,6 +707,10 @@ footer p { margin: 0; }
     const right = id === q.answer;
     state.results[state.i] = right;
     state.guesses[state.i] = id;
+    log("/guess", {
+      round: data.round, mode: "quiz", device_id: DEVICE, set_id: state.set_id, first_set: state.first,
+      story_id: q.id, guess: id, position: state.i + 1, ms_to_guess: Math.round(performance.now() - shownAt)
+    });
     document.querySelectorAll(".choice").forEach(b => {
       b.disabled = true;
       if (b.id === "choice-" + id) b.classList.add("picked");
@@ -727,8 +770,42 @@ footer p { margin: 0; }
     }));
     $("share-text").textContent = shareText();
     $("share-status").textContent = "";
+    if (!state.counted) {
+      state.counted = true;
+      store.set("tns-sets-done", setsDone() + 1);
+      store.set(KEY, state);
+    }
+    $("ask").hidden = !LOGGING || Boolean(store.get("tns-uses-most"));
+    showPlayers();
     $("results").scrollIntoView({ block: "start" });
   }
+
+  // Running total from the API: pooled accuracy only (per-model results wait for the pre-registered threshold).
+  async function showPlayers() {
+    if (!LOGGING) return;
+    try {
+      const r = await fetch(`${API}/stats?round=${data.round}`);
+      const s = await r.json();
+      if (!s.qualifying_guesses) return;
+      $("players").textContent = `Players so far: ${Math.round(s.pooled_accuracy * 100)}% right across ${s.qualifying_guesses.toLocaleString("en-AU")} first-play guesses.`;
+      $("players").hidden = false;
+    } catch {}
+  }
+
+  const USES_MOST = [["claude", "Claude"], ["chatgpt", "ChatGPT"], ["gemini", "Gemini"], ["grok", "Grok"],
+    ["copilot", "Copilot"], ["meta-ai", "Meta AI"], ["deepseek", "DeepSeek"], ["other", "Another one"], ["none", "I don't use one"]];
+  $("ask-options").replaceChildren(...USES_MOST.map(([value, label]) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.addEventListener("click", () => {
+      log("/profile", { device_id: DEVICE, uses_most: value });
+      store.set("tns-uses-most", value);
+      $("ask").replaceChildren(Object.assign(document.createElement("p"), { className: "status", textContent: "Thanks." }));
+    });
+    return b;
+  }));
+  $("ask-skip").addEventListener("click", () => { store.set("tns-uses-most", "skipped"); $("ask").hidden = true; });
 
   $("next").addEventListener("click", () => {
     if (state.i < quiz.length - 1) {
@@ -816,6 +893,9 @@ footer p { margin: 0; }
       a.querySelector(".story").append(...c.text.map(para));
       return a;
     }));
+    const pairId = newId();
+    const pairShown = performance.now();
+    let picked = false;
     const guessButtons = pair.items.map((c, k) => {
       const b = document.createElement("button");
       b.type = "button";
@@ -823,6 +903,13 @@ footer p { margin: 0; }
       b.id = "ctl-" + k;
       b.textContent = `Story ${"AB"[k]} is the robot arm`;
       b.addEventListener("click", () => {
+        if (!picked && c.id !== undefined) {
+          picked = true;
+          log("/guess", {
+            round: data.round, mode: "control", device_id: DEVICE, set_id: pairId, first_set: setsDone() === 0,
+            story_id: c.id, other_id: pair.items[1 - k].id, position: 1, ms_to_guess: Math.round(performance.now() - pairShown)
+          });
+        }
         $("ctl-status").textContent = c.cond === "S3"
           ? "Correct. That one was the 1980s robot arm."
           : `Not this time. Story ${"AB"[k]} was about an AI like the model.`;

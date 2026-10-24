@@ -24,6 +24,7 @@ Everything else is automated. These are the only things that need you.
 ## Going live and sharing
 - [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org as a demo).
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
+- [ ] Guess logging: the one-time Cloudflare setup in `docs/PLAYER_DATA.md` (about 10 minutes).
 - [ ] Plausible, then the launch checklist and traffic plan in `docs/GO_LIVE.md`.
 
 ## Working with Claude Code — guardrails

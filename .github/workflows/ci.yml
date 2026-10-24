@@ -13,6 +13,14 @@ jobs:
       - run: uv sync --locked
       - run: uv run pytest -q
 
+  worker-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Worker logic tests
+        working-directory: worker
+        run: node --test test/*.test.js
+
   guards:
     runs-on: ubuntu-latest
     steps:

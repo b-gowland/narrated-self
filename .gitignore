@@ -224,3 +224,7 @@ __marimo__/
 data/keys/
 data/selection/*.html
 !/site/
+
+# Worker
+worker/node_modules/
+worker/.wrangler/
