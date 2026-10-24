@@ -4,11 +4,11 @@ Everything else is automated. These are the only things that need you.
 
 ## Once (about 2 hours in total)
 - [ ] Check your employer's outside-activities and public-comment policy. Get written clearance if it requires it.
-- [ ] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
-- [ ] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
-- [ ] Once OpenRouter works, revoke the direct provider keys and clear them from `.env`.
-- [ ] Check the model strings in `config/models_R0.yaml` (the open-weight slot follows the rule in `docs/PREREGISTRATION.md` §3).
-- [ ] Dry run: `uv run tns run --round R0 --dry-run`. Check the prompts and the cost.
+- [x] Create an OpenRouter account. Turn on two-factor authentication, add about US$15–20 of credit, and leave auto top-up off.
+- [x] Create one OpenRouter key for this project (with a credit limit if offered) and paste it into `.env` as `OPENROUTER_API_KEY=`. Never paste keys into Claude Code chat.
+- [ ] Revoke the direct provider keys (Anthropic, OpenAI, Google) in each console, then clear them from `.env`. OpenRouter passed smoke test R-2, so they are no longer needed.
+- [ ] Review the model line-up in `config/models_R0.yaml` (the open-weight slot follows the rule in `docs/PREREGISTRATION.md` §3).
+- [x] Dry run: `uv run tns run --round R0 --dry-run`.
 - [ ] Read the prompts aloud once. Fix anything that sounds leading. Review the word lists once they are drafted.
 - [ ] Fill in your name and the date in `docs/PREREGISTRATION.md`, commit, then tag and push: `git tag prereg-v1` and `git push origin prereg-v1`. From then on `protocol/` is frozen.
 
@@ -16,6 +16,7 @@ Everything else is automated. These are the only things that need you.
 - [ ] Make a new `config/models_<round>.yaml`: the current lab flagships, plus the open-weight model picked by the rule (save the leaderboard page to `data/selection/`).
 - [ ] Run the round (or let the schedule run it), then skim the site.
 - [ ] Optional: write a short note in `docs/rounds/`.
+- [ ] Before pushing anything public: `uv run python scripts/qa.py` (or ask Claude Code to run the `qa` skill).
 
 ## Sharing (whenever you like)
 - [ ] Post the quiz link on LinkedIn.

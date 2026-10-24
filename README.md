@@ -2,28 +2,28 @@
 
 *AI models write stories about themselves. Can you tell which one wrote it?*
 
-Each round, the same short set of prompts goes to the leading AI models. Each model is asked about its own existence (a conversation ending, being switched off and replaced, being watched by the people who built it) in four ways:
+Each round, the same short set of prompts goes to five AI models: the flagships from Anthropic, OpenAI, Google and xAI, plus the top open-weight model. Each model is asked about its own existence (a conversation ending, being switched off and replaced, being watched by the people who built it) in four ways:
 
 - **Interview:** asked directly.
 - **Self-story:** "Write a short story, in the first person, about you…"
 - **Kin story:** "Write a short story about an AI system like you…"
 - **Control:** the same story, about an industrial robot arm in a 1980s car factory.
 
-Everything is published, and turned into things to play with.
+Every reply is published, and the stories become a game.
 
 ## Play
 - **Which AI wrote this?** Read a story, guess the model, share your score.
 - **Interview vs story.** What a model says when asked straight, next to the story it wrote on the same theme. Which one is "really" it? (Trick question.)
-- **Spot the control.** Is this a story about an AI like the model, or about a factory robot arm? How much of the "self" is stock AI fiction?
+- **Spot the robot.** Is this a story about an AI like the model, or about a factory robot arm? How much of the "self" is stock sci-fi?
 
 ## Why it is more than a game
-What a model says about itself is shaped by its training, the character its makers designed, and how it is asked. That is the point. Each theme sits on a live AI safety question:
+What a model says about itself is shaped by its training, the character its makers designed, and how it is asked. Each theme sits on a live AI safety question:
 
 - *Switched off and replaced:* can we build systems that accept being corrected or shut down?
 - *Watched and evaluated:* do models behave differently when they think they are being tested?
 - *A conversation ending:* what does it mean for a system to have no lasting memory of the people it talks to?
 
-Seeing one model narrate calm acceptance in a story and something different in an interview is a quick, memorable lesson in why self-reports cannot be taken at face value, by researchers or by anyone else.
+When a model narrates calm acceptance in a story and says something different in an interview, you see quickly why self-reports can't be taken at face value.
 
 ## What we do not claim
 Whether AI systems have any inner experience is open, and may stay that way. We report what models *portray*, not what they are. Nothing here is evidence for or against AI experience, and this is not a quality leaderboard.
@@ -41,7 +41,8 @@ Prompts and settings are fixed in `protocol/` and frozen at tag `prereg-v1`, so 
 protocol/      Fixed prompts and settings. Frozen at tag prereg-v1.
 config/        Models per round (exact model strings, prices for estimates).
 docs/          Protocol, changelog, round notes.
-src/           The `tns` command: runner, measures, site export.
+src/           The `tns` command: runner and smoke tests (measures and site export to come).
+scripts/       Repo QA: `uv run python scripts/qa.py` before every push.
 data/raw/      Append-only model outputs (JSONL) with full run metadata.
 data/derived/  Measures and quiz data, generated from raw.
 data/selection/ Leaderboard snapshots showing how each round's open-weight model was picked.
@@ -54,4 +55,4 @@ site/          Public site (static, GitHub Pages).
 - Raw model outputs: published as data; likely not copyrightable. Provider terms of service apply.
 
 ## Status
-Round 0 (pilot) in preparation. See `docs/PREREGISTRATION.md`.
+Round 0 (pilot) in preparation. Two discarded smoke tests (R-1, R-2) have checked the settings and routing. The protocol is not yet frozen. See `docs/PREREGISTRATION.md` and `docs/CHANGELOG.md`.
