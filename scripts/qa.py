@@ -112,7 +112,7 @@ def check_links() -> None:
     broken, checked = [], set()
     for p in prose_files():
         text = read(p)
-        for target in MD_LINK.findall(text):
+        for target in (MD_LINK.findall(strip_code(text)) if p.suffix == ".md" else []):
             if target.startswith(("http://", "https://", "mailto:")):
                 continue
             if not (p.parent / target).exists() and not (ROOT / target).exists():
