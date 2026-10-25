@@ -34,7 +34,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 - [x] Guess logging deployed (`docs/PLAYER_DATA.md`) and tested with a live guess (2026-10-25).
 - [x] Removed `noindex` (2026-10-25).
 - [x] Share image (`site/og.png`, 1200×630, drawn by `scripts/make_og_image.py`) and `og:image` tags.
-- [ ] Run QA: `uv run python scripts/qa.py`.
+- [x] Run QA: `uv run python scripts/qa.py` (2026-10-25: no failures; warnings are known and reviewed).
 - [ ] Search engines:
   - **Google Search Console:** if `airiskpractice.org` is already a domain property, the subdomain is covered. Submit `https://narratedself.airiskpractice.org/sitemap.xml`.
   - **Bing Webmaster Tools:** submit the same sitemap. Bing also feeds several AI search tools.
@@ -63,6 +63,12 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 
 **Launch week (round 0)**
 1. **LinkedIn** (you and the AI Risk Practice page). Post a masked story excerpt with "Which AI wrote this?" and the link. Post the reveal and the headline number 3–5 days later.
+
+**Rules for quoting stories in posts**
+- Quote whole sentences, word for word, from the masked text on the site (`site/data/R0.json`). Mark any cut with an ellipsis.
+- Don't name the model until the reveal post.
+- Frame a quote as something a story's narrator does, never as something the model did. Stories are fiction and say little about behaviour (PREREGISTRATION §12).
+- When a post ties a story to news, link a primary source for each news claim.
 2. **Hacker News, "Show HN".** For example: *"Show HN: Guess which AI wrote a story about itself (open data)"*. Playable, open-data projects do well there. Post on a weekday morning, US Eastern time.
 3. **Reddit.** r/artificial, r/ChatGPT, r/ClaudeAI and r/singularity. Read each subreddit's self-promotion rules first, and open with the game itself.
 4. **Bluesky and X**, where AI researchers and journalists are. The share card does the rest.
