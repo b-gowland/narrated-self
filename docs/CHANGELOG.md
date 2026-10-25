@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-26 — Site fixes from new browser tests
+- **Browser tests added** (`e2e/`, Playwright): about 125 checks of the site on phone and desktop sizes, including accessibility scans. The Pages deploy now runs them first and refuses to publish if any fail, then checks the live site read-only.
+- **Bugs found and fixed:**
+  - after the first guess, the answer panel stayed on screen for the following stories (a CSS rule overrode `hidden`; found by the maintainer on a phone);
+  - reloading after a guess showed the story unanswered and allowed a second recorded guess for it. The site now shows the earlier answer, and the API refuses a repeat guess for the same story in a set (live once the Worker is redeployed). The live database had no duplicates (checked 2026-10-26);
+  - every set was labelled "Set 1"; sets are now numbered per device;
+  - the back button left the site instead of returning to the previous view;
+  - keyboard focus was lost after "Next story", and screen readers re-read the whole story after each guess;
+  - the progress dots and answer buttons had accessible names that screen readers and voice control couldn't use.
+- None of these changed what a guess records or how it is scored.
+
 ## 2026-10-25 — Round 0 analysis
 - `tns analyse` runs the pre-registered measures (Q1a classifier on three feature sets, Q2 consistency, Q3 framing as exploratory) and writes `data/derived/R0/analysis.json`, `wordlist_rates.csv` and charts in `site/findings/R0/`. Findings and challenges are in `docs/rounds/R0.md`, summarised on the site's Findings page.
 - **Exploratory robustness checks added** (not in the pre-registration): leave-one-prompt-out, leave-one-theme-out, leave-one-format-out, stories only, a length-and-layout-only classifier, and a Wilson interval on pooled accuracy.

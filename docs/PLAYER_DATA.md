@@ -30,6 +30,7 @@ This implements the player-data protocol in `docs/PREREGISTRATION.md` §9.
 - **The site** shows pooled accuracy only.
 
 ## Implementation choices not spelled out in §9
+- **One guess per story:** the site shows an earlier answer again after a reload instead of asking for a new guess, and the API refuses a second guess for the same story in a set (Worker change of 2026-10-26; live once the Worker is redeployed).
 - **Flood limit:** at most 1,000 guesses per device per day are accepted. This guards against abuse, so it is separate from the analysis exclusions.
 - **Known bots:** user agents matching common crawler and script patterns are flagged as bots. An empty user agent counts as a bot.
 - **"AI vs robot arm"** (formerly "Spot the robot") no longer has a guess, so nothing is recorded from it. The Worker still accepts the "control" mode in case a guess returns.

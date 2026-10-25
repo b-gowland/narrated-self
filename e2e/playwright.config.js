@@ -5,6 +5,8 @@ const PORT = 4173;
 
 export default defineConfig({
   testDir: "tests",
+  // LIVE=1 runs only the read-only checks of the live site; otherwise everything else, against a local copy.
+  testMatch: process.env.LIVE ? "live.spec.js" : "*.spec.js",
   testIgnore: process.env.LIVE ? undefined : "live.spec.js",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),

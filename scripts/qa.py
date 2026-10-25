@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 import sys
 import urllib.error
@@ -312,8 +313,27 @@ def check_tests() -> None:
     report("Tests", "PASS" if r.returncode == 0 else "FAIL", [] if r.returncode == 0 else [last])
 
 
+def check_browser_tests() -> None:
+    e2e = ROOT / "e2e"
+    npx = shutil.which("npx")
+    if not (e2e / "node_modules").exists() or not npx:
+        report("Browser tests (e2e/)", "WARN", ["not installed: cd e2e && npm ci && npx playwright install chromium"])
+        return
+    r = subprocess.run([npx, "playwright", "test", "--reporter=line"], cwd=e2e, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    if "Executable doesn't exist" in r.stdout:
+        # Microsoft Store Python redirects AppData for programs it starts, so Playwright can't see its browser.
+        report("Browser tests (e2e/)", "WARN", ["couldn't start the test browser from this Python; run: cd e2e && npm test"])
+        return
+    lines = [l.strip() for l in r.stdout.splitlines() if l.strip()]
+    failed = [l for l in lines if re.match(r"\d+\) ", l)]
+    report("Browser tests (e2e/)", "PASS" if r.returncode == 0 else "FAIL",
+           [] if r.returncode == 0 else (failed or lines[-3:]))
+
+
 def main() -> int:
-    for check in (check_secrets, check_personal, check_links, check_wording, check_structure, check_currency, check_tests):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    for check in (check_secrets, check_personal, check_links, check_wording, check_structure, check_currency, check_tests, check_browser_tests):
         check()
     width = max(len(n) for n, _, _ in results)
     for name, status, details in results:
