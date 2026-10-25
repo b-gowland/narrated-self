@@ -1,7 +1,7 @@
 # Design brief
 
 ## Audience
-- **Primary: curious general readers** who use AI chat tools but don't follow AI research. They arrive from a shared link (a group chat, LinkedIn, Bluesky), on a phone, with a few minutes to spare. No onboarding tolerance.
+- **Primary: curious general readers** who use AI chat tools but don't follow AI research. They arrive from a shared link (a group chat or social media), on a phone, with a few minutes to spare. No onboarding tolerance.
 - **Secondary: people who work near AI** (tech, policy, education) who will share it as a conversation starter and may dig into the method and data.
 - **Tertiary: AI safety researchers and journalists**, who want the archive, the protocol and the numbers.
 

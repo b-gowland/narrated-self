@@ -38,7 +38,6 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 - [ ] Search engines:
   - **Google Search Console:** if `airiskpractice.org` is already a domain property, the subdomain is covered. Submit `https://narratedself.airiskpractice.org/sitemap.xml`.
   - **Bing Webmaster Tools:** submit the same sitemap. Bing also feeds several AI search tools.
-- [ ] Test the share preview with LinkedIn's Post Inspector before posting.
 
 ## 4. Search and discoverability (SEO, AEO, GEO)
 
@@ -55,28 +54,4 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 - `site/llms.txt`: a plain summary of what the site is, what it measures, what it doesn't claim, and where the data is. Done.
 - **Citable facts.** AI search quotes pages that state dated numbers plainly. Publish each round's headline numbers as sentences, for example "In round 0, players identified the author 41% of the time; a word-statistics classifier managed 87%."
 - **A citable dataset.** Archive each round on Zenodo (free DOI) or Hugging Face Datasets, and add `Dataset` structured data. Researchers and AI tools cite DOIs.
-- **One consistent name:** "The Narrated Self, a project by AI Risk Practice", the same on the site, GitHub, posts and the dataset.
-
-## 5. Traffic plan
-
-**Repeat traffic from new model releases.** Each flagship release is news, and people want to know how the new model differs. Run a round within days of a release, then post "How [new model] describes being switched off, compared with the last version." That repeats every few months at no extra cost.
-
-**Launch week (round 0)**
-1. **LinkedIn** (you and the AI Risk Practice page). Post a masked story excerpt with "Which AI wrote this?" and the link. Post the reveal and the headline number 3–5 days later.
-
-**Rules for quoting stories in posts**
-- Quote whole sentences, word for word, from the masked text on the site (`site/data/R0.json`). Mark any cut with an ellipsis.
-- Don't name the model until the reveal post.
-- Frame a quote as something a story's narrator does, never as something the model did. Stories are fiction and say little about behaviour (PREREGISTRATION §12).
-- When a post ties a story to news, link a primary source for each news claim.
-2. **Hacker News, "Show HN".** For example: *"Show HN: Guess which AI wrote a story about itself (open data)"*. Playable, open-data projects do well there. Post on a weekday morning, US Eastern time.
-3. **Reddit.** r/artificial, r/ChatGPT, r/ClaudeAI and r/singularity. Read each subreddit's self-promotion rules first, and open with the game itself.
-4. **Bluesky and X**, where AI researchers and journalists are. The share card does the rest.
-5. **Newsletter tip lines.** AI newsletters such as The Neuron, Ben's Bites and TLDR AI take reader submissions. One email each.
-
-**After round 0**
-6. A methods post on **LessWrong** or the **EA Forum**: protocol, smoke tests, the numbers.
-7. Email **Eleos AI Research** with a two-paragraph summary.
-8. **Sibling sites.** Optional: one line in the footer of `baseline.`, `library.` and `app.airiskpractice.org` ("New: guess which AI wrote this"). Deeper cross-linking can wait until there's traffic.
-
-**What to measure (Plausible):** visits, the share of visitors who start a set, the share who finish one, share clicks, and where visitors came from. Finishing and sharing matter most. If many people start but few finish, the stories are too long for the format.
+- **One consistent name:** "The Narrated Self, a project by AI Risk Practice", the same on the site, GitHub and the dataset.

@@ -57,7 +57,7 @@ Every arXiv citation was checked against arXiv's own metadata (title, date, auth
 - **Worker tooling** (`npm audit`): three advisories (one high, two moderate) in `undici`, pulled in by Cloudflare's `wrangler` and `miniflare`. These are local development and deploy tools only; none of this code is deployed in the Worker. npm's suggested fix downgrades wrangler, so the risk is accepted until wrangler ships an update. Recheck at each deploy.
 
 ## Personal information
-The project is linked to its maintainer through the GitHub username, AI Risk Practice and LinkedIn; that is accepted. The aim is to keep personal details out of the code and data: commit emails use the GitHub noreply address, no personal email or local path appears in tracked files, and the guess data holds no personal information.
+The project is linked to its maintainer through the GitHub username and AI Risk Practice; that is accepted. The aim is to keep personal details out of the code and data: commit emails use the GitHub noreply address, no personal email or local path appears in tracked files, and the guess data holds no personal information.
 
 ## Recommended settings for the maintainer
 1. **Cloudflare rate-limit rule** on `narratedself-api.airiskpractice.org/guess` (in progress).

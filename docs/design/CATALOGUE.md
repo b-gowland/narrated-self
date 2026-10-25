@@ -46,13 +46,6 @@ Compiled 2026-10-24. Sites are grouped by what we can learn from them. Details m
 6. **Two further modes reuse the same data:** *Interview vs story* (side by side) and *Spot the control* (which story is about the robot arm?).
 7. **The archive sits behind the game,** for people who want to read everything.
 
-## Social content plan (low effort)
-
-- **The share card itself.** Players do the posting.
-- **One "story of the round" post.** An excerpt with the model masked, "Can you tell who wrote this?", and a link. The reveal goes up a few days later.
-- **One number per round.** The machine classifier's accuracy against the players' accuracy.
-- **Formats:** LinkedIn (your network), Bluesky or X (AI researchers), and a LessWrong post after a couple of rounds.
-
 ## 5. Design trends in 2026
 
 - **Award winners** (Awwwards Site of the Year 2025 included Lando Norris by OFF+BRAND and Messenger by abeto; Webby 2026 Best Visual Design, Function went to FOLLOW.ART) are mostly heavy 3D brand showcases. Impressive, but the wrong model for a reading game that must load fast on a phone.

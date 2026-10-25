@@ -228,3 +228,6 @@ data/selection/*.html
 # Worker
 worker/node_modules/
 worker/.wrangler/
+
+# Private notes (launch and promotion plans)
+private/
