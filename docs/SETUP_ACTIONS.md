@@ -25,7 +25,7 @@ Everything else is automated. These are the only things that need you.
 - [x] GitHub Pages, Cloudflare DNS record and HTTPS (site live at narratedself.airiskpractice.org; open to search engines from 2026-10-25).
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
 - [x] Guess logging deployed (2026-10-25): Worker, database, export token, nightly export.
-- [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule, verified domain, Wrangler logout, OpenRouter key limit).
+- [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule done 2026-10-25, Wrangler logged out 2026-10-26; still to do: verified domain, OpenRouter key limit).
 - [x] Plausible (2026-10-25), then the launch checklist in `docs/GO_LIVE.md`.
 
 ## Working with Claude Code — guardrails
