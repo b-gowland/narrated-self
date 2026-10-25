@@ -2,7 +2,7 @@
 
 A running register of every account, credential and running cost the project depends on. Review it when something is added, and at least once a round.
 
-Last reviewed: 2026-10-25.
+Last reviewed: 2026-10-25. The full security and citation review is in `docs/SECURITY_REVIEW.md`.
 
 ## Credentials
 
@@ -19,14 +19,14 @@ Last reviewed: 2026-10-25.
 | Surface | Risk | Mitigation in place | Recommended |
 |---|---|---|---|
 | **Guess API** (`narratedself-api.airiskpractice.org`) | Fake guesses with rotating device IDs, which pollute the data and use up the free quota | Story IDs checked server-side; correctness computed server-side; 1,000 guesses per device per day; analysis excludes bots, guesses under 5 seconds and repeat sets | **Cloudflare rate-limiting rule** on `/guess` (the free plan includes one), for example 30 requests per 10 seconds per visitor. Watch the nightly counts for sudden jumps. Add Cloudflare Turnstile only if abuse appears. |
-| **`/stats` endpoint** | Each call reads every quiz row, so heavy traffic multiplies database reads | Browser cache header (5 minutes) | **Cache the result inside the Worker for 5 minutes**, so reads stay flat however many people visit. |
+| **`/stats` endpoint** | Each call reads every quiz row, so heavy traffic multiplies database reads | Cached for 5 minutes at Cloudflare's edge (done 2026-10-25) | (none) |
 | Answer key in `site/data/R0.json` | Players can look up answers | 5-second and first-play exclusions | Accepted and documented (`docs/PLAYER_DATA.md`). |
 | Subdomains of `airiskpractice.org` | Subdomain takeover if a DNS record points at GitHub with no site behind it | (none yet) | **Verify `airiskpractice.org` under GitHub → Settings → Pages → Verified domains.** It protects all four subdomains. |
 
 ## Privacy
 - **No personal data is collected:** no IP address, user agent, cookie or account. A random ID is kept in the browser's local storage.
 - **Australia:** an anonymous random ID isn't personal information under the Privacy Act.
-- **EU and UK visitors:** ePrivacy rules can require consent before storing an identifier on a device for a non-essential purpose, and research logging probably counts as non-essential. The plain notice is in place. **Recommended:** a one-click "Don't record my guesses" option, so recording is easy to refuse. This is a practical reading, not legal advice.
+- **EU and UK visitors:** ePrivacy rules can require consent before storing an identifier on a device for a non-essential purpose, and research logging probably counts as non-essential. The plain notice is in place. A one-click "Don't record my guesses" option is live (2026-10-25). This is a practical reading, not legal advice.
 - **Personal details in the repo:** the commit history uses the noreply address. Old commits may stay reachable on GitHub by direct ID until GitHub clears them; GitHub Support can purge them on request. A local backup of the old history (with the old email) sits in Claude Code's temporary folder; delete it once you're satisfied.
 
 ## Running costs

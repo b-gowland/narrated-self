@@ -62,7 +62,7 @@ data/raw/       Model outputs with full run metadata (append-only)
 data/derived/   Masked text and masking logs
 data/players/   Anonymous player totals
 data/selection/ Evidence for each round's open-weight pick
-docs/           Pre-registration, research review, changelog, operations, go-live plan, design notes
+docs/           Pre-registration, research review, changelog, operations, security review, go-live plan, design notes
 ```
 
 ## Licence
