@@ -8,7 +8,7 @@ Last reviewed: 2026-10-25. The full security and citation review is in `docs/SEC
 
 | Credential | Where it lives | What it can do | If it leaked | Status / action |
 |---|---|---|---|---|
-| **OpenRouter API key** | `.env` on the maintainer's PC (ignored by git) | Call any model, paid from prepaid credit | Someone spends the remaining credit. No auto top-up, so nothing beyond the balance. | Live. Key limit US$50, balance about US$20. **Lower the key limit to about US$25** so it never exceeds the balance. 2FA on. |
+| **OpenRouter API key** | `.env` on the maintainer's PC (ignored by git) | Call any model, paid from prepaid credit | Someone spends the remaining credit. No auto top-up, so nothing beyond the balance. | Live. Key limit US$25 (lowered 2026-10-26), about a round and a half of spend. 2FA on. |
 | Anthropic, OpenAI, Google keys | (none) | (none) | (none) | **Revoked 2026-10-25**, confirmed rejected by each provider; blanked in `.env`. The accounts and their credit remain. |
 | **Cloudflare (Wrangler) login** | Wrangler's config folder in the maintainer's Windows user profile | Broad access to the Cloudflare account: Workers, D1, routes, certificates, email routing and more | Someone with access to the PC could change the Worker, DNS-adjacent settings or other Cloudflare services | Needed only to deploy, which is rare. **Log out between deploys:** `npx.cmd wrangler logout`. Logging back in takes 30 seconds. |
 | **EXPORT_TOKEN** | Cloudflare Worker secret and GitHub Actions secret | Read aggregates and anonymous row-level guesses from the API | Early access to anonymous guess data; no personal data is exposed | Live. To rotate: `powershell -ExecutionPolicy Bypass -File C:/dev/narrated-self/scripts/set-export-token.ps1` |
@@ -21,7 +21,7 @@ Last reviewed: 2026-10-25. The full security and citation review is in `docs/SEC
 | **Guess API** (`narratedself-api.airiskpractice.org`) | Fake guesses with rotating device IDs, which pollute the data and use up the free quota | Story IDs checked server-side; correctness computed server-side; 1,000 guesses per device per day; analysis excludes bots, guesses under 5 seconds and repeat sets | **Cloudflare rate-limiting rule** on `/guess` (the free plan includes one), for example 30 requests per 10 seconds per visitor. Watch the nightly counts for sudden jumps. Add Cloudflare Turnstile only if abuse appears. |
 | **`/stats` endpoint** | Each call reads every quiz row, so heavy traffic multiplies database reads | Cached for 5 minutes at Cloudflare's edge (done 2026-10-25) | (none) |
 | Answer key in `site/data/R0.json` | Players can look up answers | 5-second and first-play exclusions | Accepted and documented (`docs/PLAYER_DATA.md`). |
-| Subdomains of `airiskpractice.org` | Subdomain takeover if a DNS record points at GitHub with no site behind it | (none yet) | **Verify `airiskpractice.org` under GitHub → Settings → Pages → Verified domains.** It protects all four subdomains. |
+| Subdomains of `airiskpractice.org` | Subdomain takeover if a DNS record points at GitHub with no site behind it | `airiskpractice.org` verified on GitHub (2026-10-26), which protects all four subdomains | (none) |
 
 ## Privacy
 - **No personal data is collected:** no IP address, user agent, cookie or account. A random ID is kept in the browser's local storage. Visits are counted with Plausible (no cookies, no personal data), which is switched off along with guess recording.
