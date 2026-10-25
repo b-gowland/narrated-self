@@ -6,7 +6,7 @@ test.skip(!process.env.SHOTS, "set SHOTS=1 to take screenshots");
 for (const scheme of ["light", "dark"]) {
   test(`all views, ${scheme}`, async ({ page }, info) => {
     await page.emulateMedia({ colorScheme: scheme });
-    const shot = name => page.screenshot({ path: `shots/${info.project.name}-${scheme}-${name}.png`, fullPage: true });
+    const shot = name => page.screenshot({ path: `shots/${info.project.name}-${scheme}-${name}.png`, fullPage: true, animations: "disabled" });
     await openGame(page);
     await shot("1-story");
     await guess(page, false);

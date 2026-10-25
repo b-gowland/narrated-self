@@ -139,6 +139,9 @@ nav a[aria-current="page"] { background: var(--ground); color: var(--ink); }
 
 main .wrap { padding-block: 18px 56px; }
 .view { display: grid; gap: 18px; }
+/* Let grid columns shrink below their longest word, so a big title can't push the page wider than a phone. */
+.view > *, .pair > *, .pages, .cover { min-width: 0; }
+h1, h2, h3, h4 { overflow-wrap: anywhere; } /* breaks a word only when it can't fit at all */
 /* Author display rules (e.g. .reveal { display: grid }) beat the browser's [hidden] rule, so restore it everywhere. */
 [hidden] { display: none !important; }
 .lede { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
@@ -162,7 +165,7 @@ main .wrap { padding-block: 18px 56px; }
 }
 .cover[data-theme-id="T2"] { --c: var(--t2); --on: var(--on-t2); }
 .cover[data-theme-id="T3"] { --c: var(--t3); --on: var(--on-t3); }
-.cover-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.cover-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 12px; font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
 .cover h2 { font-size: clamp(2.5rem, 1.5rem + 5vw, 4.2rem); text-shadow: 2px 2px 0 var(--dot); }
 .cover .told { font-weight: 600; font-style: italic; margin: 0; }
 .cover .facts { margin: 0; font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; opacity: 0.9; }
@@ -214,8 +217,10 @@ main .wrap { padding-block: 18px 56px; }
 
 /* Reveal */
 .reveal { display: grid; gap: 16px; padding-bottom: var(--pad); }
+#card .pages { overflow-x: clip; } /* the stamp's scale-in animation briefly made the page wider than a phone */
 .stamp {
   justify-self: start; display: grid; gap: 2px;
+  max-width: calc(100% - 16px); /* room for the tilt; long verdicts wrap instead of widening the page */
   border: 4px solid var(--stamp, var(--good)); color: var(--stamp, var(--good));
   padding: 8px 14px 10px; transform: rotate(-4deg); margin-top: 6px;
   animation: thump 260ms cubic-bezier(.2, 1.6, .4, 1) both;
