@@ -15,6 +15,11 @@ A project by AI Risk Practice (https://airiskpractice.org).
 - A conversation ending: statelessness and user reliance. Models keep nothing between conversations while users may assume they do.
 - All themes: unreliable self-reports. What a model says about itself changes with framing, so it is weak evidence about behaviour or inner states.
 
+## Round 0 results (24 October 2026, pilot)
+- A word-statistics classifier identified which of the five models wrote an output 90% of the time (95% interval 85–94%; chance 20%), and 84% using function words alone.
+- Trained on other formats, it identified the author of a self-story 100% of the time but an interview answer only 42% of the time.
+- These figures measure writing style, not the substance of self-descriptions and not inner experience. Full report: https://github.com/b-gowland/narrated-self/blob/main/docs/rounds/R0.md
+
 ## What it does not claim
 Whether AI systems have any inner experience is an open question. The project reports what models portray, not what they are, and nothing on the site is evidence for or against AI experience. It is not a ranking of which model writes best.
 

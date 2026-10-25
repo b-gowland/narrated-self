@@ -246,6 +246,14 @@ main .wrap { padding-block: 18px 56px; }
 .status { margin: 0; min-height: 1.5em; font-weight: 600; }
 .notice { margin: 0; font-size: 0.85rem; color: var(--ink-soft); max-width: 40rem; }
 .notice-toggle { font-size: inherit; color: var(--ink-soft); padding: 0; min-height: 0; }
+.stat { display: grid; gap: 4px; margin: 4px 0; padding: 14px 16px; border: var(--frame) solid var(--ink); background: var(--page); box-shadow: 4px 4px 0 var(--ink); }
+.stat-number { font-family: var(--font-display); font-size: clamp(2.6rem, 2rem + 3vw, 3.6rem); line-height: 0.95; text-transform: uppercase; }
+.stat-label { font-weight: 600; }
+.chart { margin: 0; background: #fff; border: 2px solid var(--ink); padding: 8px; }
+.chart img { display: block; width: 100%; height: auto; }
+.method { border-top: 2px solid var(--ink); padding-top: 10px; }
+.method summary { cursor: pointer; font-family: var(--font-display); text-transform: uppercase; font-size: 1.1rem; }
+.method p { margin: 10px 0 0; }
 .players { margin: 0; font-weight: 600; }
 .ask { display: grid; gap: 8px; border-top: 2px solid var(--ink); padding-top: 14px; }
 .ask-options { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -294,6 +302,7 @@ footer p { margin: 0; }
         <li><a href="#play" data-view="play">Play</a></li>
         <li><a href="#compare" data-view="compare">Interview vs story</a></li>
         <li><a href="#control" data-view="control">AI vs robot arm</a></li>
+        <li><a href="#findings" data-view="findings">Findings</a></li>
         <li><a href="#about" data-view="about">About</a></li>
       </ul>
     </nav>
@@ -410,6 +419,41 @@ footer p { margin: 0; }
       <div class="pair" id="ctl-pair"></div>
       <div class="actions" id="ctl-actions"></div>
       <p class="status" id="ctl-status" role="status"></p>
+    </section>
+
+    <!-- FINDINGS -->
+    <section class="view" id="view-findings" aria-labelledby="findings-title" hidden>
+      <div class="prose">
+        <h2 id="findings-title">Round 0 findings</h2>
+        <p class="notice">Pilot round, run on 24 October 2026: 180 outputs from five models. Early results from one round on one date.</p>
+
+        <p class="stat"><span class="stat-number">9 in 10</span> <span class="stat-label">times, a simple word-counting program named the model that wrote an output. Guessing at random gets 1 in 5.</span></p>
+        <p>The program knows nothing about meaning. It only counts which words each model uses and how often. It still told the five models apart about 90% of the time. The result held when formatting was stripped out, and when it could only see common words like "the", "of" and "it" (84%). So the differences sit in ordinary word use, not in topic or layout.</p>
+        <figure class="chart">
+          <img src="findings/R0/classifier_accuracy.png" width="1376" height="896" loading="lazy" alt="Bar chart of classifier accuracy against 20% chance: 90% with all words, 90% with formatting removed, 84% with function words only, 90% with each prompt held out, 89% with a theme held out; trained on other formats, 100% on self-stories, 93% on kin stories, 67% on robot-arm stories, 42% on interviews; 50% using length and layout alone.">
+        </figure>
+        <p>Two results stood out. A model's style carried almost perfectly from one of its stories about an AI to another, but much less into its story about a robot arm, and only weakly into its interview answers (42%). And four of the five models were almost never confused with each other. The exception was MiMo, the open-weight model, which the program often mistook for Claude or Gemini.</p>
+
+        <h3>What this does and doesn't show</h3>
+        <ul>
+          <li>It shows the five models write in recognisably different ways, even when they write about the same thing.</li>
+          <li>It doesn't show that their accounts of themselves differ in substance. A word-counting program picks up style, not meaning.</li>
+          <li>It says nothing about whether any model has experiences.</li>
+          <li>Whether <em>people</em> can tell the models apart is a separate question. That's what the game measures, and player results will appear here once about 250 sets have been played. <a href="#play" data-view="play" class="findings-play">Play a set</a>.</li>
+        </ul>
+
+        <details class="method">
+          <summary>Method, more results and caveats</summary>
+          <p>The classifier uses TF-IDF word features with logistic regression, tested with 5-fold cross-validation repeated 20 times, and a permutation test of 1,000 shuffled labels (p = 0.001, the smallest this test can give). Pooled across folds it was right on 163 of 180 outputs (95% interval 85–94%). Per model: Claude 97%, Gemini 100%, GPT 100%, Grok 92%, MiMo 64%.</p>
+          <figure class="chart">
+            <img src="findings/R0/confusion_all_words.png" width="896" height="736" loading="lazy" alt="Confusion matrix: Claude 35 of 36 correct, Gemini 36 of 36, GPT 36 of 36, Grok 33 of 36, MiMo 23 of 36, with MiMo most often mistaken for Claude (8) or Gemini (4).">
+          </figure>
+          <p>Every model's answers resembled its own other answers more than other models' answers. MiMo varied the most. Stories averaged 516 to 589 words for every model, but interview answers ranged from 87 words (GPT) to 318 (Claude), since the interview prompts set no length.</p>
+          <p>The word-list measures (hedging phrases, references to being a language model, first person, sentiment) show some consistent differences. For example, Claude used the most hedging phrases and Gemini the fewest in interviews and stories about AI. But the lists are small, unchecked for precision, and return zero for most outputs, so these are leads for the next round, not findings.</p>
+          <p>Main caveats: only 36 outputs per model; five specific models on one date; each model ran at its provider's default settings, which differ; the interview result is partly about length; and the analysis code was written with Claude, one of the models studied, though every step is deterministic and public.</p>
+          <p>Full report, with every number and every challenge to it: <a href="https://github.com/b-gowland/narrated-self/blob/main/docs/rounds/R0.md">Round 0 findings on GitHub</a>. Data: <a href="https://github.com/b-gowland/narrated-self/tree/main/data/derived/R0">analysis results and word-list rates</a>.</p>
+        </details>
+      </div>
     </section>
 
     <!-- ABOUT -->

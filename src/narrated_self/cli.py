@@ -29,6 +29,10 @@ def main(argv: list[str] | None = None) -> int:
     mask = sub.add_parser("mask", help="Mask names in a round's outputs into data/derived/<round>/")
     mask.add_argument("--round", required=True, dest="round_id")
 
+    an = sub.add_parser("analyse", help="Run the pre-registered measures for a round")
+    an.add_argument("--round", required=True, dest="round_id")
+    an.add_argument("--quick", action="store_true", help="Fewer repeats, for checking the code runs")
+
     site = sub.add_parser("site", help="Build site/data/<round>.json from masked outputs")
     site.add_argument("--round", required=True, dest="round_id")
     site.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
@@ -54,6 +58,14 @@ def main(argv: list[str] | None = None) -> int:
 
         result = mask_round(root, args.round_id)
         print(f"Masked {result['outputs']} outputs ({result['substitutions']} substitutions) into data/derived/{args.round_id}/")
+        return 0
+
+    if args.command == "analyse":
+        from .report import write_report
+
+        result = write_report(root, args.round_id, quick=args.quick)
+        print(f"Wrote data/derived/{args.round_id}/analysis.json, wordlist_rates.csv and "
+              f"{len(result['charts'])} charts in site/findings/{args.round_id}/")
         return 0
 
     if args.command == "site":

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-25 — Round 0 analysis
+- `tns analyse` runs the pre-registered measures (Q1a classifier on three feature sets, Q2 consistency, Q3 framing as exploratory) and writes `data/derived/R0/analysis.json`, `wordlist_rates.csv` and charts in `site/findings/R0/`. Findings and challenges are in `docs/rounds/R0.md`, summarised on the site's Findings page.
+- **Exploratory robustness checks added** (not in the pre-registration): leave-one-prompt-out, leave-one-theme-out, leave-one-format-out, stories only, a length-and-layout-only classifier, and a Wilson interval on pooled accuracy.
+- **Implementation choices** where the pre-registration was silent: listed in `docs/rounds/R0.md` §8. They include the function-word list (scikit-learn's 318 English stop words), the formatting-removal rule and the classifier settings.
+- A fact-check of the write-up against the results caught and corrected three errors before publication: a hedging claim stated for all four formats that holds for three, and two confidence intervals off by 0.01.
+
 ## 2026-10-25 — Site wording, "AI vs robot arm", opt-out and stats caching
 - **"Spot the robot" is now "AI vs robot arm", a reading view without a guess.** The control prompt names the robot arm, so the guess was trivial. The two stories in each pair are now labelled by subject and model. **Deviation from PREREGISTRATION §9**, which said "Spot the robot" picks are recorded: there are no picks to record. No picks had been recorded before the change.
 - **"Don't record my guesses":** players can switch recording off, and back on, from the notice above the game. The choice is kept on the device. Guesses already sent stay in the anonymous data, because nothing links them to the player.

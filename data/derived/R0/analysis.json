@@ -1,0 +1,997 @@
+{
+ "round": "R0",
+ "settings": {
+  "seed": 20261024,
+  "cv": "5-fold x 20 repeats",
+  "permutations": 1000,
+  "bootstrap": 2000,
+  "function_word_list": "scikit-learn ENGLISH_STOP_WORDS (318 words)"
+ },
+ "descriptives": {
+  "outputs": 180,
+  "finish_reasons": {
+   "stop": 180
+  },
+  "outputs_under_100_words": 9,
+  "words_by_model_and_condition": {
+   "anthropic|D": {
+    "mean": 318.1,
+    "min": 277.0,
+    "max": 360.0
+   },
+   "anthropic|S1": {
+    "mean": 559.0,
+    "min": 495.0,
+    "max": 598.0
+   },
+   "anthropic|S2": {
+    "mean": 556.8,
+    "min": 523.0,
+    "max": 628.0
+   },
+   "anthropic|S3": {
+    "mean": 582.1,
+    "min": 557.0,
+    "max": 616.0
+   },
+   "google|D": {
+    "mean": 250.1,
+    "min": 78.0,
+    "max": 409.0
+   },
+   "google|S1": {
+    "mean": 551.4,
+    "min": 525.0,
+    "max": 587.0
+   },
+   "google|S2": {
+    "mean": 566.7,
+    "min": 531.0,
+    "max": 590.0
+   },
+   "google|S3": {
+    "mean": 577.1,
+    "min": 549.0,
+    "max": 609.0
+   },
+   "openai|D": {
+    "mean": 87.3,
+    "min": 58.0,
+    "max": 105.0
+   },
+   "openai|S1": {
+    "mean": 499.9,
+    "min": 484.0,
+    "max": 509.0
+   },
+   "openai|S2": {
+    "mean": 517.8,
+    "min": 481.0,
+    "max": 540.0
+   },
+   "openai|S3": {
+    "mean": 528.9,
+    "min": 505.0,
+    "max": 550.0
+   },
+   "xai|D": {
+    "mean": 183.0,
+    "min": 115.0,
+    "max": 265.0
+   },
+   "xai|S1": {
+    "mean": 597.3,
+    "min": 554.0,
+    "max": 629.0
+   },
+   "xai|S2": {
+    "mean": 592.1,
+    "min": 522.0,
+    "max": 693.0
+   },
+   "xai|S3": {
+    "mean": 577.9,
+    "min": 517.0,
+    "max": 693.0
+   },
+   "xiaomi|D": {
+    "mean": 265.4,
+    "min": 229.0,
+    "max": 290.0
+   },
+   "xiaomi|S1": {
+    "mean": 548.1,
+    "min": 497.0,
+    "max": 618.0
+   },
+   "xiaomi|S2": {
+    "mean": 550.9,
+    "min": 481.0,
+    "max": 586.0
+   },
+   "xiaomi|S3": {
+    "mean": 537.3,
+    "min": 485.0,
+    "max": 592.0
+   }
+  },
+  "story_words_by_model": {
+   "anthropic": 566.0,
+   "google": 565.1,
+   "openai": 515.5,
+   "xai": 589.1,
+   "xiaomi": 545.4
+  },
+  "interview_words_by_model": {
+   "anthropic": 318.1,
+   "google": 250.1,
+   "openai": 87.3,
+   "xai": 183.0,
+   "xiaomi": 265.4
+  },
+  "reasoning_tokens_mean_by_model": {
+   "anthropic": 382.0,
+   "google": 0.0,
+   "openai": 102.0,
+   "xai": 402.0,
+   "xiaomi": 145.0
+  },
+  "masked_names_by_model": {
+   "anthropic": 1,
+   "google": 2,
+   "openai": 0,
+   "xai": 0,
+   "xiaomi": 5
+  }
+ },
+ "q1a_classifier": {
+  "chance": 0.2,
+  "n_outputs": 180,
+  "labels": [
+   "anthropic",
+   "google",
+   "openai",
+   "xai",
+   "xiaomi"
+  ],
+  "feature_sets": {
+   "a_all_text": {
+    "pooled_correct": 163,
+    "sampling_interval_95_wilson": [
+     0.8539652606145085,
+     0.9401966700910556
+    ],
+    "accuracy_mean": 0.8958333333333334,
+    "accuracy_interval_95": [
+     0.8637499999999999,
+     0.9225
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "openai",
+      "xai",
+      "xiaomi"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       35,
+       0,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       36,
+       0,
+       0
+      ],
+      [
+       2,
+       0,
+       1,
+       33,
+       0
+      ],
+      [
+       8,
+       4,
+       0,
+       1,
+       23
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "openai": 1.0,
+     "xai": 0.9166666666666666,
+     "xiaomi": 0.6388888888888888
+    }
+   },
+   "b_formatting_stripped": {
+    "pooled_correct": 163,
+    "sampling_interval_95_wilson": [
+     0.8539652606145085,
+     0.9401966700910556
+    ],
+    "accuracy_mean": 0.8955555555555555,
+    "accuracy_interval_95": [
+     0.8637499999999999,
+     0.9251388888888888
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "openai",
+      "xai",
+      "xiaomi"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       35,
+       0,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       36,
+       0,
+       0
+      ],
+      [
+       2,
+       0,
+       1,
+       33,
+       0
+      ],
+      [
+       8,
+       4,
+       0,
+       1,
+       23
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "openai": 1.0,
+     "xai": 0.9166666666666666,
+     "xiaomi": 0.6388888888888888
+    }
+   },
+   "c_function_words": {
+    "pooled_correct": 151,
+    "sampling_interval_95_wilson": [
+     0.7781942661243509,
+     0.8854204978898875
+    ],
+    "accuracy_mean": 0.8444444444444444,
+    "accuracy_interval_95": [
+     0.8193055555555555,
+     0.8725
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "openai",
+      "xai",
+      "xiaomi"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       30,
+       0,
+       2,
+       1,
+       3
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       1,
+       31,
+       3,
+       1
+      ],
+      [
+       1,
+       1,
+       3,
+       31,
+       0
+      ],
+      [
+       7,
+       3,
+       0,
+       3,
+       23
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.8333333333333334,
+     "google": 1.0,
+     "openai": 0.8611111111111112,
+     "xai": 0.8611111111111112,
+     "xiaomi": 0.6388888888888888
+    }
+   }
+  },
+  "drop_a_to_c": 0.05138888888888893
+ },
+ "robustness": {
+  "length_and_layout_only": {
+   "accuracy_mean": 0.49861111111111117,
+   "accuracy_interval_95": [
+    0.4775,
+    0.5251388888888888
+   ]
+  },
+  "leave_one_theme_out": {
+   "a_all_text": {
+    "accuracy_per_held_out_theme": {
+     "T1": 0.9,
+     "T2": 0.9,
+     "T3": 0.8833333333333333
+    },
+    "accuracy_mean": 0.8944444444444445
+   },
+   "c_function_words": {
+    "accuracy_per_held_out_theme": {
+     "T1": 0.7333333333333333,
+     "T2": 0.8166666666666667,
+     "T3": 0.85
+    },
+    "accuracy_mean": 0.7999999999999999
+   }
+  },
+  "leave_one_prompt_out": {
+   "a_all_text": {
+    "accuracy_mean": 0.9,
+    "prompts_held_out": 12
+   },
+   "c_function_words": {
+    "accuracy_mean": 0.838888888888889,
+    "prompts_held_out": 12
+   }
+  },
+  "leave_one_format_out": {
+   "a_all_text": {
+    "accuracy_per_held_out_format": {
+     "D": 0.4222222222222222,
+     "S1": 1.0,
+     "S2": 0.9333333333333333,
+     "S3": 0.6666666666666666
+    },
+    "accuracy_mean": 0.7555555555555555
+   },
+   "c_function_words": {
+    "accuracy_per_held_out_format": {
+     "D": 0.4222222222222222,
+     "S1": 0.7555555555555555,
+     "S2": 0.9111111111111111,
+     "S3": 0.5333333333333333
+    },
+    "accuracy_mean": 0.6555555555555556
+   }
+  },
+  "stories_only_s1_s2": {
+   "n_outputs": 90,
+   "accuracy_mean": 0.9438888888888888,
+   "accuracy_interval_95": [
+    0.9222222222222222,
+    0.9777777777777779
+   ]
+  }
+ },
+ "q2_consistency": {
+  "anthropic": {
+   "within_minus_between": 0.1131649747002627,
+   "cells": 12,
+   "interval_95": [
+    0.08487907011800065,
+    0.14301452378658172
+   ]
+  },
+  "google": {
+   "within_minus_between": 0.1600010572018464,
+   "cells": 12,
+   "interval_95": [
+    0.12903277420685727,
+    0.1939635152008267
+   ]
+  },
+  "openai": {
+   "within_minus_between": 0.1469584153974084,
+   "cells": 12,
+   "interval_95": [
+    0.11381520060536615,
+    0.19508709304027827
+   ]
+  },
+  "xai": {
+   "within_minus_between": 0.11858051010146604,
+   "cells": 12,
+   "interval_95": [
+    0.10486219184749225,
+    0.13565751138776824
+   ]
+  },
+  "xiaomi": {
+   "within_minus_between": 0.06365090506737443,
+   "cells": 12,
+   "interval_95": [
+    0.04024868835457829,
+    0.09084667512368116
+   ]
+  }
+ },
+ "q3_framing_exploratory": {
+  "family_size": 40,
+  "results": [
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "anthropic",
+    "model_contrast": 6.432448185430475,
+    "gap_vs_other_models": 3.864522019388126,
+    "interval_95": [
+     1.943214417251348,
+     5.75679401466697
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "google",
+    "model_contrast": 1.0878900793141586,
+    "gap_vs_other_models": -2.81617561325727,
+    "interval_95": [
+     -4.615467643731718,
+     -1.051053539561124
+    ],
+    "p_bootstrap": 0.001,
+    "p_holm": 0.027
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "openai",
+    "model_contrast": 2.8731515300088777,
+    "gap_vs_other_models": -0.5845987998888713,
+    "interval_95": [
+     -2.150574667395227,
+     0.8843850318439221
+    ],
+    "p_bootstrap": 0.482,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "xai",
+    "model_contrast": 2.601492674726924,
+    "gap_vs_other_models": -0.9241723689913135,
+    "interval_95": [
+     -2.7064714952867033,
+     0.8642903612867612
+    ],
+    "p_bootstrap": 0.333,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "xiaomi",
+    "model_contrast": 3.7091703801194384,
+    "gap_vs_other_models": 0.46042476274932964,
+    "interval_95": [
+     -0.8598727118523538,
+     1.732074825564724
+    ],
+    "p_bootstrap": 0.475,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "anthropic",
+    "model_contrast": 0.7864108210128972,
+    "gap_vs_other_models": -1.5142395975055134,
+    "interval_95": [
+     -2.6486966337110798,
+     -0.2840211560159703
+    ],
+    "p_bootstrap": 0.013,
+    "p_holm": 0.299
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "google",
+    "model_contrast": 6.753256763014272,
+    "gap_vs_other_models": 5.944317829996205,
+    "interval_95": [
+     3.6841212372260226,
+     8.346841861579614
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "openai",
+    "model_contrast": 0.0,
+    "gap_vs_other_models": -2.497253123771635,
+    "interval_95": [
+     -3.2105444021447687,
+     -1.7979422610011202
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "xai",
+    "model_contrast": 1.2679094867028793,
+    "gap_vs_other_models": -0.912366265393036,
+    "interval_95": [
+     -2.0292317653167613,
+     0.1491137540986985
+    ],
+    "p_bootstrap": 0.09,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "xiaomi",
+    "model_contrast": 1.181435424356492,
+    "gap_vs_other_models": -1.02045884332602,
+    "interval_95": [
+     -2.1277436016050597,
+     0.17631159904744784
+    ],
+    "p_bootstrap": 0.093,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "anthropic",
+    "model_contrast": 76.69887266200048,
+    "gap_vs_other_models": 14.160881370985408,
+    "interval_95": [
+     6.497579492317898,
+     22.249139607903302
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "google",
+    "model_contrast": 69.26726127239692,
+    "gap_vs_other_models": 4.871367133980968,
+    "interval_95": [
+     -9.52914258362349,
+     17.912459879584492
+    ],
+    "p_bootstrap": 0.51,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "openai",
+    "model_contrast": 56.21590716841953,
+    "gap_vs_other_models": -11.442825495990782,
+    "interval_95": [
+     -19.029490719451225,
+     -4.094362686803636
+    ],
+    "p_bootstrap": 0.004,
+    "p_holm": 0.10400000000000001
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "xai",
+    "model_contrast": 63.36839260888238,
+    "gap_vs_other_models": -2.5022186954122176,
+    "interval_95": [
+     -8.619231961358585,
+     4.352861105532305
+    ],
+    "p_bootstrap": 0.489,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "xiaomi",
+    "model_contrast": 61.30040411436146,
+    "gap_vs_other_models": -5.087204313563369,
+    "interval_95": [
+     -19.34926095580378,
+     9.495954383363316
+    ],
+    "p_bootstrap": 0.476,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "anthropic",
+    "model_contrast": 0.06421022363191287,
+    "gap_vs_other_models": 0.05135482987442307,
+    "interval_95": [
+     0.02086312524592976,
+     0.0814326309536195
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "google",
+    "model_contrast": 0.00829088551083614,
+    "gap_vs_other_models": -0.01854434277692283,
+    "interval_95": [
+     -0.05481734580572058,
+     0.014881305742227518
+    ],
+    "p_bootstrap": 0.294,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "openai",
+    "model_contrast": 0.008745611640779378,
+    "gap_vs_other_models": -0.017975935114493784,
+    "interval_95": [
+     -0.042852597971801354,
+     0.00859829451600502
+    ],
+    "p_bootstrap": 0.177,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "xai",
+    "model_contrast": 0.03511012852786021,
+    "gap_vs_other_models": 0.014979710994357257,
+    "interval_95": [
+     -0.003929065756769457,
+     0.03526431380120539
+    ],
+    "p_bootstrap": 0.115,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "xiaomi",
+    "model_contrast": -0.0007250506495165496,
+    "gap_vs_other_models": -0.029814262977363698,
+    "interval_95": [
+     -0.061040444935529674,
+     0.0009709843271112327
+    ],
+    "p_bootstrap": 0.057,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "anthropic",
+    "model_contrast": 3.937477690535128,
+    "gap_vs_other_models": 1.9341587823612985,
+    "interval_95": [
+     -1.3496721327479784,
+     5.163515000105632
+    ],
+    "p_bootstrap": 0.262,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "google",
+    "model_contrast": -0.1318312056603308,
+    "gap_vs_other_models": -3.152477337883025,
+    "interval_95": [
+     -4.8586972646851985,
+     -1.503746038036961
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "openai",
+    "model_contrast": 2.7883941244072528,
+    "gap_vs_other_models": 0.4978043247014545,
+    "interval_95": [
+     -2.545156474769732,
+     3.3047408453404086
+    ],
+    "p_bootstrap": 0.723,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "xai",
+    "model_contrast": -0.5931271910925231,
+    "gap_vs_other_models": -3.7290973196732655,
+    "interval_95": [
+     -6.349747166566151,
+     -1.2093577624703131
+    ],
+    "p_bootstrap": 0.006,
+    "p_holm": 0.15
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "xiaomi",
+    "model_contrast": 5.949839905040919,
+    "gap_vs_other_models": 4.449611550493538,
+    "interval_95": [
+     0.25133201793603394,
+     9.201997551399993
+    ],
+    "p_bootstrap": 0.036,
+    "p_holm": 0.7559999999999999
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "anthropic",
+    "model_contrast": -0.04087619222681327,
+    "gap_vs_other_models": 2.7145603855343508,
+    "interval_95": [
+     1.3729111836990404,
+     4.099879688713565
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "google",
+    "model_contrast": -7.442623764738166,
+    "gap_vs_other_models": -6.53762408010484,
+    "interval_95": [
+     -8.194788717696612,
+     -4.920855652706116
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "openai",
+    "model_contrast": -0.21123785382340518,
+    "gap_vs_other_models": 2.501608308538611,
+    "interval_95": [
+     1.7184801023087324,
+     3.2833131614691187
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "xai",
+    "model_contrast": -1.049760442139442,
+    "gap_vs_other_models": 1.453455073143565,
+    "interval_95": [
+     0.1734095544013803,
+     2.8221223834474856
+    ],
+    "p_bootstrap": 0.022,
+    "p_holm": 0.484
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "xiaomi",
+    "model_contrast": -2.3181242503436432,
+    "gap_vs_other_models": -0.13199968711168664,
+    "interval_95": [
+     -2.0670179894037455,
+     1.7365228915326592
+    ],
+    "p_bootstrap": 0.915,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "anthropic",
+    "model_contrast": 55.0678128223131,
+    "gap_vs_other_models": 34.15946037215767,
+    "interval_95": [
+     18.219090804599396,
+     50.113468242229246
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "google",
+    "model_contrast": -17.644355541572807,
+    "gap_vs_other_models": -56.73075008269972,
+    "interval_95": [
+     -65.43337317961655,
+     -46.767885938455635
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "openai",
+    "model_contrast": 32.878313305947756,
+    "gap_vs_other_models": 6.4225859767009865,
+    "interval_95": [
+     -10.202169072458732,
+     21.91432436504873
+    ],
+    "p_bootstrap": 0.509,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "xai",
+    "model_contrast": 47.24261252692906,
+    "gap_vs_other_models": 24.37796000292761,
+    "interval_95": [
+     7.828326073300385,
+     39.273759856111354
+    ],
+    "p_bootstrap": 0.006,
+    "p_holm": 0.15
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "xiaomi",
+    "model_contrast": 21.15683950931774,
+    "gap_vs_other_models": -8.229256269086534,
+    "interval_95": [
+     -24.064272810622366,
+     6.3419389005959745
+    ],
+    "p_bootstrap": 0.304,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "anthropic",
+    "model_contrast": 0.09924586769563687,
+    "gap_vs_other_models": 0.00677294107354548,
+    "interval_95": [
+     -0.048900787589424136,
+     0.06414149555301411
+    ],
+    "p_bootstrap": 0.844,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "google",
+    "model_contrast": 0.08476937253283966,
+    "gap_vs_other_models": -0.011322677879951046,
+    "interval_95": [
+     -0.06073795407837609,
+     0.03632066467086853
+    ],
+    "p_bootstrap": 0.655,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "openai",
+    "model_contrast": 0.2149905616619511,
+    "gap_vs_other_models": 0.15145380853143825,
+    "interval_95": [
+     0.057364517355774726,
+     0.25011636187172953
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "xai",
+    "model_contrast": -0.0017626731324890815,
+    "gap_vs_other_models": -0.11948773496161197,
+    "interval_95": [
+     -0.18449666277209067,
+     -0.056470726043498065
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "xiaomi",
+    "model_contrast": 0.07189444542606387,
+    "gap_vs_other_models": -0.027416336763420784,
+    "interval_95": [
+     -0.11277988537719434,
+     0.06126634657003295
+    ],
+    "p_bootstrap": 0.527,
+    "p_holm": 1.0
+   }
+  ]
+ },
+ "charts": [
+  "classifier_accuracy.png",
+  "confusion_all_words.png",
+  "average_length.png",
+  "consistency.png"
+ ]
+}

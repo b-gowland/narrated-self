@@ -128,7 +128,7 @@
   const wordCount = paras => paras.join(" ").replace(/\[\[[^\]]+\]\]/g, "x").split(/\s+/).filter(Boolean).length;
 
   // Views
-  const views = ["play", "compare", "control", "about"];
+  const views = ["play", "compare", "control", "findings", "about"];
   function show(view) {
     if (!views.includes(view)) view = "play";
     views.forEach(v => { $("view-" + v).hidden = v !== view; });
@@ -137,7 +137,7 @@
     });
     try { history.replaceState(null, "", "#" + view); } catch {}
   }
-  document.querySelectorAll("nav a, .wordmark").forEach(a => a.addEventListener("click", e => {
+  document.querySelectorAll("nav a, .wordmark, a[data-view]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     show(a.getAttribute("href").slice(1));
     window.scrollTo(0, 0);

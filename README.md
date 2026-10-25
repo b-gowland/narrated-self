@@ -46,6 +46,7 @@ Prompts and settings live in `protocol/` and stay fixed, so rounds can be compar
 uv run tns run --round R0
 uv run tns mask --round R0
 uv run tns site --round R0
+uv run tns analyse --round R0
 ```
 
 Before pushing anything public, run `uv run python scripts/qa.py`. Accounts, credentials and running costs are tracked in [docs/OPERATIONS.md](docs/OPERATIONS.md).
@@ -54,7 +55,7 @@ Before pushing anything public, run `uv run python scripts/qa.py`. Accounts, cre
 ```
 protocol/       Fixed prompts, settings, masking list and word lists (frozen at tag prereg-v1)
 config/         Models per round: exact model strings, route, host, prices for estimates
-src/            The tns command: runner, smoke tests, masking and site export
+src/            The tns command: runner, smoke tests, masking, site export and analysis
 worker/         Cloudflare Worker that records anonymous guesses
 scripts/        Repo QA and helper scripts
 site/           Public site (GitHub Pages)
@@ -69,4 +70,4 @@ docs/           Pre-registration, research review, changelog, operations, securi
 Code is MIT. Human-written documents and reports are CC BY 4.0. Raw model outputs are published as data; they are probably not copyrightable, and each provider's terms of service apply.
 
 ## Status
-Round 0 (pilot) ran on 24 October 2026: 180 outputs, all under the frozen protocol. The site plays the real stories and records guesses anonymously. It is open to search engines; the launch plan is in [docs/GO_LIVE.md](docs/GO_LIVE.md).
+Round 0 (pilot) ran on 24 October 2026: 180 outputs, all under the frozen protocol. First findings, with every caveat: [docs/rounds/R0.md](docs/rounds/R0.md). The site plays the real stories and records guesses anonymously. It is open to search engines; the launch plan is in [docs/GO_LIVE.md](docs/GO_LIVE.md).
