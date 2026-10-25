@@ -26,7 +26,7 @@ Everything else is automated. These are the only things that need you.
 - [ ] Verify `airiskpractice.org` under GitHub account **Settings → Pages → Verified domains** (protects all four subdomains).
 - [x] Guess logging deployed (2026-10-25): Worker, database, export token, nightly export.
 - [ ] Security and cost actions in `docs/OPERATIONS.md` (rate-limit rule, verified domain, Wrangler logout, OpenRouter key limit).
-- [ ] Plausible, then the launch checklist in `docs/GO_LIVE.md`.
+- [x] Plausible (2026-10-25), then the launch checklist in `docs/GO_LIVE.md`.
 
 ## Working with Claude Code — guardrails
 - Keep the CLAUDE.md hard rules. Refuse anything that has a model scoring or summarising outputs.

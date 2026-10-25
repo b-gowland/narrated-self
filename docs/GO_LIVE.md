@@ -24,10 +24,10 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 5. Back in **Settings → Pages**, tick **Enforce HTTPS** once GitHub has issued the certificate. That usually takes minutes, but can take up to an hour.
 6. If `airiskpractice.org` isn't already a **verified domain** on your GitHub account (**Settings → Pages → Verified domains**), verify it. This stops anyone else claiming your subdomains. It's probably already done for the other three sites.
 
-## 2. Analytics (about 5 minutes)
-**Research data** (guesses) goes through the project's own Cloudflare Worker; see `docs/PLAYER_DATA.md`. **Traffic** (visits, where people come from, shares) can use Plausible, as your other sites do. It is privacy-friendly and needs no cookie banner.
-1. In Plausible, add the site `narratedself.airiskpractice.org`.
-2. Copy the script line it gives you and send it to Claude Code. It will add the line, plus events for **Set started**, **Set finished** and **Share**.
+## 2. Analytics (done 2026-10-25)
+**Research data** (guesses) goes through the project's own Cloudflare Worker; see `docs/PLAYER_DATA.md`. **Traffic** (visits, where people come from, shares) uses Plausible, which sets no cookies and keeps no personal data.
+- `site/analytics.js` loads Plausible, and skips it for players who chose "Don't record my guesses". The site's CSP allows `plausible.io`.
+- `site/app.js` sends three custom events: **Set started** (first guess of a set), **Set finished** and **Share**. Each needs a matching custom-event goal in Plausible.
 
 ## 3. Launch checklist
 - [x] Round 0 run, and the site rebuilt with real, masked stories.

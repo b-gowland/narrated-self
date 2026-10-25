@@ -24,7 +24,7 @@ Last reviewed: 2026-10-25. The full security and citation review is in `docs/SEC
 | Subdomains of `airiskpractice.org` | Subdomain takeover if a DNS record points at GitHub with no site behind it | (none yet) | **Verify `airiskpractice.org` under GitHub → Settings → Pages → Verified domains.** It protects all four subdomains. |
 
 ## Privacy
-- **No personal data is collected:** no IP address, user agent, cookie or account. A random ID is kept in the browser's local storage.
+- **No personal data is collected:** no IP address, user agent, cookie or account. A random ID is kept in the browser's local storage. Visits are counted with Plausible (no cookies, no personal data), which is switched off along with guess recording.
 - **Australia:** an anonymous random ID isn't personal information under the Privacy Act.
 - **EU and UK visitors:** ePrivacy rules can require consent before storing an identifier on a device for a non-essential purpose, and research logging probably counts as non-essential. The plain notice is in place. A one-click "Don't record my guesses" option is live (2026-10-25). This is a practical reading, not legal advice.
 - **Personal details in the repo:** the commit history uses the noreply address. Old commits may stay reachable on GitHub by direct ID until GitHub clears them; GitHub Support can purge them on request. A local backup of the old history (with the old email) sits in Claude Code's temporary folder; delete it once you're satisfied.
@@ -37,7 +37,7 @@ Last reviewed: 2026-10-25. The full security and citation review is in `docs/SEC
 | Cloudflare Worker and D1 | Free plan | Free limits: 100,000 Worker requests a day; D1 5 million rows read and 100,000 written a day, 5 GB stored. At about 7 requests per player, that's roughly 10,000 players a day. On the free plan, going over makes requests fail rather than charging. Check whether the account is on Workers Paid (US$5/month), where overages are billed. |
 | GitHub Pages and Actions | Free (public repo) | GitHub disables scheduled workflows in a repo with no activity for 60 days. If the nightly export stops, re-enable it under Actions. |
 | Cloudflare DNS | Free | (none) |
-| Plausible (if added) | Your existing plan | This site's pageviews count towards the plan's monthly quota. |
+| Plausible | Your existing plan | This site's pageviews count towards the plan's monthly quota. |
 | Domain | Existing renewal | (none) |
 
 ## Routine checks

@@ -200,8 +200,12 @@
     shownAt = performance.now();
   }
 
+  // Plausible goals; names must match the goals set up in Plausible.
+  const track = name => { if (recording) try { window.plausible?.(name); } catch {} };
+
   function guess(id) {
     const q = quiz[state.i];
+    if (state.i === 0) track("Set started");
     const right = id === q.answer;
     state.results[state.i] = right;
     state.guesses[state.i] = id;
@@ -270,6 +274,7 @@
     $("share-status").textContent = "";
     if (!state.counted) {
       state.counted = true;
+      track("Set finished");
       store.set("tns-sets-done", setsDone() + 1);
       store.set(KEY, state);
     }
@@ -330,6 +335,7 @@
     }
   }
   $("share").addEventListener("click", async () => {
+    track("Share");
     if (navigator.share) {
       try {
         await navigator.share({ text: shareText() });

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Narrated Self</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://narratedself-api.airiskpractice.org http://127.0.0.1:8787; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://narratedself-api.airiskpractice.org https://plausible.io http://127.0.0.1:8787; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- The description is what a search result shows: say what this is in the words people search with. -->
 <meta name="description" content="Which AI wrote this? Read short stories that AI models wrote about their own existence, then guess the author: Claude, GPT, Gemini, Grok or an open-weight model. Free, no login, open data.">
@@ -24,6 +24,7 @@
 <meta name="twitter:image:alt" content="The Narrated Self: Who wrote this? Short stories AI models wrote about themselves.">
 <meta name="twitter:title" content="Which AI wrote this?">
 <meta name="twitter:description" content="Five AI models wrote stories about themselves. Can you tell which one wrote each?">
+<script src="analytics.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -532,6 +533,7 @@ footer p { margin: 0; }
         <h3 id="your-guesses">Your guesses</h3>
         <p>When you play on this site, each guess is recorded: which story you saw, what you picked, whether it was right, how long you took, its position in your set, and whether it's your first set. You can also answer one optional question about which AI assistant you use most.</p>
         <p>Nothing that identifies you is kept: no account, no name, no IP address, no browser details. A random ID kept in your browser links your guesses together; clearing your browser data removes it. To stop recording, use "Don't record my guesses" above the game. Nothing more is sent from this device after that. Guesses already sent stay in the anonymous data, because nothing links them to you. Totals are published in the project's open data, and the full anonymous guess records are published once each round's analysis is done. Results describe the people who played, not the public in general.</p>
+        <p>Visits are counted with Plausible, which uses no cookies and keeps no personal data: it records which pages were viewed, where visitors came from, and whether a set was started, finished or shared. "Don't record my guesses" turns this off too.</p>
 
         <h2 id="faq">Questions</h2>
         <h3>Can people tell which AI model wrote a piece of text?</h3>
