@@ -150,7 +150,7 @@
   const DEVICE = store.get("tns-device") || newId();
   store.set("tns-device", DEVICE);
   const setsDone = () => store.get("tns-sets-done") || 0;
-  const fresh = () => ({ set: data.drawSet(), set_id: newId(), first: setsDone() === 0, counted: false, i: 0, results: [], guesses: [] });
+  const fresh = () => ({ set: data.drawSet(), set_id: newId(), first: setsDone() === 0, n: setsDone() + 1, counted: false, i: 0, results: [], guesses: [] });
   let state = store.get(KEY);
   let quiz;
   try {
@@ -159,6 +159,7 @@
   } catch {
     state = fresh();
     quiz = state.set.map(id => data.item(id));
+    store.set(KEY, state); // so a reload before the first guess shows the same story
   }
   let shownAt = performance.now();
 
@@ -198,21 +199,33 @@
     $("reveal").hidden = true;
     renderPips();
     shownAt = performance.now();
+    // Already guessed (e.g. a reload after guessing): show that answer again rather than allowing a second guess.
+    if (state.results[state.i] !== undefined) showReveal(state.guesses[state.i]);
   }
 
   // Plausible goals; names must match the goals set up in Plausible.
   const track = name => { if (recording) try { window.plausible?.(name); } catch {} };
 
   function guess(id) {
+    if (state.results[state.i] !== undefined) return; // one guess per story
     const q = quiz[state.i];
     if (state.i === 0) track("Set started");
-    const right = id === q.answer;
-    state.results[state.i] = right;
+    state.results[state.i] = id === q.answer;
     state.guesses[state.i] = id;
     log("/guess", {
       round: data.round, mode: "quiz", device_id: DEVICE, set_id: state.set_id, first_set: state.first,
       story_id: q.id, guess: id, position: state.i + 1, ms_to_guess: Math.round(performance.now() - shownAt)
     });
+    store.set(KEY, state);
+    showReveal(id);
+    $("stamp").scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    $("next").focus({ preventScroll: true });
+  }
+
+  // The answer for the current story, after a guess.
+  function showReveal(id) {
+    const q = quiz[state.i];
+    const right = id === q.answer;
     document.querySelectorAll(".choice").forEach(b => {
       b.disabled = true;
       if (b.id === "choice-" + id) b.classList.add("picked");
@@ -238,21 +251,23 @@
     $("next").textContent = state.i === quiz.length - 1 ? "See my score" : "Next story";
     $("reveal").hidden = false;
     renderPips();
-    store.set(KEY, state);
-    $("stamp").scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    $("next").focus({ preventScroll: true });
   }
+
+  // "Round 0" from "R0"; the set number counts this device's sets (older saved games have none).
+  const roundLabel = `Round ${String(data.round).replace(/^R/, "")}`;
+  const setLabel = sep => state.n ? `${roundLabel}${sep}set ${state.n}` : roundLabel;
 
   function shareText() {
     const n = state.results.filter(Boolean).length;
     const marks = state.results.map(r => (r ? "🟩" : "⬛")).join("");
-    return `THE NARRATED SELF · Round 0, set 1\n${marks} ${n}/${quiz.length}\nWho wrote this?`;
+    return `THE NARRATED SELF · ${setLabel(", ")}\n${marks} ${n}/${quiz.length}\nWho wrote this?`;
   }
 
   function renderResults() {
     const n = state.results.filter(Boolean).length;
     $("card").hidden = true;
     $("results").hidden = false;
+    $("results-label").textContent = setLabel(" · ").replace(" set", " Set");
     $("score").textContent = `${n}/${quiz.length}`;
     const chance = `Guessing at random would get about 1 in ${data.models.length} right.`;
     $("score-line").textContent =

@@ -231,3 +231,8 @@ worker/.wrangler/
 
 # Private notes (launch and promotion plans)
 private/
+
+# Browser tests
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
