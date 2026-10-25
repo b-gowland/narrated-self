@@ -113,6 +113,8 @@ body::after {
 a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--t1); outline-offset: 3px; }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: 0.95; letter-spacing: 0.01em; margin: 0; text-wrap: balance; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+[tabindex="-1"]:focus { outline: none; }
 .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--page); padding: 8px 12px; z-index: 60; }
 .skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); top: calc(8px + env(safe-area-inset-top, 0px)); }
 .scrawl { font-family: var(--font-hand); font-weight: 600; font-size: 1.45rem; line-height: 1.1; transform: rotate(-2deg); display: inline-block; }
@@ -326,10 +328,10 @@ footer p { margin: 0; }
       </div>
       <p class="notice" id="notice" hidden><span id="notice-text"></span> <a href="#about" id="notice-link">How the data is used</a> · <button class="textlink notice-toggle" id="optout" type="button"></button></p>
 
-      <article class="book" id="card" aria-live="polite">
+      <article class="book" id="card">
         <div class="cover" id="cover">
           <div class="cover-top"><span id="m-no"></span><span class="pips" id="pips" aria-label="Progress"></span></div>
-          <h2 id="m-theme"></h2>
+          <h2 id="m-theme" tabindex="-1"></h2>
           <p class="told" id="m-cond"></p>
           <p class="facts" id="m-facts"></p>
         </div>
@@ -362,10 +364,12 @@ footer p { margin: 0; }
         </div>
       </article>
 
+      <p class="sr-only" id="announce" role="status"></p>
+
       <article class="book" id="results" hidden>
         <div class="cover" data-theme-id="T3">
           <div class="cover-top"><span id="results-label">Round 0</span></div>
-          <h2>Your score</h2>
+          <h2 id="results-title" tabindex="-1">Your score</h2>
         </div>
         <div class="pages" style="padding-bottom: var(--pad)">
           <p class="score" id="score"></p>

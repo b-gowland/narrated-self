@@ -100,7 +100,7 @@
     if (!recording) $("ask").hidden = true;
   });
   updateNotice();
-  $("notice-link").addEventListener("click", e => { e.preventDefault(); show("about"); $("your-guesses").scrollIntoView(); });
+  $("notice-link").addEventListener("click", e => { e.preventDefault(); go("about"); $("your-guesses").scrollIntoView(); });
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -135,13 +135,20 @@
     document.querySelectorAll("nav a").forEach(a => {
       if (a.dataset.view === view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
-    try { history.replaceState(null, "", "#" + view); } catch {}
+  }
+  // Each view gets its own history entry, so the back button returns to the previous view instead of leaving the site.
+  function go(view) {
+    if (!views.includes(view)) view = "play";
+    if (location.hash.slice(1) !== view) { try { history.pushState(null, "", "#" + view); } catch {} }
+    show(view);
   }
   document.querySelectorAll("nav a, .wordmark, a[data-view]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
-    show(a.getAttribute("href").slice(1));
+    go(a.getAttribute("href").slice(1));
     window.scrollTo(0, 0);
   }));
+  // Back/forward and typed hashes. Other anchors (the skip link's #main) are left to the browser.
+  window.addEventListener("popstate", () => { const h = location.hash.slice(1); if (!h || views.includes(h)) show(h); });
   show(location.hash.slice(1));
 
   // Play
@@ -197,6 +204,7 @@
     $("tray").classList.remove("done");
     $("tray-label").textContent = "Who wrote it?";
     $("reveal").hidden = true;
+    $("announce").textContent = "";
     renderPips();
     shownAt = performance.now();
     // Already guessed (e.g. a reload after guessing): show that answer again rather than allowing a second guess.
@@ -218,6 +226,7 @@
     });
     store.set(KEY, state);
     showReveal(id);
+    $("announce").textContent = `${$("verdict").textContent} ${$("who").textContent}.`;
     $("stamp").scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     $("next").focus({ preventScroll: true });
   }
@@ -296,6 +305,7 @@
     $("ask").hidden = !recording || Boolean(store.get("tns-uses-most"));
     showPlayers();
     $("results").scrollIntoView({ block: "start" });
+    if (document.activeElement === $("next")) $("results-title").focus({ preventScroll: true });
   }
 
   // Running total from the API: pooled accuracy only (per-model results wait for the pre-registered threshold).
@@ -331,6 +341,7 @@
       store.set(KEY, state);
       renderCard();
       $("card").scrollIntoView({ block: "start" });
+      $("m-theme").focus({ preventScroll: true }); // keyboard users start the next story at its title
     } else {
       renderResults();
     }
@@ -371,6 +382,7 @@
     $("card").hidden = false;
     renderCard();
     $("card").scrollIntoView({ block: "start" });
+    $("m-theme").focus({ preventScroll: true });
   });
 
   if (state.results.length === quiz.length && state.results.every(r => r !== undefined)) renderResults(); else renderCard();
@@ -392,7 +404,7 @@
     $("cmp-model").value = model;
     $("cmp-theme").value = theme;
     renderCompare();
-    show("compare");
+    go("compare");
     window.scrollTo(0, 0);
   }
   $("cmp-model").addEventListener("change", renderCompare);
