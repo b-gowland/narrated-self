@@ -69,6 +69,11 @@ async function postGuess(request, env, headers) {
     "SELECT COUNT(*) AS n FROM guesses WHERE device_id = ? AND received_at >= ?"
   ).bind(r.device_id, today).first();
   if (n >= MAX_GUESSES_PER_DEVICE_PER_DAY) return json({ error: "daily limit reached" }, 429, headers);
+  // One guess per story in a set: a second one (an old page, a reload, a script) is refused, not stored.
+  const dup = await env.DB.prepare(
+    "SELECT 1 FROM guesses WHERE set_id = ? AND mode = ? AND position = ? LIMIT 1"
+  ).bind(r.set_id, r.mode, r.position).first();
+  if (dup) return json({ error: "already guessed" }, 409, headers);
   await env.DB.prepare(
     `INSERT INTO guesses (received_at, round, mode, device_id, set_id, first_set, story_id, other_id,
        true_model, theme, cond, guess, correct, position, ms_to_guess, is_bot)

@@ -30,10 +30,14 @@ test("each guess is announced to screen readers, and cleared for the next story"
   expect(g.pick).not.toBe(g.answer);
 });
 
-test("choice buttons have names that include the lab", async ({ page }) => {
+test("choice buttons are named by what they show, and progress is announced", async ({ page }) => {
   await openGame(page);
-  await expect(page.getByRole("button", { name: "Claude, by Anthropic" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "MiMo, by Xiaomi" })).toBeVisible();
+  // Phones hide the lab line to save space, so the name is the model alone there.
+  await expect(page.getByRole("button", { name: /^Claude( Anthropic)?$/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^MiMo( Xiaomi)?$/ })).toBeVisible();
+  await expect(page.locator("#pips")).toHaveAttribute("aria-label", "Story 1 of 5: 0 right, 0 wrong");
+  await guess(page, false);
+  await expect(page.locator("#pips")).toHaveAttribute("aria-label", "Story 1 of 5: 0 right, 1 wrong");
 });
 
 test("no view scrolls sideways", async ({ page }) => {

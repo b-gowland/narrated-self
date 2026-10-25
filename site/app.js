@@ -171,6 +171,8 @@
   let shownAt = performance.now();
 
   function renderPips() {
+    const right = state.results.filter(r => r === true).length, wrong = state.results.filter(r => r === false).length;
+    $("pips").setAttribute("aria-label", `Story ${state.i + 1} of ${quiz.length}: ${right} right, ${wrong} wrong`);
     $("pips").replaceChildren(...quiz.map((_, k) => {
       const i = document.createElement("i");
       const r = state.results[k];
@@ -194,7 +196,6 @@
       b.type = "button";
       b.className = "choice";
       b.id = "choice-" + m.id;
-      b.setAttribute("aria-label", `${m.name}, by ${m.lab}`);
       b.innerHTML = "<span></span><small></small>";
       b.firstChild.textContent = m.name;
       b.lastChild.textContent = m.lab;
