@@ -6,9 +6,11 @@ import { aggregate, buildGuessRow, buildProfileRow, indexRound } from "./logic.j
 
 const MAX_GUESSES_PER_DEVICE_PER_DAY = 1000; // flood protection only; analysis exclusions are separate
 const MAX_BODY_BYTES = 4096;
+const ROUND_ID = /^R\d{1,3}$/;
 const roundCache = new Map(); // per isolate: round -> { index, models, at }
 
 async function loadRound(env, round) {
+  if (!ROUND_ID.test(round)) return null; // validate before building any URL from it
   const hit = roundCache.get(round);
   if (hit && Date.now() - hit.at < 10 * 60 * 1000) return hit;
   const res = await fetch(`${env.SITE_URL}/data/${round}.json`, { cf: { cacheTtl: 600 } });
@@ -28,10 +30,25 @@ function cors(env, request) {
     : {};
 }
 
+const SECURITY_HEADERS = { "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer" };
+
 const json = (body, status, headers = {}) =>
-  new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...headers } });
+  new Response(JSON.stringify(body), {
+    status, headers: { "Content-Type": "application/json", ...SECURITY_HEADERS, ...headers },
+  });
+
+// Constant-time comparison, so response timing can't be used to guess the export token.
+function tokenMatches(given, expected) {
+  if (!expected || typeof given !== "string") return false;
+  const a = new TextEncoder().encode(given);
+  const b = new TextEncoder().encode(expected);
+  if (a.byteLength !== b.byteLength) return false;
+  return crypto.subtle.timingSafeEqual(a, b);
+}
 
 async function readBody(request) {
+  const declared = Number(request.headers.get("Content-Length") ?? "0");
+  if (declared > MAX_BODY_BYTES) return null; // refuse large bodies before reading them
   const text = await request.text();
   if (text.length > MAX_BODY_BYTES) return null;
   try { return JSON.parse(text); } catch { return null; }
@@ -99,12 +116,16 @@ async function getStats(url, env, headers, ctx) {
   }
   return new Response(body, {
     status: 200,
-    headers: { "Content-Type": "application/json", "Cache-Control": `public, max-age=${STATS_TTL_SECONDS}`, ...headers },
+    headers: {
+      "Content-Type": "application/json", "Cache-Control": `public, max-age=${STATS_TTL_SECONDS}`,
+      ...SECURITY_HEADERS, ...headers,
+    },
   });
 }
 
 async function getExport(url, request, env) {
-  if (!env.EXPORT_TOKEN || request.headers.get("Authorization") !== `Bearer ${env.EXPORT_TOKEN}`) {
+  const auth = request.headers.get("Authorization") ?? "";
+  if (!tokenMatches(auth.startsWith("Bearer ") ? auth.slice(7) : "", env.EXPORT_TOKEN)) {
     return json({ error: "unauthorised" }, 401);
   }
   const roundId = url.searchParams.get("round") ?? "";

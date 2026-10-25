@@ -47,7 +47,8 @@ def text_files(exclude_raw: bool = True) -> list[Path]:
 
 def prose_files() -> list[Path]:
     """User-facing writing: docs, README, CLAUDE.md, the site."""
-    return [p for p in text_files() if p.suffix in (".md", ".html")]
+    return [p for p in text_files() if p.suffix in (".md", ".html")
+            or (p.suffix == ".js" and p.relative_to(ROOT).as_posix().startswith("site/"))]
 
 
 def report(name: str, status: str, details: list[str]) -> None:
@@ -213,7 +214,9 @@ def sentences_of(line: str) -> list[str]:
 def visible_text(p: Path) -> str:
     """User-facing text: Markdown without code; HTML without tags, plus the strings inside its scripts."""
     raw = read(p)
-    if p.suffix != ".html":
+    if p.suffix == ".js":
+        raw = f"<script>{raw}</script>"  # site script: read only its user-facing strings
+    elif p.suffix != ".html":
         return strip_code(raw)
     strings = []
     code = re.compile(r"=>|;|&&|\|\||===|\)\.|\.\.\.|^\s*[).,]|\.map\(|\bconst\b|\breturn\b|\bfunction\b|\$\(|\)\s*\{")
