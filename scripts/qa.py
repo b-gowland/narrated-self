@@ -172,7 +172,8 @@ def check_wording() -> None:
     hits = []
     for p in prose_files():
         rel = p.relative_to(ROOT).as_posix()
-        for n, line in enumerate(strip_code(read(p)).splitlines(), 1):
+        text = visible_text(p) if p.suffix == ".js" else strip_code(read(p))  # scripts: user-facing strings only
+        for n, line in enumerate(text.splitlines(), 1):
             if re.match(r"\s*- \[.*\]\(https?://", line):
                 continue  # a cited source title, not our writing
             low = line.lower()
