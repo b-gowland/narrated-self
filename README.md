@@ -49,7 +49,7 @@ uv run tns site --round R0
 uv run tns analyse --round R0
 ```
 
-Before pushing anything public, run `uv run python scripts/qa.py`. Site changes also need the browser tests: `cd e2e && npm ci && npx playwright install chromium`, then `npm test`. Accounts, credentials and running costs are tracked in [docs/OPERATIONS.md](docs/OPERATIONS.md).
+Before pushing anything public, run `uv run python scripts/qa.py`. Site changes also need the browser tests: `cd e2e && npm ci && npx playwright install chromium webkit`, then `npm test`. Accounts, credentials and running costs are tracked in [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ## Repo layout
 ```
@@ -57,7 +57,7 @@ protocol/       Fixed prompts, settings, masking list and word lists (frozen at 
 config/         Models per round: exact model strings, route, host, prices for estimates
 src/            The tns command: runner, smoke tests, masking, site export and analysis
 worker/         Cloudflare Worker that records anonymous guesses
-e2e/            Browser tests of the site (Playwright, phone and desktop)
+e2e/            Browser tests of the site (Playwright: Android, desktop and iPhone)
 scripts/        Repo QA and helper scripts
 site/           Public site (GitHub Pages)
 data/raw/       Model outputs with full run metadata (append-only)

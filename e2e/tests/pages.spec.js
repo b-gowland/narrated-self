@@ -50,7 +50,8 @@ test("the wordmark and the Findings play link go to the game", async ({ page }) 
   await expect(page.locator("#view-play")).toBeVisible();
 });
 
-test("the skip link jumps to the game without breaking the view", async ({ page }) => {
+test("the skip link jumps to the game without breaking the view", async ({ page, browserName }) => {
+  test.skip(browserName === "webkit", "Safari only tabs to links when a system setting is on");
   await openGame(page, "/#about");
   await page.keyboard.press("Tab");
   await expect(page.locator(".skip")).toBeFocused();

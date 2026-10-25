@@ -20,7 +20,9 @@ export default defineConfig({
   },
   projects: [
     { name: "phone", use: { ...devices["Pixel 7"] } },
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } } }
+    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } } },
+    // Safari's engine, as on every iPhone.
+    { name: "iphone", use: { ...devices["iPhone 15"] } }
   ],
   webServer: process.env.LIVE ? undefined : {
     command: "node serve.mjs",

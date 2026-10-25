@@ -26,7 +26,7 @@ Add `--no-network` when offline. It reports PASS, WARN or FAIL for:
 | Wording | common AI-writing tells, US spellings, and wording that says a model "feels", "experiences" or "is conscious" |
 | Currency | README layout folders that don't exist, references to repo files that don't exist, and a changed `protocol/` after tagging |
 | Tests | `uv run pytest` |
-| Browser tests | `cd e2e && npm test`: Playwright plays the site in Chrome at phone and desktop sizes (game, play again, resuming, sharing, opt-out, what gets recorded, navigation, accessibility scans). Guesses go to a stand-in API, never the live one |
+| Browser tests | `cd e2e && npm test`: Playwright plays the site in Chrome (phone and desktop) and Safari's engine (iPhone) (game, play again, resuming, sharing, opt-out, what gets recorded, navigation, accessibility scans). Guesses go to a stand-in API, never the live one |
 
 **Any change to `site/` must pass the browser tests before it is pushed.** The Pages deploy also runs them and refuses to publish if they fail, then runs read-only checks on the live site (`LIVE=1 npm test`). When fixing a site bug, add a test that fails without the fix. For a visual look over every view, run `SHOTS=1 npx playwright test screenshots` and open `e2e/shots/`.
 

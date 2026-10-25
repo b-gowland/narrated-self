@@ -30,7 +30,7 @@ jobs:
         working-directory: e2e
         run: |
           npm ci
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
           npx playwright test
 
   build:
@@ -82,6 +82,6 @@ jobs:
           LIVE: "1"
         run: |
           npm ci
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
           sleep 30
           npx playwright test
