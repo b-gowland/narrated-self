@@ -1,5 +1,5 @@
 {
- "all_guesses": 0,
+ "all_guesses": 4,
  "chance": 0.2,
  "confusion_matrix": null,
  "excluded": {
@@ -10,7 +10,7 @@
  "per_model": {
   "anthropic": {
    "accuracy": null,
-   "qualifying": 0
+   "qualifying": 1
   },
   "google": {
    "accuracy": null,
@@ -18,20 +18,20 @@
   },
   "openai": {
    "accuracy": null,
-   "qualifying": 0
+   "qualifying": 1
   },
   "xai": {
    "accuracy": null,
-   "qualifying": 0
+   "qualifying": 1
   },
   "xiaomi": {
    "accuracy": null,
-   "qualifying": 0
+   "qualifying": 1
   }
  },
  "per_model_threshold": 200,
- "pooled_accuracy": null,
- "qualifying_guesses": 0,
+ "pooled_accuracy": 0.25,
+ "qualifying_guesses": 4,
  "round": "R0",
  "spot_the_robot": {
   "correct": 0,
