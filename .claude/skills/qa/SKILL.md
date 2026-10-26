@@ -22,6 +22,7 @@ Add `--no-network` when offline. It reports PASS, WARN or FAIL for:
 |---|---|
 | Secrets | API key patterns in tracked files and the whole git history; a tracked `.env` or `data/keys/` |
 | Personal details | personal email addresses, local paths such as `C:\Users\…`, and non-noreply commit author emails |
+| Link tags | AI-tool and tracking parameters in any link (`utm_source=chatgpt.com`, `srsltid=`, `#:~:text=` and similar). These show a link was pasted from an AI answer unchecked; strip them to the clean URL. FAIL |
 | Links | broken relative links in Markdown, and web links that return errors (401/403/429 are flagged for a manual look) |
 | Wording | common AI-writing tells, US spellings, and wording that says a model "feels", "experiences" or "is conscious" |
 | Currency | README layout folders that don't exist, references to repo files that don't exist, and a changed `protocol/` after tagging |

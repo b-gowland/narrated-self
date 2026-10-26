@@ -108,6 +108,21 @@ def check_personal() -> None:
 # 3. Links -----------------------------------------------------------------
 URL = re.compile(r"https?://[^\s)\"'<>`\]]+")
 MD_LINK = re.compile(r"\]\(([^)#\s]+)(?:#[^)]*)?\)")
+# Tags that AI tools and trackers add to copied links (e.g. ?utm_source=chatgpt.com). They show a link was
+# pasted from an AI answer without checking, and they leak tracking. Strip them back to the clean URL.
+LINK_TAGS = re.compile(
+    r"[?&#](?:utm_[a-z]+|srsltid|fbclid|gclid|mc_cid|_hsenc|ref_src)=|[?&](?:ref|source|src|via)=(?:chatgpt|openai|perplexity|claude|copilot|gemini|bing)|chatgpt\.com|#:~:text=",
+    re.I)
+
+
+def check_link_tags() -> None:
+    found = []
+    for p in text_files():
+        for n, line in enumerate(read(p).splitlines(), 1):
+            for url in URL.findall(line):
+                if LINK_TAGS.search(url):
+                    found.append(f"{p.relative_to(ROOT).as_posix()}:{n}: {url[:120]}")
+    report("Link tags (AI-tool and tracking parameters)", "FAIL" if found else "PASS", found)
 
 
 def check_links() -> None:
@@ -333,7 +348,7 @@ def check_browser_tests() -> None:
 
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    for check in (check_secrets, check_personal, check_links, check_wording, check_structure, check_currency, check_tests, check_browser_tests):
+    for check in (check_secrets, check_personal, check_link_tags, check_links, check_wording, check_structure, check_currency, check_tests, check_browser_tests):
         check()
     width = max(len(n) for n, _, _ in results)
     for name, status, details in results:
