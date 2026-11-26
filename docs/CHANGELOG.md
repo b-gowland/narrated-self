@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-26 — Site deploys to Cloudflare Pages
+- The site moved from GitHub Pages to Cloudflare Pages on 17 Nov 2026, during a GitHub account suspension. The deploy workflow now publishes `site/` with `wrangler pages deploy` (project `narratedself`) after the browser tests pass, then runs the live checks. It needs Cloudflare secrets in the `production` environment; without them it warns and publishes nothing.
+- `site/_headers` adds security headers and keeps the `*.pages.dev` copy out of search. `site/CNAME` is removed.
+
 ## 2026-10-26 — Site fixes from new browser tests
 - **Browser tests added** (`e2e/`, Playwright): about 125 checks of the site on phone and desktop sizes, including accessibility scans. The Pages deploy now runs them first and refuses to publish if any fail, then checks the live site read-only.
 - **Bugs found and fixed:**

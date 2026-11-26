@@ -1,6 +1,8 @@
 # Going live
 
-The site will live at **narratedself.airiskpractice.org**, next to the other AI Risk Practice tools (`baseline.`, `library.` and `app.airiskpractice.org`). It uses the same setup: GitHub Pages, deployed by a GitHub Action, with DNS on Cloudflare.
+The site will live at **narratedself.airiskpractice.org**, next to the other AI Risk Practice tools (`baseline.`, `library.` and `app.airiskpractice.org`). It now uses the same setup as those sites: Cloudflare Pages (project `narratedself`), deployed by a GitHub Action with `wrangler pages deploy`.
+
+> **Moved off GitHub Pages on 17 Nov 2026.** A GitHub account suspension took every GitHub Pages site offline, so all four sites moved to Cloudflare Pages. The GitHub Pages steps below are kept as history only. Deploys need `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as secrets of the repo's `production` environment, limited to `main`.
 
 Search engines can list the site from 2026-10-25, when `noindex` was removed.
 
@@ -10,7 +12,7 @@ Live at https://narratedself.airiskpractice.org with HTTPS enforced. The steps a
 
 **GitHub** (repo `b-gowland/narrated-self`)
 1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
-2. **Settings → Pages → Custom domain:** enter `narratedself.airiskpractice.org` and save. The `site/CNAME` file sets this too.
+2. **Settings → Pages → Custom domain:** enter `narratedself.airiskpractice.org` and save. (The old CNAME file in the site folder, which also set this, was removed in the move to Cloudflare Pages.)
 
 **Cloudflare** (zone `airiskpractice.org`)
 3. **DNS → Records → Add record:**

@@ -43,7 +43,7 @@ Every arXiv citation was checked against arXiv's own metadata (title, date, auth
 - **Content Security Policy added.** The page script moved to `site/app.js`, so the policy can forbid inline scripts entirely (`script-src 'self'`). Connections are allowed only to the site itself and the guess API. Fonts come only from Google Fonts. Plugins are blocked, and forms can't post anywhere.
 - The one place a data value was put into HTML (a theme ID) now uses a data attribute instead.
 - No keys, tokens or secrets in any site file.
-- GitHub Pages can't send custom headers, so clickjacking protection (`frame-ancestors`) isn't possible. The site has no account or sensitive action to hijack, so this is accepted.
+- Since the move to Cloudflare Pages (Nov 2026), `site/_headers` sends security headers (`nosniff`, a referrer policy, a permissions policy, HSTS) and keeps the `*.pages.dev` copy out of search. Clickjacking protection (`frame-ancestors`) is left off: the site has no account or sensitive action to hijack, and the stories may be embedded elsewhere.
 
 ## Repo and workflows
 - Secret scanning and push protection: on. Open alerts: 0. Secret patterns in the full git history: none.

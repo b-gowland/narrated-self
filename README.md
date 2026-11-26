@@ -59,7 +59,7 @@ src/            The tns command: runner, smoke tests, masking, site export and a
 worker/         Cloudflare Worker that records anonymous guesses
 e2e/            Browser tests of the site (Playwright: Android, desktop and iPhone)
 scripts/        Repo QA and helper scripts
-site/           Public site (GitHub Pages)
+site/           Public site (Cloudflare Pages)
 data/raw/       Model outputs with full run metadata (append-only)
 data/derived/   Masked text and masking logs
 data/players/   Anonymous player totals
