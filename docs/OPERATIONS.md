@@ -35,7 +35,8 @@ Last reviewed: 2026-10-25. The full security and citation review is in `docs/SEC
 |---|---|---|
 | Model calls (OpenRouter) | About US$4 per pilot round (180 outputs), about US$10 per full round (420 outputs) | Spent so far US$5.22, including two smoke tests. Quarterly full rounds cost about US$40 a year. OpenRouter adds about 5% when buying credit. Gemini's introductory price is reported to double from 1 December 2026. |
 | Cloudflare Worker and D1 | Free plan | Free limits: 100,000 Worker requests a day; D1 5 million rows read and 100,000 written a day, 5 GB stored. At about 7 requests per player, that's roughly 10,000 players a day. On the free plan, going over makes requests fail rather than charging. Check whether the account is on Workers Paid (US$5/month), where overages are billed. |
-| GitHub Pages and Actions | Free (public repo) | GitHub disables scheduled workflows in a repo with no activity for 60 days. If the nightly export stops, re-enable it under Actions. |
+| Cloudflare Pages | Free plan | Project `narratedself`. Deployed from Actions with an API token (Account · Cloudflare Pages · Edit only), stored in the `production` environment limited to `main`. **The token expires 26 Nov 2027**: make a new one and update the secret in every AI Risk Practice repo that uses it. |
+| GitHub Actions | Free (public repo) | GitHub disables scheduled workflows in a repo with no activity for 60 days. If the nightly export stops, re-enable it under Actions. |
 | Cloudflare DNS | Free | (none) |
 | Plausible | Your existing plan | This site's pageviews count towards the plan's monthly quota. |
 | Domain | Existing renewal | (none) |
