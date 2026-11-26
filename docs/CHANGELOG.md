@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-26 — Self-hosted fonts and a tighter CSP
+- **Web fonts are self-hosted.** Anton, Caveat and Libre Franklin (same weights as before) are in `site/fonts/` as WOFF2 files with their SIL Open Font Licences, loaded by `site/fonts/fonts.css`. Pages no longer contact Google Fonts, and the CSP drops `fonts.googleapis.com` and `fonts.gstatic.com`. Only Latin and Latin Extended are included; other scripts use system fonts.
+- **No local address in the published CSP.** `connect-src` no longer lists `http://127.0.0.1:8787`. The local test server adds it when serving pages, so local play against `wrangler dev` still works. A browser test checks the published pages.
+- **Dependabot** checks the `e2e` and `worker` npm packages, the Python lock file and the workflow actions weekly, with minor and patch updates grouped.
+- `docs/RESEARCH_REVIEW.md` now names Cloudflare Pages as the site host.
+
 ## 2026-11-26 — Site deploys to Cloudflare Pages
 - The site moved from GitHub Pages to Cloudflare Pages on 17 Nov 2026, during a GitHub account suspension. The deploy workflow now publishes `site/` with `wrangler pages deploy` (project `narratedself`) after the browser tests pass, then runs the live checks. It needs Cloudflare secrets in the `production` environment; without them it warns and publishes nothing.
 - `site/_headers` adds security headers and keeps the `*.pages.dev` copy out of search. `site/CNAME` is removed.

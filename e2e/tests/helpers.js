@@ -31,7 +31,6 @@ export const test = base.extend({
       route.request().resourceType() === "script"
         ? route.fulfill({ status: 200, contentType: "text/javascript", body: "" })
         : route.fulfill({ status: 202, body: "ok" }));
-    await page.route(/fonts\.(googleapis|gstatic)\.com/, route => route.abort());
     await use({ calls, guesses: () => calls.filter(c => c.path === "/guess").map(c => c.body) });
   }, { auto: true }],
   // Every test fails on a script error or a blocked resource, unless it opts out.
@@ -40,8 +39,7 @@ export const test = base.extend({
     const errors = [];
     page.on("pageerror", e => errors.push(`pageerror: ${e.message}`));
     page.on("console", m => {
-      // Blocked web fonts are a test artefact, not a site error.
-      if (m.type() === "error" && !/fonts\.g|ERR_FAILED/.test(m.text())) errors.push(`console: ${m.text()}`);
+      if (m.type() === "error" && !/ERR_FAILED/.test(m.text())) errors.push(`console: ${m.text()}`);
     });
     await page.addInitScript(() => {
       window.__csp = [];
