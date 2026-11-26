@@ -10,9 +10,7 @@ async function scan(page, label) {
 
 for (const scheme of ["light", "dark"]) {
   test.describe(`${scheme} mode`, () => {
-    // axe fetches the font stylesheet to inspect it, which the site's CSP rightly blocks; page errors still fail.
-    test.use({ colorScheme: scheme, allowErrors: true });
-    test.afterEach(async ({ errors }) => expect(errors.filter(e => e.startsWith("pageerror"))).toEqual([]));
+    test.use({ colorScheme: scheme });
 
     test("game: story, reveal and score page", async ({ page }) => {
       await openGame(page);

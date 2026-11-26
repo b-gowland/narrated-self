@@ -1,4 +1,5 @@
 // Navigation between views, the back button, the two reading views, Findings, About and the 404 page.
+import { readFileSync } from "node:fs";
 import { test, expect, openGame, guess, storyById, ROUND } from "./helpers.js";
 
 const VIEWS = ["play", "compare", "control", "findings", "about"];
@@ -142,4 +143,24 @@ test("an unknown page shows the 404 page with a way back", async ({ page, errors
   await expect(page.locator("#view-play")).toBeVisible();
   expect(errors.filter(e => !/status of 404/.test(e))).toEqual([]);
 });
+});
+
+// The web fonts are self-hosted: the pages load them from the site itself and name no other font host.
+test("web fonts load from the site itself", async ({ page }) => {
+  const fontHosts = new Set();
+  page.on("request", r => { if (r.resourceType() === "font" || r.url().endsWith(".css")) fontHosts.add(new URL(r.url()).host); });
+  await openGame(page);
+  await page.evaluate(() => document.fonts.ready);
+  const loaded = await page.evaluate(() => [...document.fonts].filter(f => f.status === "loaded").map(f => f.family.replace(/"/g, "")));
+  expect(loaded).toContain("Anton");
+  expect(loaded).toContain("Libre Franklin");
+  expect([...fontHosts]).toEqual([new URL(page.url()).host]);
+});
+
+// The published pages must not allow connections to a local address; the local server adds it for development.
+test("the published CSP has no local or Google Fonts hosts", () => {
+  for (const name of ["index.html", "404.html"]) {
+    const html = readFileSync(new URL(`../../site/${name}`, import.meta.url), "utf8");
+    expect(html, name).not.toMatch(/127\.0\.0\.1|localhost|fonts\.(googleapis|gstatic)\.com/);
+  }
 });

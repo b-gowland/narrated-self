@@ -40,7 +40,7 @@ Every arXiv citation was checked against arXiv's own metadata (title, date, auth
 
 ## Site review
 - **Model text is always inserted as text, never as HTML.** A story containing markup or script can't run. This is the most important check for a site that displays model output.
-- **Content Security Policy added.** The page script moved to `site/app.js`, so the policy can forbid inline scripts entirely (`script-src 'self'`). Connections are allowed only to the site itself and the guess API. Fonts come only from Google Fonts. Plugins are blocked, and forms can't post anywhere.
+- **Content Security Policy added.** The page script moved to `site/app.js`, so the policy can forbid inline scripts entirely (`script-src 'self'`). Connections are allowed only to the site itself, the guess API and Plausible. Fonts are self-hosted in `site/fonts/` (since Nov 2026; before that they came from Google Fonts), so `font-src` is `'self'`. The published policy has no local address: the local test server (`e2e/serve.mjs`) adds the local guess API (`http://127.0.0.1:8787`) to `connect-src` only when it serves the pages, which is the only time `site/app.js` uses that address. Plugins are blocked, and forms can't post anywhere.
 - The one place a data value was put into HTML (a theme ID) now uses a data attribute instead.
 - No keys, tokens or secrets in any site file.
 - Since the move to Cloudflare Pages (Nov 2026), `site/_headers` sends security headers (`nosniff`, a referrer policy, a permissions policy, HSTS) and keeps the `*.pages.dev` copy out of search. Clickjacking protection (`frame-ancestors`) is left off: the site has no account or sensitive action to hijack, and the stories may be embedded elsewhere.
