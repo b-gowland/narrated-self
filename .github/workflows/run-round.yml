@@ -9,8 +9,9 @@ name: Run a round
 # Start it by hand: Actions -> Run a round -> Run workflow, and give the round
 # (for example R1). It needs config/models_<round>.yaml on main.
 #
-# The OpenRouter key is the repository secret OPENROUTER_API_KEY. Keep a low
-# credit limit on that key in OpenRouter, because the limit is the real cap on
+# The OpenRouter key is OPENROUTER_API_KEY, a secret of the "production"
+# environment, which only main can use. It is a separate key ("GitHub round
+# runner") with a US$10 limit in OpenRouter; that limit is the real cap on
 # spend. The key is handed only to the step that calls the models.
 #
 # Raw outputs are append-only (CLAUDE.md rule 3): the runner only adds lines,
@@ -35,6 +36,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    environment: production
     env:
       ROUND: ${{ inputs.round }}
     steps:
@@ -69,7 +71,7 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           if [ -z "$OPENROUTER_API_KEY" ]; then
-            echo "::error::Add the repository secret OPENROUTER_API_KEY first."; exit 1
+            echo "::error::Add OPENROUTER_API_KEY to the production environment first."; exit 1
           fi
           # A failed cell is reported, and a rerun of this workflow resumes it.
           uv run tns run --round "$ROUND" || echo "::warning::Some cells failed; rerun the workflow to resume them."
