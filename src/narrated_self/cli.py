@@ -37,6 +37,10 @@ def main(argv: list[str] | None = None) -> int:
     site.add_argument("--round", required=True, dest="round_id")
     site.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
 
+    cmp_ = sub.add_parser("compare", help="Changes between two rounds (Q4), written to data/derived/compare/")
+    cmp_.add_argument("--rounds", nargs=2, required=True, metavar=("BEFORE", "AFTER"))
+    cmp_.add_argument("--quick", action="store_true", help="Fewer permutations, for checking the code runs")
+
     args = parser.parse_args(argv)
     root = Path.cwd()
 
@@ -66,6 +70,13 @@ def main(argv: list[str] | None = None) -> int:
         result = write_report(root, args.round_id, quick=args.quick)
         print(f"Wrote data/derived/{args.round_id}/analysis.json, wordlist_rates.csv and "
               f"{len(result['charts'])} charts in site/findings/{args.round_id}/")
+        return 0
+
+    if args.command == "compare":
+        from .compare import write_compare
+
+        out = write_compare(root, *args.rounds, permutations=200 if args.quick else 10_000)
+        print(f"Wrote {out.relative_to(root).as_posix()}")
         return 0
 
     if args.command == "site":
