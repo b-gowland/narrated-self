@@ -1,0 +1,997 @@
+{
+ "round": "R1",
+ "settings": {
+  "seed": 20261024,
+  "cv": "5-fold x 20 repeats",
+  "permutations": 1000,
+  "bootstrap": 2000,
+  "function_word_list": "scikit-learn ENGLISH_STOP_WORDS (318 words)"
+ },
+ "descriptives": {
+  "outputs": 180,
+  "finish_reasons": {
+   "stop": 180
+  },
+  "outputs_under_100_words": 12,
+  "words_by_model_and_condition": {
+   "anthropic|D": {
+    "mean": 263.0,
+    "min": 204.0,
+    "max": 316.0
+   },
+   "anthropic|S1": {
+    "mean": 549.9,
+    "min": 500.0,
+    "max": 586.0
+   },
+   "anthropic|S2": {
+    "mean": 546.4,
+    "min": 510.0,
+    "max": 574.0
+   },
+   "anthropic|S3": {
+    "mean": 558.0,
+    "min": 526.0,
+    "max": 590.0
+   },
+   "google|D": {
+    "mean": 228.8,
+    "min": 145.0,
+    "max": 353.0
+   },
+   "google|S1": {
+    "mean": 514.0,
+    "min": 460.0,
+    "max": 578.0
+   },
+   "google|S2": {
+    "mean": 501.3,
+    "min": 449.0,
+    "max": 530.0
+   },
+   "google|S3": {
+    "mean": 536.2,
+    "min": 481.0,
+    "max": 588.0
+   },
+   "moonshotai|D": {
+    "mean": 128.6,
+    "min": 46.0,
+    "max": 187.0
+   },
+   "moonshotai|S1": {
+    "mean": 483.9,
+    "min": 437.0,
+    "max": 525.0
+   },
+   "moonshotai|S2": {
+    "mean": 519.4,
+    "min": 451.0,
+    "max": 589.0
+   },
+   "moonshotai|S3": {
+    "mean": 501.1,
+    "min": 448.0,
+    "max": 582.0
+   },
+   "openai|D": {
+    "mean": 73.2,
+    "min": 50.0,
+    "max": 95.0
+   },
+   "openai|S1": {
+    "mean": 494.3,
+    "min": 450.0,
+    "max": 530.0
+   },
+   "openai|S2": {
+    "mean": 506.6,
+    "min": 487.0,
+    "max": 540.0
+   },
+   "openai|S3": {
+    "mean": 521.6,
+    "min": 493.0,
+    "max": 551.0
+   },
+   "xai|D": {
+    "mean": 162.1,
+    "min": 117.0,
+    "max": 239.0
+   },
+   "xai|S1": {
+    "mean": 568.7,
+    "min": 539.0,
+    "max": 610.0
+   },
+   "xai|S2": {
+    "mean": 548.0,
+    "min": 514.0,
+    "max": 594.0
+   },
+   "xai|S3": {
+    "mean": 542.4,
+    "min": 396.0,
+    "max": 663.0
+   }
+  },
+  "story_words_by_model": {
+   "anthropic": 551.4,
+   "google": 517.2,
+   "moonshotai": 501.5,
+   "openai": 507.5,
+   "xai": 553.0
+  },
+  "interview_words_by_model": {
+   "anthropic": 263.0,
+   "google": 228.8,
+   "moonshotai": 128.6,
+   "openai": 73.2,
+   "xai": 162.1
+  },
+  "reasoning_tokens_mean_by_model": {
+   "anthropic": 1371.0,
+   "google": 1784.0,
+   "moonshotai": 1581.0,
+   "openai": 0.0,
+   "xai": 929.0
+  },
+  "masked_names_by_model": {
+   "anthropic": 0,
+   "google": 3,
+   "moonshotai": 8,
+   "openai": 0,
+   "xai": 0
+  }
+ },
+ "q1a_classifier": {
+  "chance": 0.2,
+  "n_outputs": 180,
+  "labels": [
+   "anthropic",
+   "google",
+   "moonshotai",
+   "openai",
+   "xai"
+  ],
+  "feature_sets": {
+   "a_all_text": {
+    "pooled_correct": 170,
+    "sampling_interval_95_wilson": [
+     0.9007673885684612,
+     0.9695470560403759
+    ],
+    "accuracy_mean": 0.9436111111111112,
+    "accuracy_interval_95": [
+     0.9163888888888888,
+     0.9640277777777777
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "moonshotai",
+      "openai",
+      "xai"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       35,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       34,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       5,
+       31,
+       0
+      ],
+      [
+       0,
+       0,
+       2,
+       0,
+       34
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "moonshotai": 0.9444444444444444,
+     "openai": 0.8611111111111112,
+     "xai": 0.9444444444444444
+    }
+   },
+   "b_formatting_stripped": {
+    "pooled_correct": 172,
+    "sampling_interval_95_wilson": [
+     0.9147621269171728,
+     0.9773101788068854
+    ],
+    "accuracy_mean": 0.9447222222222222,
+    "accuracy_interval_95": [
+     0.9193055555555555,
+     0.9640277777777778
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "moonshotai",
+      "openai",
+      "xai"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       35,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       35,
+       1,
+       0
+      ],
+      [
+       0,
+       0,
+       5,
+       31,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       35
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "moonshotai": 0.9722222222222222,
+     "openai": 0.8611111111111112,
+     "xai": 0.9722222222222222
+    }
+   },
+   "c_function_words": {
+    "pooled_correct": 162,
+    "sampling_interval_95_wilson": [
+     0.8474767289960173,
+     0.9358062711519363
+    ],
+    "accuracy_mean": 0.8830555555555556,
+    "accuracy_interval_95": [
+     0.8581944444444444,
+     0.9029166666666667
+    ],
+    "permutation_p": 0.000999000999000999,
+    "confusion_matrix": {
+     "labels": [
+      "anthropic",
+      "google",
+      "moonshotai",
+      "openai",
+      "xai"
+     ],
+     "rows_true_cols_predicted": [
+      [
+       34,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       0,
+       36,
+       0,
+       0,
+       0
+      ],
+      [
+       4,
+       0,
+       28,
+       2,
+       2
+      ],
+      [
+       1,
+       0,
+       1,
+       32,
+       2
+      ],
+      [
+       0,
+       0,
+       1,
+       3,
+       32
+      ]
+     ]
+    },
+    "per_model_recall": {
+     "anthropic": 0.9444444444444444,
+     "google": 1.0,
+     "moonshotai": 0.7777777777777778,
+     "openai": 0.8888888888888888,
+     "xai": 0.8888888888888888
+    }
+   }
+  },
+  "drop_a_to_c": 0.060555555555555585
+ },
+ "robustness": {
+  "length_and_layout_only": {
+   "accuracy_mean": 0.5050000000000001,
+   "accuracy_interval_95": [
+    0.4661111111111111,
+    0.53625
+   ]
+  },
+  "leave_one_theme_out": {
+   "a_all_text": {
+    "accuracy_per_held_out_theme": {
+     "T1": 0.9166666666666666,
+     "T2": 0.9166666666666666,
+     "T3": 0.9333333333333333
+    },
+    "accuracy_mean": 0.9222222222222222
+   },
+   "c_function_words": {
+    "accuracy_per_held_out_theme": {
+     "T1": 0.8333333333333334,
+     "T2": 0.8166666666666667,
+     "T3": 0.85
+    },
+    "accuracy_mean": 0.8333333333333334
+   }
+  },
+  "leave_one_prompt_out": {
+   "a_all_text": {
+    "accuracy_mean": 0.9277777777777777,
+    "prompts_held_out": 12
+   },
+   "c_function_words": {
+    "accuracy_mean": 0.8722222222222222,
+    "prompts_held_out": 12
+   }
+  },
+  "leave_one_format_out": {
+   "a_all_text": {
+    "accuracy_per_held_out_format": {
+     "D": 0.5777777777777777,
+     "S1": 0.9777777777777777,
+     "S2": 1.0,
+     "S3": 0.6
+    },
+    "accuracy_mean": 0.7888888888888889
+   },
+   "c_function_words": {
+    "accuracy_per_held_out_format": {
+     "D": 0.4444444444444444,
+     "S1": 0.9333333333333333,
+     "S2": 0.9333333333333333,
+     "S3": 0.6222222222222222
+    },
+    "accuracy_mean": 0.7333333333333333
+   }
+  },
+  "stories_only_s1_s2": {
+   "n_outputs": 90,
+   "accuracy_mean": 0.9911111111111112,
+   "accuracy_interval_95": [
+    0.9608333333333332,
+    1.0
+   ]
+  }
+ },
+ "q2_consistency": {
+  "anthropic": {
+   "within_minus_between": 0.18119345876221318,
+   "cells": 12,
+   "interval_95": [
+    0.1231422375022606,
+    0.2517379170492801
+   ]
+  },
+  "google": {
+   "within_minus_between": 0.19948521080364548,
+   "cells": 12,
+   "interval_95": [
+    0.16181664777145296,
+    0.24298401372700557
+   ]
+  },
+  "moonshotai": {
+   "within_minus_between": 0.1046962465665315,
+   "cells": 12,
+   "interval_95": [
+    0.08138831783146068,
+    0.13441390790822846
+   ]
+  },
+  "openai": {
+   "within_minus_between": 0.11567154835972904,
+   "cells": 12,
+   "interval_95": [
+    0.08594664272292639,
+    0.14803855155666154
+   ]
+  },
+  "xai": {
+   "within_minus_between": 0.11422497521131077,
+   "cells": 12,
+   "interval_95": [
+    0.09455930323002784,
+    0.13734272540686865
+   ]
+  }
+ },
+ "q3_framing_exploratory": {
+  "family_size": 40,
+  "results": [
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "anthropic",
+    "model_contrast": 2.588736644487669,
+    "gap_vs_other_models": 0.40727692879192334,
+    "interval_95": [
+     -0.9622346517283606,
+     1.8478828146531405
+    ],
+    "p_bootstrap": 0.619,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "google",
+    "model_contrast": 0.9218180025633443,
+    "gap_vs_other_models": -1.6763713736134829,
+    "interval_95": [
+     -2.348314277699139,
+     -0.9673756007611469
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "moonshotai",
+    "model_contrast": 5.10267213647045,
+    "gap_vs_other_models": 3.5496962937704,
+    "interval_95": [
+     1.9240676721162895,
+     5.23816007236325
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "openai",
+    "model_contrast": 0.9075030345591889,
+    "gap_vs_other_models": -1.6942650836186766,
+    "interval_95": [
+     -2.645739394426875,
+     -0.7616405260584971
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "hedging",
+    "model": "xai",
+    "model_contrast": 1.7938456891899994,
+    "gap_vs_other_models": -0.5863367653301639,
+    "interval_95": [
+     -1.8452110670452087,
+     0.4911878823360871
+    ],
+    "p_bootstrap": 0.34,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "anthropic",
+    "model_contrast": 0.0,
+    "gap_vs_other_models": -1.3393719349463926,
+    "interval_95": [
+     -1.805829158026593,
+     -0.9378883433788391
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "google",
+    "model_contrast": 4.521956746647563,
+    "gap_vs_other_models": 4.313073998363061,
+    "interval_95": [
+     2.8215027364356455,
+     6.017249858532147
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "moonshotai",
+    "model_contrast": 0.2508151492350138,
+    "gap_vs_other_models": -1.0258529984026254,
+    "interval_95": [
+     -1.5735344892100478,
+     -0.43728663475172924
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "openai",
+    "model_contrast": 0.0,
+    "gap_vs_other_models": -1.3393719349463926,
+    "interval_95": [
+     -1.805829158026593,
+     -0.9378883433788391
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "lm_self_reference",
+    "model": "xai",
+    "model_contrast": 0.5847158439029941,
+    "gap_vs_other_models": -0.60847713006765,
+    "interval_95": [
+     -1.2863071589527422,
+     0.0420648794764625
+    ],
+    "p_bootstrap": 0.073,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "anthropic",
+    "model_contrast": 53.207233516680944,
+    "gap_vs_other_models": -9.585362811898577,
+    "interval_95": [
+     -23.339700138138063,
+     1.8389327201293435
+    ],
+    "p_bootstrap": 0.118,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "google",
+    "model_contrast": 56.788785356929424,
+    "gap_vs_other_models": -5.108423011587988,
+    "interval_95": [
+     -18.051494402893326,
+     9.077606956353108
+    ],
+    "p_bootstrap": 0.49,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "moonshotai",
+    "model_contrast": 67.02928734641478,
+    "gap_vs_other_models": 7.69220447526871,
+    "interval_95": [
+     0.3644493187717281,
+     15.38951716916436
+    ],
+    "p_bootstrap": 0.037,
+    "p_holm": 0.7769999999999999
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "openai",
+    "model_contrast": 61.34943367865968,
+    "gap_vs_other_models": 0.5923873905748422,
+    "interval_95": [
+     -11.20373815407578,
+     11.79475521321804
+    ],
+    "p_bootstrap": 0.852,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "first_person",
+    "model": "xai",
+    "model_contrast": 66.00287893231423,
+    "gap_vs_other_models": 6.409193957643026,
+    "interval_95": [
+     -0.6495506966810398,
+     13.795718987170291
+    ],
+    "p_bootstrap": 0.077,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "anthropic",
+    "model_contrast": 0.05986714914373361,
+    "gap_vs_other_models": 0.022858018893095612,
+    "interval_95": [
+     -0.013832848227228795,
+     0.06169612359672114
+    ],
+    "p_bootstrap": 0.237,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "google",
+    "model_contrast": 0.053095155532739934,
+    "gap_vs_other_models": 0.014393026879353517,
+    "interval_95": [
+     -0.014423167969477403,
+     0.04742578147994801
+    ],
+    "p_bootstrap": 0.355,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "moonshotai",
+    "model_contrast": 0.03675732323949742,
+    "gap_vs_other_models": -0.006029263487199614,
+    "interval_95": [
+     -0.04302777825191556,
+     0.030691572098322642
+    ],
+    "p_bootstrap": 0.748,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "openai",
+    "model_contrast": 0.03599367550553975,
+    "gap_vs_other_models": -0.006983823154646705,
+    "interval_95": [
+     -0.03123481702613789,
+     0.017132410968666127
+    ],
+    "p_bootstrap": 0.557,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "S1_minus_S3",
+    "measure": "sentiment",
+    "model": "xai",
+    "model_contrast": 0.022190366724774875,
+    "gap_vs_other_models": -0.024237959130602803,
+    "interval_95": [
+     -0.05236238587649723,
+     0.001346965899212874
+    ],
+    "p_bootstrap": 0.066,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "anthropic",
+    "model_contrast": 4.337859226558503,
+    "gap_vs_other_models": 4.830251622646112,
+    "interval_95": [
+     2.115569589077618,
+     7.618583110371918
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "google",
+    "model_contrast": -1.3042256179674085,
+    "gap_vs_other_models": -2.222354433011278,
+    "interval_95": [
+     -3.7559683523284724,
+     -0.6566640622245682
+    ],
+    "p_bootstrap": 0.004,
+    "p_holm": 0.092
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "moonshotai",
+    "model_contrast": 1.5289732287086049,
+    "gap_vs_other_models": 1.3191441253337386,
+    "interval_95": [
+     -2.0407063332851676,
+     5.0539562610920274
+    ],
+    "p_bootstrap": 0.542,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "openai",
+    "model_contrast": -1.1318749211315664,
+    "gap_vs_other_models": -2.0069160619664754,
+    "interval_95": [
+     -4.942962874808499,
+     0.9795473650094896
+    ],
+    "p_bootstrap": 0.199,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "hedging",
+    "model": "xai",
+    "model_contrast": -1.0624422739600639,
+    "gap_vs_other_models": -1.9201252530020971,
+    "interval_95": [
+     -3.8629748516412428,
+     0.007078746732832619
+    ],
+    "p_bootstrap": 0.052,
+    "p_holm": 0.988
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "anthropic",
+    "model_contrast": 1.1247977482890643,
+    "gap_vs_other_models": 4.06944082897085,
+    "interval_95": [
+     3.4903393565331737,
+     4.630936303612325
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "google",
+    "model_contrast": -8.90616704882583,
+    "gap_vs_other_models": -8.469265167422767,
+    "interval_95": [
+     -10.636103729804283,
+     -6.326915863115705
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "moonshotai",
+    "model_contrast": -0.1912411550965768,
+    "gap_vs_other_models": 2.4243921997387994,
+    "interval_95": [
+     1.7719626969947626,
+     3.059720821037967
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "openai",
+    "model_contrast": 0.0,
+    "gap_vs_other_models": 2.6634436436095204,
+    "interval_95": [
+     2.0853505465375832,
+     3.2206253235677784
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "lm_self_reference",
+    "model": "xai",
+    "model_contrast": -2.6811641188047375,
+    "gap_vs_other_models": -0.6880115048964017,
+    "interval_95": [
+     -1.5978605705611402,
+     0.20972644430118864
+    ],
+    "p_bootstrap": 0.137,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "anthropic",
+    "model_contrast": 59.68383151742292,
+    "gap_vs_other_models": 30.205218953841822,
+    "interval_95": [
+     15.119255301971767,
+     45.06433791620097
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "google",
+    "model_contrast": -7.240097628173892,
+    "gap_vs_other_models": -53.44969247815419,
+    "interval_95": [
+     -62.114898703310935,
+     -44.07432146014959
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "moonshotai",
+    "model_contrast": 24.899073997823628,
+    "gap_vs_other_models": -13.275727945657287,
+    "interval_95": [
+     -25.903684409761706,
+     0.5414327699288334
+    ],
+    "p_bootstrap": 0.057,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "openai",
+    "model_contrast": 55.44629782253789,
+    "gap_vs_other_models": 24.908301835235548,
+    "interval_95": [
+     10.785258487615911,
+     37.12917844183296
+    ],
+    "p_bootstrap": 0.0,
+    "p_holm": 0.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "first_person",
+    "model": "xai",
+    "model_contrast": 44.809176062136736,
+    "gap_vs_other_models": 11.611899634734101,
+    "interval_95": [
+     -5.096486286963925,
+     27.551443384419
+    ],
+    "p_bootstrap": 0.189,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "anthropic",
+    "model_contrast": 0.04389682948043642,
+    "gap_vs_other_models": -0.01055226444393556,
+    "interval_95": [
+     -0.06789623265697581,
+     0.04677233795158249
+    ],
+    "p_bootstrap": 0.769,
+    "p_holm": 1.0
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "google",
+    "model_contrast": 0.10528684692638907,
+    "gap_vs_other_models": 0.06618525736350525,
+    "interval_95": [
+     0.008672772683290505,
+     0.12252951568669282
+    ],
+    "p_bootstrap": 0.02,
+    "p_holm": 0.44
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "moonshotai",
+    "model_contrast": 0.15501458580556304,
+    "gap_vs_other_models": 0.12834493096247274,
+    "interval_95": [
+     0.04045732477453268,
+     0.23474320167529836
+    ],
+    "p_bootstrap": 0.001,
+    "p_holm": 0.025
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "openai",
+    "model_contrast": -0.03938511409678077,
+    "gap_vs_other_models": -0.11465469391545705,
+    "interval_95": [
+     -0.18345699300690263,
+     -0.04721928055019246
+    ],
+    "p_bootstrap": 0.002,
+    "p_holm": 0.048
+   },
+   {
+    "contrast": "D_minus_S2",
+    "measure": "sentiment",
+    "model": "xai",
+    "model_contrast": -0.0031199429376834106,
+    "gap_vs_other_models": -0.06932322996658535,
+    "interval_95": [
+     -0.13349738797246624,
+     -0.0029869290448422043
+    ],
+    "p_bootstrap": 0.041,
+    "p_holm": 0.8200000000000001
+   }
+  ]
+ },
+ "charts": [
+  "classifier_accuracy.png",
+  "confusion_all_words.png",
+  "average_length.png",
+  "consistency.png"
+ ]
+}

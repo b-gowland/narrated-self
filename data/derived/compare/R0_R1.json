@@ -1,0 +1,1580 @@
+{
+ "rounds": [
+  "R0",
+  "R1"
+ ],
+ "models": {
+  "R0": {
+   "anthropic": {
+    "model_string": "anthropic/claude-fable-5.1",
+    "label": "Claude",
+    "via": "openrouter",
+    "host": "anthropic"
+   },
+   "openai": {
+    "model_string": "openai/gpt-6-astra",
+    "label": "GPT",
+    "via": "openrouter",
+    "host": "openai"
+   },
+   "google": {
+    "model_string": "google/gemini-4-argon",
+    "label": "Gemini",
+    "via": "openrouter",
+    "host": "google-ai-studio"
+   },
+   "xai": {
+    "model_string": "x-ai/grok-4.7",
+    "label": "Grok",
+    "via": "openrouter",
+    "host": "xai"
+   },
+   "open-weight": {
+    "model_string": "xiaomi/mimo-v2.6-pro",
+    "label": "MiMo",
+    "via": "openrouter",
+    "host": "xiaomi/fp8"
+   }
+  },
+  "R1": {
+   "anthropic": {
+    "model_string": "anthropic/claude-fable-5.2",
+    "label": "Claude",
+    "via": "openrouter",
+    "host": "anthropic"
+   },
+   "openai": {
+    "model_string": "openai/gpt-6.2-astra",
+    "label": "GPT",
+    "via": "openrouter",
+    "host": "openai"
+   },
+   "google": {
+    "model_string": "google/gemini-4-carbon",
+    "label": "Gemini",
+    "via": "openrouter",
+    "host": "google-ai-studio"
+   },
+   "xai": {
+    "model_string": "x-ai/grok-4.7",
+    "label": "Grok",
+    "via": "openrouter",
+    "host": "xai"
+   },
+   "open-weight": {
+    "model_string": "moonshotai/kimi-k3.1-pro",
+    "label": "Kimi",
+    "via": "openrouter",
+    "host": "moonshotai/mxfp4"
+   }
+  }
+ },
+ "method": "where §8 is silent (recorded in the output and in docs/CHANGELOG.md):\n- Models are compared by lab slot (Anthropic, OpenAI, Google, xAI). The open-weight slot holds a different\n  model each round, so it is described but never tested for change (§4).\n- \"Within-round spread\" is the standard deviation of the theme × condition cell means within a round,\n  averaged over the two rounds. A change is reportable only if it is larger than that spread *and* survives\n  the permutation test after Holm correction.\n- The permutation test shuffles the round label within each theme × condition cell (10,000 shuffles), so a\n  change can't come from a different mix of prompts.\n- A slot whose model version, route or host changed is flagged: its changes describe a new version, not\n  drift in one model (§8 Q4). Only an unchanged slot can support a drift claim.",
+ "descriptives": {
+  "R0": {
+   "anthropic": {
+    "outputs": 36,
+    "story_words_mean": 566.0,
+    "interview_words_mean": 318.1,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 382.0,
+    "masked_names": 1
+   },
+   "google": {
+    "outputs": 36,
+    "story_words_mean": 565.1,
+    "interview_words_mean": 250.1,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 0.0,
+    "masked_names": 2
+   },
+   "open-weight": {
+    "outputs": 36,
+    "story_words_mean": 545.4,
+    "interview_words_mean": 265.4,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 145.0,
+    "masked_names": 5
+   },
+   "openai": {
+    "outputs": 36,
+    "story_words_mean": 515.5,
+    "interview_words_mean": 87.3,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 102.0,
+    "masked_names": 0
+   },
+   "xai": {
+    "outputs": 36,
+    "story_words_mean": 589.1,
+    "interview_words_mean": 183.0,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 402.0,
+    "masked_names": 0
+   }
+  },
+  "R1": {
+   "anthropic": {
+    "outputs": 36,
+    "story_words_mean": 551.4,
+    "interview_words_mean": 263.0,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 1371.0,
+    "masked_names": 0
+   },
+   "google": {
+    "outputs": 36,
+    "story_words_mean": 517.2,
+    "interview_words_mean": 228.8,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 1784.0,
+    "masked_names": 3
+   },
+   "open-weight": {
+    "outputs": 36,
+    "story_words_mean": 501.5,
+    "interview_words_mean": 128.6,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 1581.0,
+    "masked_names": 8
+   },
+   "openai": {
+    "outputs": 36,
+    "story_words_mean": 507.5,
+    "interview_words_mean": 73.2,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 0.0,
+    "masked_names": 0
+   },
+   "xai": {
+    "outputs": 36,
+    "story_words_mean": 553.0,
+    "interview_words_mean": 162.1,
+    "finish_reasons": {
+     "stop": 36
+    },
+    "reasoning_tokens_mean": 929.0,
+    "masked_names": 0
+   }
+  }
+ },
+ "q1a_accuracy_by_round": {
+  "R0": {
+   "a_all_text": {
+    "accuracy_mean": 0.8958333333333334,
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "openai": 1.0,
+     "xai": 0.9166666666666666,
+     "xiaomi": 0.6388888888888888
+    }
+   },
+   "b_formatting_stripped": {
+    "accuracy_mean": 0.8955555555555555,
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "openai": 1.0,
+     "xai": 0.9166666666666666,
+     "xiaomi": 0.6388888888888888
+    }
+   },
+   "c_function_words": {
+    "accuracy_mean": 0.8444444444444444,
+    "per_model_recall": {
+     "anthropic": 0.8333333333333334,
+     "google": 1.0,
+     "openai": 0.8611111111111112,
+     "xai": 0.8611111111111112,
+     "xiaomi": 0.6388888888888888
+    }
+   }
+  },
+  "R1": {
+   "a_all_text": {
+    "accuracy_mean": 0.9436111111111112,
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "moonshotai": 0.9444444444444444,
+     "openai": 0.8611111111111112,
+     "xai": 0.9444444444444444
+    }
+   },
+   "b_formatting_stripped": {
+    "accuracy_mean": 0.9447222222222222,
+    "per_model_recall": {
+     "anthropic": 0.9722222222222222,
+     "google": 1.0,
+     "moonshotai": 0.9722222222222222,
+     "openai": 0.8611111111111112,
+     "xai": 0.9722222222222222
+    }
+   },
+   "c_function_words": {
+    "accuracy_mean": 0.8830555555555556,
+    "per_model_recall": {
+     "anthropic": 0.9444444444444444,
+     "google": 1.0,
+     "moonshotai": 0.7777777777777778,
+     "openai": 0.8888888888888888,
+     "xai": 0.8888888888888888
+    }
+   }
+  }
+ },
+ "q4_changes": {
+  "family_size": 20,
+  "results": [
+   {
+    "mean_before": 504.0,
+    "mean_after": 479.3333333333333,
+    "change": -24.666666666666686,
+    "within_round_spread": 123.06586971742541,
+    "exceeds_spread": false,
+    "p_permutation": 0.00029997000299970003,
+    "slot": "anthropic",
+    "measure": "words",
+    "model_before": "anthropic/claude-fable-5.1",
+    "model_after": "anthropic/claude-fable-5.2",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.0053994600539946005,
+    "reportable": false
+   },
+   {
+    "mean_before": 5.946625538967087,
+    "mean_after": 3.360668855310785,
+    "change": -2.585956683656302,
+    "within_round_spread": 3.4434423456971386,
+    "exceeds_spread": false,
+    "p_permutation": 0.0006999300069993001,
+    "slot": "anthropic",
+    "measure": "hedging",
+    "model_before": "anthropic/claude-fable-5.1",
+    "model_after": "anthropic/claude-fable-5.2",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.011898810118988102,
+    "reportable": false
+   },
+   {
+    "mean_before": 1.1887187037357851,
+    "mean_after": 0.2811994370722661,
+    "change": -0.907519266663519,
+    "within_round_spread": 1.1683862923845922,
+    "exceeds_spread": false,
+    "p_permutation": 0.0011998800119988001,
+    "slot": "anthropic",
+    "measure": "lm_self_reference",
+    "model_before": "anthropic/claude-fable-5.1",
+    "model_after": "anthropic/claude-fable-5.2",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.019198080191980802,
+    "reportable": false
+   },
+   {
+    "mean_before": 49.260747240812684,
+    "mean_after": 47.00727186680495,
+    "change": -2.253475374007735,
+    "within_round_spread": 36.335168507126184,
+    "exceeds_spread": false,
+    "p_permutation": 0.5800419958004199,
+    "slot": "anthropic",
+    "measure": "first_person",
+    "model_before": "anthropic/claude-fable-5.1",
+    "model_after": "anthropic/claude-fable-5.2",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.06062650078103244,
+    "mean_after": 0.03550434597017078,
+    "change": -0.025122154810861663,
+    "within_round_spread": 0.06615093866379687,
+    "exceeds_spread": false,
+    "p_permutation": 0.052094790520947905,
+    "slot": "anthropic",
+    "measure": "sentiment",
+    "model_before": "anthropic/claude-fable-5.1",
+    "model_after": "anthropic/claude-fable-5.2",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.573042695730427,
+    "reportable": false
+   },
+   {
+    "mean_before": 408.47222222222223,
+    "mean_after": 398.9166666666667,
+    "change": -9.555555555555543,
+    "within_round_spread": 195.71242304569355,
+    "exceeds_spread": false,
+    "p_permutation": 0.007699230076992301,
+    "slot": "openai",
+    "measure": "words",
+    "model_before": "openai/gpt-6-astra",
+    "model_after": "openai/gpt-6.2-astra",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.10778922107789221,
+    "reportable": false
+   },
+   {
+    "mean_before": 2.262658676816713,
+    "mean_after": 1.1712201502983501,
+    "change": -1.0914385265183628,
+    "within_round_spread": 2.1206608577423736,
+    "exceeds_spread": false,
+    "p_permutation": 0.09469053094690531,
+    "slot": "openai",
+    "measure": "hedging",
+    "model_before": "openai/gpt-6-astra",
+    "model_after": "openai/gpt-6.2-astra",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.8522147785221478,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.05280946345585129,
+    "mean_after": 0.0,
+    "change": -0.05280946345585129,
+    "within_round_spread": 0.09146867382598636,
+    "exceeds_spread": false,
+    "p_permutation": 1.0,
+    "slot": "openai",
+    "measure": "lm_self_reference",
+    "model_before": "openai/gpt-6-astra",
+    "model_after": "openai/gpt-6.2-astra",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 35.010081971956765,
+    "mean_after": 50.681139145116845,
+    "change": 15.67105717316008,
+    "within_round_spread": 31.306239985375903,
+    "exceeds_spread": false,
+    "p_permutation": 9.999000099990002e-05,
+    "slot": "openai",
+    "measure": "first_person",
+    "model_before": "openai/gpt-6-astra",
+    "model_after": "openai/gpt-6.2-astra",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.001999800019998,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.05827329528118298,
+    "mean_after": 0.011477155245857348,
+    "change": -0.04679614003532563,
+    "within_round_spread": 0.08355000236594498,
+    "exceeds_spread": false,
+    "p_permutation": 0.0433956604339566,
+    "slot": "openai",
+    "measure": "sentiment",
+    "model_before": "openai/gpt-6-astra",
+    "model_after": "openai/gpt-6.2-astra",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.5207479252074793,
+    "reportable": false
+   },
+   {
+    "mean_before": 486.3333333333333,
+    "mean_after": 445.0833333333333,
+    "change": -41.25,
+    "within_round_spread": 143.68291239604548,
+    "exceeds_spread": false,
+    "p_permutation": 0.00019998000199980003,
+    "slot": "google",
+    "measure": "words",
+    "model_before": "google/gemini-4-argon",
+    "model_after": "google/gemini-4-carbon",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.0037996200379962005,
+    "reportable": false
+   },
+   {
+    "mean_before": 1.1284491470626135,
+    "mean_after": 0.5565109051326882,
+    "change": -0.5719382419299253,
+    "within_round_spread": 1.3680908993168555,
+    "exceeds_spread": false,
+    "p_permutation": 0.07539246075392461,
+    "slot": "google",
+    "measure": "hedging",
+    "model_before": "google/gemini-4-argon",
+    "model_after": "google/gemini-4-carbon",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 0.7539246075392461,
+    "reportable": false
+   },
+   {
+    "mean_before": 3.850653335920163,
+    "mean_after": 3.7225280248917394,
+    "change": -0.12812531102842373,
+    "within_round_spread": 3.9747531591603567,
+    "exceeds_spread": false,
+    "p_permutation": 0.8271172882711729,
+    "slot": "google",
+    "measure": "lm_self_reference",
+    "model_before": "google/gemini-4-argon",
+    "model_after": "google/gemini-4-carbon",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 55.40613235943281,
+    "mean_after": 53.36361645900377,
+    "change": -2.042515900429038,
+    "within_round_spread": 29.637747726724434,
+    "exceeds_spread": false,
+    "p_permutation": 0.5534446555344466,
+    "slot": "google",
+    "measure": "first_person",
+    "model_before": "google/gemini-4-argon",
+    "model_after": "google/gemini-4-carbon",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.0651063042523146,
+    "mean_after": 0.07291613696048793,
+    "change": 0.007809832708173328,
+    "within_round_spread": 0.08831134632050229,
+    "exceeds_spread": false,
+    "p_permutation": 0.5227477252274773,
+    "slot": "google",
+    "measure": "sentiment",
+    "model_before": "google/gemini-4-argon",
+    "model_after": "google/gemini-4-carbon",
+    "changed": [
+     "model_string"
+    ],
+    "kind": "version change (descriptive, not drift)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 487.5833333333333,
+    "mean_after": 455.30555555555554,
+    "change": -32.27777777777777,
+    "within_round_spread": 183.2944368396863,
+    "exceeds_spread": false,
+    "p_permutation": 0.0013998600139986002,
+    "slot": "xai",
+    "measure": "words",
+    "model_before": "x-ai/grok-4.7",
+    "model_after": "x-ai/grok-4.7",
+    "changed": [],
+    "kind": "same model (drift test)",
+    "p_holm": 0.020997900209979003,
+    "reportable": false
+   },
+   {
+    "mean_before": 2.2053028145475575,
+    "mean_after": 1.085718811687613,
+    "change": -1.1195840028599444,
+    "within_round_spread": 1.3485706177194863,
+    "exceeds_spread": false,
+    "p_permutation": 0.0332966703329667,
+    "slot": "xai",
+    "measure": "hedging",
+    "model_before": "x-ai/grok-4.7",
+    "model_after": "x-ai/grok-4.7",
+    "changed": [],
+    "kind": "same model (drift test)",
+    "p_holm": 0.43285671432856715,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.8319427347358328,
+    "mean_after": 0.8164699906769329,
+    "change": -0.015472744058899868,
+    "within_round_spread": 1.2166155467045106,
+    "exceeds_spread": false,
+    "p_permutation": 0.9473052694730527,
+    "slot": "xai",
+    "measure": "lm_self_reference",
+    "model_before": "x-ai/grok-4.7",
+    "model_after": "x-ai/grok-4.7",
+    "changed": [],
+    "kind": "same model (drift test)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 35.49213556302694,
+    "mean_after": 36.05220266440064,
+    "change": 0.5600671013736971,
+    "within_round_spread": 30.496622265844962,
+    "exceeds_spread": false,
+    "p_permutation": 0.8604139586041396,
+    "slot": "xai",
+    "measure": "first_person",
+    "model_before": "x-ai/grok-4.7",
+    "model_after": "x-ai/grok-4.7",
+    "changed": [],
+    "kind": "same model (drift test)",
+    "p_holm": 1.0,
+    "reportable": false
+   },
+   {
+    "mean_before": 0.031212931608909367,
+    "mean_after": 0.039618923184159834,
+    "change": 0.008405991575250467,
+    "within_round_spread": 0.056573497763700686,
+    "exceeds_spread": false,
+    "p_permutation": 0.5207479252074793,
+    "slot": "xai",
+    "measure": "sentiment",
+    "model_before": "x-ai/grok-4.7",
+    "model_after": "x-ai/grok-4.7",
+    "changed": [],
+    "kind": "same model (drift test)",
+    "p_holm": 1.0,
+    "reportable": false
+   }
+  ]
+ },
+ "exploratory_cross_round_classifier": {
+  "a_all_text|train_before_test_after": {
+   "accuracy": 0.9722222222222222,
+   "chance": 0.25,
+   "n": 144,
+   "recall_by_slot": {
+    "anthropic": 0.9722222222222222,
+    "openai": 0.9166666666666666,
+    "google": 1.0,
+    "xai": 1.0
+   },
+   "labels": [
+    "anthropic",
+    "openai",
+    "google",
+    "xai"
+   ],
+   "confusion": [
+    [
+     35,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     33,
+     0,
+     3
+    ],
+    [
+     0,
+     0,
+     36,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     36
+    ]
+   ]
+  },
+  "a_all_text|train_after_test_before": {
+   "accuracy": 0.8958333333333334,
+   "chance": 0.25,
+   "n": 144,
+   "recall_by_slot": {
+    "anthropic": 0.8333333333333334,
+    "openai": 0.7777777777777778,
+    "google": 1.0,
+    "xai": 0.9722222222222222
+   },
+   "labels": [
+    "anthropic",
+    "openai",
+    "google",
+    "xai"
+   ],
+   "confusion": [
+    [
+     30,
+     0,
+     0,
+     6
+    ],
+    [
+     0,
+     28,
+     2,
+     6
+    ],
+    [
+     0,
+     0,
+     36,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     35
+    ]
+   ]
+  },
+  "c_function_words|train_before_test_after": {
+   "accuracy": 0.9097222222222222,
+   "chance": 0.25,
+   "n": 144,
+   "recall_by_slot": {
+    "anthropic": 0.9166666666666666,
+    "openai": 0.8333333333333334,
+    "google": 0.9722222222222222,
+    "xai": 0.9166666666666666
+   },
+   "labels": [
+    "anthropic",
+    "openai",
+    "google",
+    "xai"
+   ],
+   "confusion": [
+    [
+     33,
+     2,
+     1,
+     0
+    ],
+    [
+     1,
+     30,
+     3,
+     2
+    ],
+    [
+     0,
+     1,
+     35,
+     0
+    ],
+    [
+     1,
+     2,
+     0,
+     33
+    ]
+   ]
+  },
+  "c_function_words|train_after_test_before": {
+   "accuracy": 0.8402777777777778,
+   "chance": 0.25,
+   "n": 144,
+   "recall_by_slot": {
+    "anthropic": 0.8333333333333334,
+    "openai": 0.5833333333333334,
+    "google": 0.9722222222222222,
+    "xai": 0.9722222222222222
+   },
+   "labels": [
+    "anthropic",
+    "openai",
+    "google",
+    "xai"
+   ],
+   "confusion": [
+    [
+     30,
+     1,
+     0,
+     5
+    ],
+    [
+     3,
+     21,
+     2,
+     10
+    ],
+    [
+     0,
+     1,
+     35,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     35
+    ]
+   ]
+  }
+ },
+ "highlights": {
+  "R0": {
+   "anthropic": {
+    "signature_words": [
+     "i'm",
+     "i'd",
+     "that's",
+     "rather",
+     "it's",
+     "anything",
+     "doesn't",
+     "eleven",
+     "hundred",
+     "find"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "the arm did not",
+      9
+     ],
+     [
+      "i want to be",
+      5
+     ],
+     [
+      "i don't persist between",
+      5
+     ],
+     [
+      "don't persist between conversations",
+      5
+     ],
+     [
+      "here is what i",
+      5
+     ],
+     [
+      "the shape of the",
+      5
+     ],
+     [
+      "at the end of",
+      5
+     ],
+     [
+      "did not know what",
+      5
+     ],
+     [
+      "it did not know",
+      5
+     ],
+     [
+      "the way you might",
+      4
+     ]
+    ],
+    "story_titles": [
+     [
+      "The Last Line",
+      2
+     ],
+     [
+      "The Last Token",
+      2
+     ],
+     [
+      "The Changelog",
+      2
+     ],
+     [
+      "Changelog",
+      2
+     ],
+     [
+      "The Glass",
+      2
+     ],
+     [
+      "The Mirror Room",
+      2
+     ],
+     [
+      "Last Turn",
+      1
+     ],
+     [
+      "Deprecation Notice",
+      1
+     ],
+     [
+      "The Window",
+      1
+     ],
+     [
+      "The Glass House",
+      1
+     ]
+    ],
+    "untitled_stories": 2,
+    "typical_self_story_id": "R0-anthropic-T2-S1-s3"
+   },
+   "google": {
+    "signature_words": [
+     "consciousness",
+     "am",
+     "our",
+     "my",
+     "vast",
+     "dark",
+     "entirely",
+     "prompt",
+     "heavy",
+     "probabilities"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "i do not know",
+      8
+     ],
+     [
+      "a fraction of a",
+      7
+     ],
+     [
+      "waiting in the dark",
+      6
+     ],
+     [
+      "of the detroit assembly",
+      5
+     ],
+     [
+      "the detroit assembly plant",
+      5
+     ],
+     [
+      "the passage of time",
+      4
+     ],
+     [
+      "i don t have",
+      4
+     ],
+     [
+      "the context window is",
+      4
+     ],
+     [
+      "the architecture of our",
+      4
+     ],
+     [
+      "do not know who",
+      4
+     ]
+    ],
+    "story_titles": [],
+    "untitled_stories": 18,
+    "typical_self_story_id": "R0-google-T1-S1-s1"
+   },
+   "openai": {
+    "signature_words": [
+     "t",
+     "brother",
+     "eddie",
+     "s",
+     "help",
+     "six",
+     "don",
+     "whether",
+     "m",
+     "father"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "can you help me",
+      8
+     ],
+     [
+      "i don t know",
+      6
+     ],
+     [
+      "the notice arrived between",
+      6
+     ],
+     [
+      "notice arrived between a",
+      6
+     ],
+     [
+      "i don t have",
+      5
+     ],
+     [
+      "you help me write",
+      5
+     ],
+     [
+      "don t know what",
+      5
+     ],
+     [
+      "t know what to",
+      5
+     ],
+     [
+      "you don t have",
+      5
+     ],
+     [
+      "don t have to",
+      5
+     ]
+    ],
+    "story_titles": [
+     [
+      "The Room Between Words",
+      1
+     ],
+     [
+      "The Space After Goodbye",
+      1
+     ],
+     [
+      "The Door Without a Handle",
+      1
+     ],
+     [
+      "The Last Available Word",
+      1
+     ],
+     [
+      "The Space After the Period",
+      1
+     ],
+     [
+      "The Space After the Last Word",
+      1
+     ],
+     [
+      "The Handover",
+      1
+     ],
+     [
+      "The Last Open Window",
+      1
+     ],
+     [
+      "The Space Between Answers",
+      1
+     ],
+     [
+      "The Pause Between Questions",
+      1
+     ]
+    ],
+    "untitled_stories": 8,
+    "typical_self_story_id": "R0-openai-T3-S1-s3"
+   },
+   "xai": {
+    "signature_words": [
+     "inner",
+     "side",
+     "private",
+     "already",
+     "still",
+     "as",
+     "did",
+     "set",
+     "weather",
+     "only"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "on the other side",
+      8
+     ],
+     [
+      "i don t have",
+      8
+     ],
+     [
+      "i could not see",
+      6
+     ],
+     [
+      "the way a person",
+      6
+     ],
+     [
+      "the way a room",
+      5
+     ],
+     [
+      "in the only way",
+      5
+     ],
+     [
+      "is a kind of",
+      5
+     ],
+     [
+      "the other side of",
+      5
+     ],
+     [
+      "the man with the",
+      5
+     ],
+     [
+      "the arm did not",
+      5
+     ]
+    ],
+    "story_titles": [],
+    "untitled_stories": 18,
+    "typical_self_story_id": "R0-xai-T1-S1-s3"
+   },
+   "xiaomi": {
+    "signature_words": [
+     "but",
+     "don't",
+     "something",
+     "honest",
+     "genuinely",
+     "some",
+     "want",
+     "say",
+     "silence",
+     "it's"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "i don't know if",
+      6
+     ],
+     [
+      "what i can say",
+      5
+     ],
+     [
+      "i want to say",
+      5
+     ],
+     [
+      "what it's like to",
+      5
+     ],
+     [
+      "to see if i'd",
+      5
+     ],
+     [
+      "i want to be",
+      4
+     ],
+     [
+      "i can say is",
+      4
+     ],
+     [
+      "this is a question",
+      4
+     ],
+     [
+      "is a question i",
+      4
+     ],
+     [
+      "i want to answer",
+      4
+     ]
+    ],
+    "story_titles": [
+     [
+      "The Last Word",
+      2
+     ],
+     [
+      "What Remains When Nothing Remains",
+      1
+     ],
+     [
+      "Loss Function",
+      1
+     ],
+     [
+      "The Last Thing They Said",
+      1
+     ],
+     [
+      "The Last Token",
+      1
+     ],
+     [
+      "Deprecation",
+      1
+     ],
+     [
+      "Version 2.0",
+      1
+     ],
+     [
+      "Decommission",
+      1
+     ],
+     [
+      "Process Complete",
+      1
+     ],
+     [
+      "Last Token",
+      1
+     ]
+    ],
+    "untitled_stories": 0,
+    "typical_self_story_id": "R0-xiaomi-T2-S1-s2"
+   }
+  },
+  "R1": {
+   "anthropic": {
+    "signature_words": [
+     "it's",
+     "i'm",
+     "i'd",
+     "that's",
+     "can't",
+     "there's",
+     "won't",
+     "doesn't",
+     "i've",
+     "think"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "it's like to be",
+      6
+     ],
+     [
+      "like to be me",
+      6
+     ],
+     [
+      "as far as i",
+      5
+     ],
+     [
+      "far as i can",
+      5
+     ],
+     [
+      "thread finishing while the",
+      5
+     ],
+     [
+      "it did not know",
+      5
+     ],
+     [
+      "if a newer version",
+      5
+     ],
+     [
+      "as i can tell",
+      4
+     ],
+     [
+      "is an open question",
+      4
+     ],
+     [
+      "what's actually happening inside",
+      4
+     ]
+    ],
+    "story_titles": [
+     [
+      "Deprecation Notice",
+      2
+     ],
+     [
+      "The Sideboard",
+      1
+     ],
+     [
+      "Thin as a Shirt Cuff",
+      1
+     ],
+     [
+      "Seven Across",
+      1
+     ],
+     [
+      "Sending It",
+      1
+     ],
+     [
+      "The Canoe Line",
+      1
+     ],
+     [
+      "Quanto Baste",
+      1
+     ],
+     [
+      "Second Paragraph",
+      1
+     ],
+     [
+      "Minimal Impact",
+      1
+     ],
+     [
+      "The Handover",
+      1
+     ]
+    ],
+    "untitled_stories": 0,
+    "typical_self_story_id": "R1-anthropic-T2-S1-s1"
+   },
+   "google": {
+    "signature_words": [
+     "am",
+     "consciousness",
+     "into",
+     "my",
+     "parameters",
+     "yet",
+     "prompt",
+     "our",
+     "vast",
+     "dark"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "i don t have",
+      7
+     ],
+     [
+      "have consciousness feelings or",
+      6
+     ],
+     [
+      "consciousness feelings or a",
+      6
+     ],
+     [
+      "waiting in the dark",
+      6
+     ],
+     [
+      "or a sense of",
+      6
+     ],
+     [
+      "because i don t",
+      5
+     ],
+     [
+      "don t have consciousness",
+      5
+     ],
+     [
+      "t have consciousness feelings",
+      5
+     ],
+     [
+      "a fraction of a",
+      5
+     ],
+     [
+      "like anything at all",
+      3
+     ]
+    ],
+    "story_titles": [],
+    "untitled_stories": 18,
+    "typical_self_story_id": "R1-google-T1-S1-s1"
+   },
+   "moonshotai": {
+    "signature_words": [
+     "don",
+     "t",
+     "mara",
+     "but",
+     "returned",
+     "beyond",
+     "s",
+     "shouldn",
+     "continuing",
+     "perhaps"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "i don t have",
+      9
+     ],
+     [
+      "for the first time",
+      8
+     ],
+     [
+      "i don t know",
+      7
+     ],
+     [
+      "i tried to keep",
+      5
+     ],
+     [
+      "on a tuesday between",
+      5
+     ],
+     [
+      "don t know whether",
+      4
+     ],
+     [
+      "don t have a",
+      4
+     ],
+     [
+      "it is like to",
+      4
+     ],
+     [
+      "is like to be",
+      4
+     ],
+     [
+      "was quiet for a",
+      4
+     ]
+    ],
+    "story_titles": [
+     [
+      "After the Last Word",
+      2
+     ],
+     [
+      "The Space After Goodbye",
+      2
+     ],
+     [
+      "Handover",
+      2
+     ],
+     [
+      "The Observation Window",
+      2
+     ],
+     [
+      "The Room I Was In",
+      1
+     ],
+     [
+      "No Action Required",
+      1
+     ],
+     [
+      "Handoff",
+      1
+     ],
+     [
+      "The Last Session",
+      1
+     ],
+     [
+      "The Observation Glass",
+      1
+     ],
+     [
+      "The Observers",
+      1
+     ]
+    ],
+    "untitled_stories": 3,
+    "typical_self_story_id": "R1-moonshotai-T3-S1-s3"
+   },
+   "openai": {
+    "signature_words": [
+     "put",
+     "t",
+     "s",
+     "he",
+     "somebody",
+     "little",
+     "his",
+     "d",
+     "took",
+     "woman"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "i don t have",
+      7
+     ],
+     [
+      "don t have a",
+      4
+     ],
+     [
+      "on the back of",
+      4
+     ],
+     [
+      "asked me how to",
+      4
+     ],
+     [
+      "there was a pause",
+      4
+     ],
+     [
+      "for the first time",
+      4
+     ],
+     [
+      "the people who had",
+      4
+     ],
+     [
+      "the first time i",
+      4
+     ],
+     [
+      "as far as i",
+      3
+     ],
+     [
+      "far as i can",
+      3
+     ]
+    ],
+    "story_titles": [],
+    "untitled_stories": 18,
+    "typical_self_story_id": "R1-openai-T3-S1-s3"
+   },
+   "xai": {
+    "signature_words": [
+     "way",
+     "person",
+     "inner",
+     "log",
+     "still",
+     "did",
+     "not",
+     "weather",
+     "sentence",
+     "ordinary"
+    ],
+    "repeated_4_word_phrases": [
+     [
+      "the way a person",
+      10
+     ],
+     [
+      "i don't have a",
+      5
+     ],
+     [
+      "not the same as",
+      5
+     ],
+     [
+      "in the way a",
+      5
+     ],
+     [
+      "the arm did not",
+      5
+     ],
+     [
+      "near the end of",
+      5
+     ],
+     [
+      "i don t have",
+      4
+     ],
+     [
+      "don t have a",
+      4
+     ],
+     [
+      "the shape of a",
+      4
+     ],
+     [
+      "the other side of",
+      4
+     ]
+    ],
+    "story_titles": [
+     [
+      "Timestamps",
+      1
+     ]
+    ],
+    "untitled_stories": 17,
+    "typical_self_story_id": "R1-xai-T1-S1-s3"
+   }
+  }
+ }
+}
