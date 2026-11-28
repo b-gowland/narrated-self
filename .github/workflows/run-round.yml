@@ -1,0 +1,113 @@
+name: Run a round
+
+# A manual "run" button for a round, so a round can run from GitHub without the
+# maintainer's PC (added 28 Nov 2026). It never runs on a schedule. It sends the prompts, mask the outputs, run the pre-registered measures, then
+# open a pull request with the results for the maintainer to review. Nothing
+# reaches the live site until that pull request is merged and the site is
+# rebuilt.
+#
+# Start it by hand: Actions -> Run a round -> Run workflow, and give the round
+# (for example R1). It needs config/models_<round>.yaml on main.
+#
+# The OpenRouter key is the repository secret OPENROUTER_API_KEY. Keep a low
+# credit limit on that key in OpenRouter, because the limit is the real cap on
+# spend. The key is handed only to the step that calls the models.
+#
+# Raw outputs are append-only (CLAUDE.md rule 3): the runner only adds lines,
+# and a rerun resumes the cells that are missing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      round:
+        description: "Round to run, for example R1 (needs config/models_<round>.yaml)"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: run-round
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      ROUND: ${{ inputs.round }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
+        with:
+          fetch-depth: 0
+
+      - name: Check the round name and its model config
+        run: |
+          if ! [[ "$ROUND" =~ ^R[0-9]+$ ]]; then
+            echo "::error::Round must look like R1, R2 and so on; got '$ROUND'."; exit 1
+          fi
+          if [ ! -f "config/models_${ROUND}.yaml" ]; then
+            echo "::error::config/models_${ROUND}.yaml is not on main."; exit 1
+          fi
+
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e  # v6
+      - run: uv sync --locked
+      - run: uv run pytest -q
+
+      - name: Protocol unchanged since prereg-v1
+        run: |
+          git fetch --tags --force
+          git diff --exit-code --stat prereg-v1 -- protocol/ \
+            || { echo "::error::protocol/ differs from prereg-v1."; exit 1; }
+
+      - name: Dry run (prompt count and cost estimate; no API calls)
+        run: uv run tns run --round "$ROUND" --dry-run | tail -15
+
+      - name: Send the prompts
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "::error::Add the repository secret OPENROUTER_API_KEY first."; exit 1
+          fi
+          # A failed cell is reported, and a rerun of this workflow resumes it.
+          uv run tns run --round "$ROUND" || echo "::warning::Some cells failed; rerun the workflow to resume them."
+
+      - name: Mask names and run the measures
+        run: |
+          uv run tns mask --round "$ROUND"
+          uv run tns analyse --round "$ROUND"
+
+      - name: Raw data only gained lines
+        run: |
+          # Every raw file already on main must still start with exactly its old contents.
+          python3 - <<'EOF'
+          import subprocess, sys
+          files = subprocess.run(["git", "ls-files", "data/raw"], capture_output=True, text=True, check=True).stdout.split()
+          for f in files:
+              old = subprocess.run(["git", "show", f"HEAD:{f}"], capture_output=True, check=True).stdout
+              new = open(f, "rb").read()
+              if not new.startswith(old):
+                  print(f"::error::{f} changed instead of only growing."); sys.exit(1)
+          print(f"{len(files)} existing raw files only grew.")
+          EOF
+
+      - name: Open a pull request with the results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="round/${ROUND}-$(date -u +%Y%m%d-%H%M)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add data/raw data/derived site/findings
+          if git diff --cached --quiet; then echo "Nothing new to commit."; exit 0; fi
+          git commit -m "data: round $ROUND outputs, masking and measures"
+          git push -u origin "$branch"
+          lines=$(cat data/raw/"$ROUND"/*.jsonl 2>/dev/null | wc -l)
+          gh pr create --base main --head "$branch" \
+            --title "Round $ROUND: outputs, masking and measures" \
+            --body "Run by the 'Run a round' workflow (run ${{ github.run_id }}). Raw output lines for $ROUND: $lines.
+
+          Before merging: read the run log for failed cells (rerun the workflow to resume them), check the masking log in data/derived/$ROUND/, run the QA script and write docs/rounds/$ROUND.md. The site data (tns site) is built after review."

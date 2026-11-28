@@ -2,7 +2,8 @@
 
 ## 2026-11-28 — Round 1 prepared
 - **Models (`config/models_R1.yaml`):** Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Carbon, Grok 4.7 (unchanged from R0), and Kimi K3.1 Pro in the open-weight slot. Carbon, not Neon, is Google's flagship under §4: Google calls Carbon its strongest model, while Neon is a fast, mid-priced coding and agentic model. The open-weight selection is in `data/selection/R1.json`.
-- **Deviation from §11 (cadence).** §11 says a new round when a tracked provider releases a new flagship, "at most quarterly". The maintainer decided on 28 Nov 2026 to run new frontier models every 2–4 weeks, so R1 runs about five weeks after R0. Q4 (change across rounds) is unaffected in method, but shorter gaps mean smaller expected changes.
+- **Deviation from §11 (cadence).** §11 says a new round when a tracked provider releases a new flagship, "at most quarterly". Three labs released new flagships in November, and the maintainer chose to run R1 early, about five weeks after R0. A one-off choice, not a new schedule.
+- **Run button.** `.github/workflows/run-round.yml` runs a round from GitHub when started by hand (never on a schedule), using the repository secret `OPENROUTER_API_KEY`, and opens a pull request with the results for review.
 - **Deviation from §11 (planned paraphrase).** §11 planned a second wording of each theme's prompts (`protocol/prompts_v2.yaml`) for R1. It hasn't been written: it is a protocol change for the maintainer. R1 uses the frozen prompts only, so it stays directly comparable with R0.
 - **Index version.** Artificial Analysis moved from v4.3.2 (R0) to v5.0.2. Only the rank is used for selection, so the rule is unchanged.
 - The protocol (`protocol/`, tag `prereg-v1`) is unchanged.
