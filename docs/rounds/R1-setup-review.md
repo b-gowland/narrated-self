@@ -18,6 +18,13 @@ The first Round 1 run (GitHub Actions run 46119982682) sent its prompts one mode
 | 10 | Reasoning is comparable across rounds | The protocol leaves reasoning at each provider's default and logs the tokens. R0 used some (means: Claude 382, Grok 402, MiMo 145, GPT 102, Gemini 0). If a lab changed its default, a change in style could partly be a change in thinking | **Holds**, with that caveat | Report reasoning tokens per model next to any change in R1 |
 | 11 | The run would be unattended and safe to leave | It was safe (spend capped by the key) but not reliable (nothing kept) | **Half right** | Covered by 1–5 |
 
+## The rerun (28 Nov, run 46130836375)
+
+- **The model jobs worked.** All five finished side by side, between 14 and 57 minutes (Kimi slowest, about 94 s a call). All 180 outputs ended normally ("stop"), and each was served by its own lab's host. Billed US$5.89, close to the corrected estimate of US$7.19.
+- **One more wrong assumption: that the measures are quick.** The last job had 30 minutes, and masking plus `tns analyse` (repeated cross-validation and permutation tests) took longer on a runner. The job was cancelled before it opened the pull request. The outputs were safe as artifacts: they were downloaded (checksums match), committed unchanged to `round/R1-20261128-0931`, and analysed locally.
+- **Fix:** the last job now commits the raw outputs and opens the pull request *before* the measures run. The measures get their own 150-minute limit, and their results are added as a second commit, or noted on the PR if they don't finish.
+- **The common thread** in both failures: limits were guessed instead of measured. Before raising or trusting a limit, time the step on real data.
+
 ## What to check before the next round
 
 1. Read the previous round's logged cost (`provider_meta.cost_usd`) and time per call, not just the dry run.

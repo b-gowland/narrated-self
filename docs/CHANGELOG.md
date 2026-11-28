@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-28 — Round runner: pull request before the measures
+- The rerun's model jobs all finished, but the last job ran out of its 30 minutes during the measures and never opened the pull request. It now commits the raw outputs and opens the PR first, then runs masking and the measures with their own 150-minute limit and adds them as a second commit (job limit 180 minutes). Details in `docs/rounds/R1-setup-review.md`.
+
 ## 2026-11-28 — Round runner rebuilt after a cancelled run
 - The first R1 run sent its 180 prompts one model after another, reached the two-hour limit and was cancelled; about US$5.28 was spent and no outputs were kept. The review of every assumption is in `docs/rounds/R1-setup-review.md`.
 - **`run-round.yml`:** each model runs in its own job, side by side; each model's outputs are saved as an artifact even after a failure or timeout; a last job always gathers them and opens the pull request; `resume_from` finishes a part-done round by sending only missing cells.

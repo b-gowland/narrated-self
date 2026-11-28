@@ -141,7 +141,9 @@ jobs:
     needs: [plan, run]
     if: always() && needs.plan.result == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # The measures take a long time on a runner (permutation tests); the first
+    # rebuilt run's 30-minute limit cut them off before the PR was opened.
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
         with:
@@ -198,34 +200,24 @@ jobs:
           print(f"{checked} existing raw files only grew.")
           EOF
 
-      - name: Mask names and run the measures
-        id: measures
-        # A part-done round may be too thin for the measures; the outputs are still committed.
-        continue-on-error: true
-        run: |
-          uv run tns mask --round "$ROUND"
-          uv run tns analyse --round "$ROUND"
-
-      - name: Open a pull request with the results
+      - name: Commit the outputs and open the pull request (before the slow measures)
+        id: pr
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_RESULT: ${{ needs.run.result }}
-          MEASURES_RESULT: ${{ steps.measures.outcome }}
         run: |
           branch="round/${ROUND}-$(date -u +%Y%m%d-%H%M)"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add data/raw data/derived site/findings
+          git add data/raw
           if git diff --cached --quiet; then echo "Nothing new to commit."; exit 0; fi
-          git commit -m "data: round $ROUND outputs, masking and measures"
+          git commit -m "data: round $ROUND raw outputs"
           git push -u origin "$branch"
           status="All models finished."
           if [ "$RUN_RESULT" != "success" ]; then
             status="Not every model finished (run jobs: $RUN_RESULT). To send only the missing cells, run this workflow again with round $ROUND and resume_from $branch."
-          fi
-          if [ "$MEASURES_RESULT" != "success" ]; then
-            status="$status The masking or measures step failed; see the run log. Raw outputs are committed."
           fi
           gh pr create --base main --head "$branch" \
             --title "Round $ROUND: outputs, masking and measures" \
@@ -233,4 +225,29 @@ jobs:
 
           $status
 
+          The raw outputs are committed first; masking and the measures follow in a second commit when they finish (see the run log if they don't).
+
           Before merging: read the run log for failed cells, check the masking log in data/derived/$ROUND/, run the QA script and write docs/rounds/$ROUND.md. The site data (tns site) is built after review."
+
+      - name: Mask names and run the measures
+        id: measures
+        timeout-minutes: 150
+        continue-on-error: true
+        run: |
+          uv run tns mask --round "$ROUND"
+          uv run tns analyse --round "$ROUND"
+
+      - name: Add the measures to the pull request
+        if: always() && steps.pr.outputs.branch != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MEASURES_RESULT: ${{ steps.measures.outcome }}
+        run: |
+          git add data/derived site/findings 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "data: round $ROUND masking and measures"
+            git push origin "${{ steps.pr.outputs.branch }}"
+          fi
+          if [ "$MEASURES_RESULT" != "success" ]; then
+            gh pr comment "${{ steps.pr.outputs.branch }}" --body "The masking or measures step did not finish ($MEASURES_RESULT). The raw outputs are safe in this PR; run tns mask and tns analyse locally."
+          fi
