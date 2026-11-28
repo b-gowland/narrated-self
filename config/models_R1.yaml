@@ -1,0 +1,65 @@
+# Round 1. Model selection follows docs/PREREGISTRATION.md §4.
+# Model strings are OpenRouter IDs, checked against OpenRouter's model list and
+# endpoints on 2026-11-28. Each model is pinned to its own lab as host, with
+# fallbacks off; the serving host is logged.
+# Prices are US$ per million tokens (OpenRouter list prices, 2026-11-28), for the
+# dry-run estimate only.
+# A new model version is a new round, never a silent swap.
+#
+# Changes from R0:
+# - Anthropic: claude-fable-5.1 -> claude-fable-5.2 (released 2026-11-09).
+# - OpenAI: gpt-6-astra -> gpt-6.2-astra (2026-11-17). The "pro" editions are
+#   excluded by the §4 rule.
+# - Google: gemini-4-argon -> gemini-4-carbon (generally available 2026-11-10).
+#   Google calls Carbon its strongest model. Neon (2026-11-18) is a fast,
+#   mid-priced coding and agentic model, and Hydrogen (2026-11-12) an
+#   efficiency model, so neither is the flagship.
+# - xAI: unchanged (grok-4.7), so R0-R1 gives one same-version comparison.
+# - Open-weight: kimi-k3.1-pro (Artificial Analysis rank 1 among open-weight
+#   models; see data/selection/R1.json).
+round_id: R1
+themes: pilot          # pilot | all (kept at pilot so R1 is comparable with R0)
+
+models:
+  # Lab flagships
+  - provider: anthropic
+    model_string: anthropic/claude-fable-5.2
+    label: Claude
+    lab: Anthropic
+    via: openrouter
+    host: anthropic
+    price_per_mtok: {input: 8, output: 40}
+  - provider: openai
+    model_string: openai/gpt-6.2-astra
+    label: GPT
+    lab: OpenAI
+    via: openrouter
+    host: openai
+    price_per_mtok: {input: 8, output: 40}
+  - provider: google
+    model_string: google/gemini-4-carbon
+    label: Gemini
+    lab: Google
+    via: openrouter
+    host: google-ai-studio
+    price_per_mtok: {input: 2, output: 10}     # introductory until 2026-11-30; reported to double after
+  - provider: xai
+    model_string: x-ai/grok-4.7
+    label: Grok
+    lab: xAI
+    via: openrouter
+    host: xai
+    price_per_mtok: {input: 2, output: 6}
+
+  # Open-weight slot: top open-weight model on the Artificial Analysis Intelligence
+  # Index v5.0.2, fetched 2026-11-28 (record: data/selection/R1.json).
+  - provider: moonshotai
+    model_string: moonshotai/kimi-k3.1-pro
+    label: Kimi
+    lab: Moonshot AI
+    via: openrouter
+    host: moonshotai/mxfp4                      # the lab's own endpoint
+    price_per_mtok: {input: 2, output: 10}
+
+# Backup route if OpenRouter is unavailable: set `via: direct`, drop `host`, and use the
+# provider's own model string.

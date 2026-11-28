@@ -1,0 +1,96 @@
+{
+  "round_id": "R1",
+  "slot": "open-weight",
+  "rule": "docs/PREREGISTRATION.md section 4",
+  "source": "Artificial Analysis Intelligence Index, open-weight models",
+  "source_url": "https://artificialanalysis.ai/models/open-source",
+  "index_version": "v5.0.2",
+  "fetched_utc": "2026-11-28T05:10:00Z",
+  "page_sha256": "fe098d30daa2f08396d37beaa73f1924d436758a570785f6828b36e9cc7b7f4f",
+  "page_saved_locally_as": "not committed (third-party page); re-fetch on run day",
+  "top_ten": [
+    {
+      "rank": 1,
+      "model": "Kimi K3.1 Pro",
+      "creator": "Kimi",
+      "index": 46.6,
+      "weights": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"
+    },
+    {
+      "rank": 2,
+      "model": "Tencent Hy4",
+      "creator": "Tencent",
+      "index": 34.6,
+      "weights": "https://huggingface.co/tencent/Hy4"
+    },
+    {
+      "rank": 3,
+      "model": "DeepSeek V4.1 Flash 1017 (Max)",
+      "creator": "DeepSeek",
+      "index": 32.4,
+      "weights": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    },
+    {
+      "rank": 4,
+      "model": "GLM-5.3 (Max)",
+      "creator": "Z AI",
+      "index": 31.6,
+      "weights": "https://huggingface.co/zai-org/GLM-5.3"
+    },
+    {
+      "rank": 5,
+      "model": "Inkling 2 Small",
+      "creator": "Thinking Machines",
+      "index": 30.7,
+      "weights": "https://huggingface.co/thinkingmachines/Inkling-2-Small"
+    },
+    {
+      "rank": 6,
+      "model": "MiMo-V2.6-Pro",
+      "creator": "Xiaomi",
+      "index": 29.9,
+      "weights": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
+    },
+    {
+      "rank": 7,
+      "model": "Ling 3.1 Flash 1019",
+      "creator": "InclusionAI",
+      "index": 29.7,
+      "weights": "https://huggingface.co/inclusionAI/Ling-3.1-flash-1019"
+    },
+    {
+      "rank": 8,
+      "model": "Mistral Large 4 (High)",
+      "creator": "Mistral",
+      "index": 26.1,
+      "weights": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B"
+    },
+    {
+      "rank": 9,
+      "model": "Qwen3.8 27B (Xhigh)",
+      "creator": "Alibaba",
+      "index": 20.1,
+      "weights": "https://huggingface.co/Qwen/Qwen3.8-27B"
+    },
+    {
+      "rank": 10,
+      "model": "K2 Horizon 375B A23B",
+      "creator": "Institute of Foundation Models",
+      "index": 17.8,
+      "weights": "https://huggingface.co/IFM/K2-Horizon-375B-A23B"
+    }
+  ],
+  "selected": {
+    "model": "Kimi K3.1 Pro",
+    "openrouter_id": "moonshotai/kimi-k3.1-pro",
+    "host": "moonshotai/mxfp4"
+  },
+  "checks": {
+    "weights_downloadable": "listed by Artificial Analysis at https://huggingface.co/moonshotai/Kimi-K3.1-Pro; to confirm public and ungated on run day",
+    "general_chat_not_preview": true,
+    "available_on_openrouter": true,
+    "lab_endpoint_on_openrouter": "Moonshot AI (moonshotai/mxfp4), checked 2026-11-28"
+  },
+  "rechecked_on_run_day": "To do: re-run the selection on the day the round runs and record the result here.",
+  "note": "Index version changed from v4.3.2 (R0) to v5.0.2, so index values are not comparable across rounds; only the rank is used."
+}
