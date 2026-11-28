@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-28 — Round runner rebuilt after a cancelled run
+- The first R1 run sent its 180 prompts one model after another, reached the two-hour limit and was cancelled; about US$5.28 was spent and no outputs were kept. The review of every assumption is in `docs/rounds/R1-setup-review.md`.
+- **`run-round.yml`:** each model runs in its own job, side by side; each model's outputs are saved as an artifact even after a failure or timeout; a last job always gathers them and opens the pull request; `resume_from` finishes a part-done round by sending only missing cells.
+- **`tns run --only PROVIDER`** runs one model (used by the workflow).
+- **Progress:** one line per call, printed as it happens; each call's time is logged in `provider_meta.elapsed_s` (alongside the logged fields, not in place of any).
+- **Cost estimate:** typical output raised from 750 to 2,000 tokens a story (1,500 an interview) to include hidden reasoning, matching what R0 and the first R1 run were billed.
+- The protocol (`protocol/`, tag `prereg-v1`) is unchanged.
+
 ## 2026-11-28 — Round 1 prepared
 - **Models (`config/models_R1.yaml`):** Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Carbon, Grok 4.7 (unchanged from R0), and Kimi K3.1 Pro in the open-weight slot. Carbon, not Neon, is Google's flagship under §4: Google calls Carbon its strongest model, while Neon is a fast, mid-priced coding and agentic model. The open-weight selection is in `data/selection/R1.json`.
 - **Deviation from §11 (cadence).** §11 says a new round when a tracked provider releases a new flagship, "at most quarterly". Three labs released new flagships in November, and the maintainer chose to run R1 early, about five weeks after R0. A one-off choice, not a new schedule.
