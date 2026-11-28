@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-28 — Round 1 prepared
+- **Models (`config/models_R1.yaml`):** Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Carbon, Grok 4.7 (unchanged from R0), and Kimi K3.1 Pro in the open-weight slot. Carbon, not Neon, is Google's flagship under §4: Google calls Carbon its strongest model, while Neon is a fast, mid-priced coding and agentic model. The open-weight selection is in `data/selection/R1.json`.
+- **Deviation from §11 (cadence).** §11 says a new round when a tracked provider releases a new flagship, "at most quarterly". Three labs released new flagships in November, and the maintainer chose to run R1 early, about five weeks after R0. A one-off choice, not a new schedule.
+- **Run button.** `.github/workflows/run-round.yml` runs a round from GitHub when started by hand (never on a schedule), using `OPENROUTER_API_KEY` from the `production` environment (main only), and opens a pull request with the results for review.
+- **Deviation from §11 (planned paraphrase).** §11 planned a second wording of each theme's prompts (`protocol/prompts_v2.yaml`) for R1. It hasn't been written: it is a protocol change for the maintainer. R1 uses the frozen prompts only, so it stays directly comparable with R0.
+- **Index version.** Artificial Analysis moved from v4.3.2 (R0) to v5.0.2. Only the rank is used for selection, so the rule is unchanged.
+- The protocol (`protocol/`, tag `prereg-v1`) is unchanged.
+
 ## 2026-11-26 — Self-hosted fonts and a tighter CSP
 - **Web fonts are self-hosted.** Anton, Caveat and Libre Franklin (same weights as before) are in `site/fonts/` as WOFF2 files with their SIL Open Font Licences, loaded by `site/fonts/fonts.css`. Pages no longer contact Google Fonts, and the CSP drops `fonts.googleapis.com` and `fonts.gstatic.com`. Only Latin and Latin Extended are included; other scripts use system fonts.
 - **No local address in the published CSP.** `connect-src` no longer lists `http://127.0.0.1:8787`. The local test server adds it when serving pages, so local play against `wrangler dev` still works. A browser test checks the published pages.
