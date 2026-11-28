@@ -166,3 +166,22 @@ def test_real_adapters_construct_without_network(monkeypatch):
     for cls in ADAPTERS.values():
         monkeypatch.setenv(cls.env_key, "test-key")
         assert cls().provider == cls.provider
+
+def test_only_limits_the_run_to_named_providers(repo: Path):
+    from narrated_self.runner import only_providers
+
+    plan = plan_round(repo, "R0")
+    first = plan.config.models[0].provider
+    limited = only_providers(plan, [first])
+    assert [m.provider for m in limited.config.models] == [first]
+    assert limited.cells == plan.cells
+    with pytest.raises(SystemExit):
+        only_providers(plan, ["no-such-lab"])
+
+
+def test_progress_is_reported_per_call_and_time_is_logged(repo: Path):
+    lines: list[str] = []
+    run(repo, fakes(), lines)
+    assert any(line.lstrip().startswith("[1/") and "words" in line for line in lines)
+    rec = records(repo, "anthropic")[0]
+    assert isinstance(rec["provider_meta"]["elapsed_s"], float)

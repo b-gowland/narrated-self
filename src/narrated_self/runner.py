@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import time
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
@@ -42,7 +42,21 @@ def plan_round(root: Path, round_id: str, config_path: Path | None = None) -> Ro
     return RoundPlan(protocol, config, build_cells(protocol, config.themes))
 
 
-def dry_run(plan: RoundPlan, out: Callable[[str], None] = print) -> None:
+def only_providers(plan: RoundPlan, providers: list[str]) -> RoundPlan:
+    """The same plan limited to some providers' models (cells are unchanged)."""
+    known = {m.provider for m in plan.config.models}
+    unknown = sorted(set(providers) - known)
+    if unknown:
+        raise SystemExit(f"Not in this round's config: {', '.join(unknown)} (have: {', '.join(sorted(known))})")
+    models = [m for m in plan.config.models if m.provider in providers]
+    return replace(plan, config=replace(plan.config, models=models))
+
+
+def _print(line: str) -> None:
+    print(line, flush=True)  # flushed so a CI log shows progress as it happens
+
+
+def dry_run(plan: RoundPlan, out: Callable[[str], None] = _print) -> None:
     """Print the full prompt matrix and a cost estimate. Makes no API calls."""
     settings = plan.protocol.settings
     out(f"Round {plan.config.round_id} · protocol v{plan.protocol.version} · sha256 {plan.protocol.sha256}")
@@ -147,7 +161,7 @@ def run_round(
     plan: RoundPlan,
     adapters: dict[str, Adapter] | None = None,
     sleep: Callable[[float], None] = time.sleep,
-    out: Callable[[str], None] = print,
+    out: Callable[[str], None] = _print,
 ) -> int:
     """Send every outstanding cell and append one JSON line per output. Returns an exit code."""
     settings = plan.protocol.settings
@@ -198,6 +212,7 @@ def run_round(
             out(f"  note: this API does not accept {', '.join(not_sent)}; provider default used and logged")
 
         for i, cell in enumerate(todo):
+            started = time.monotonic()
             try:
                 result = generate_with_retries(adapter, model.model_string, cell.prompt_text, gen, retries, sleep)
             except Exception as exc:
@@ -227,9 +242,12 @@ def run_round(
                 "usage_tokens": result.usage,
             }
             record = {name: values[name] for name in settings["log_fields"]}
-            record["provider_meta"] = result.meta
+            elapsed = round(time.monotonic() - started, 1)
+            record["provider_meta"] = {**result.meta, "elapsed_s": elapsed}
             with path.open("a", encoding="utf-8", newline="\n") as f:
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            out(f"  [{i + 1}/{len(todo)}] {cell.theme_id}/{cell.condition_id}/s{cell.sample_n}: "
+                f"{len(result.text.split())} words, {result.finish_reason}, {elapsed}s")
 
     out("Done." if failures == 0 else f"Finished with {failures} cells outstanding; rerun the same command to resume.")
     return 0 if failures == 0 else 1

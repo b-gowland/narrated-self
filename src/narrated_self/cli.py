@@ -20,6 +20,8 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--round", required=True, dest="round_id")
     run.add_argument("--models", type=Path, help="Model config (default: config/models_<round>.yaml)")
     run.add_argument("--dry-run", action="store_true", help="Print the prompt matrix and cost; no API calls")
+    run.add_argument("--only", action="append", metavar="PROVIDER",
+                     help="Run only this provider's model (repeatable); used to run models side by side in CI")
 
     smoke = sub.add_parser("smoke", help="One sample per prompt per model, saved as discarded round R-1")
     smoke.add_argument("--round", required=True, dest="round_id", help="Round whose models and prompts to use")
@@ -50,6 +52,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "run":
         plan = plan_round(root, args.round_id, args.models)
+        if args.only:
+            from .runner import only_providers
+
+            plan = only_providers(plan, args.only)
         if args.dry_run:
             dry_run(plan)
             return 0
